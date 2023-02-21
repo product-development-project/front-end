@@ -4,11 +4,12 @@ export default function TopBar(props) {
     return (
         <div
             style={{
-                backgroundColor: "purple",
-                height: "50px",
+                backgroundColor: "green",
+                height: "70px",
                 display: "flex",
                 justifyContent: "space-between",
-                marginBottom: '20px'
+                marginBottom: '20px',
+                paddingTop: '15px'
             }}
         >
             <div

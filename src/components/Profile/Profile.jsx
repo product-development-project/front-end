@@ -3,10 +3,6 @@ import { useNavigate } from 'react-router-dom';
 import TopBar from '../TopBar';
 import { Button } from '../UI/Button';
 import { makeStyles } from '@material-ui/core/styles';
-import Card from '@material-ui/core/Card';
-import CardContent from '@material-ui/core/CardContent';
-import Typography from '@material-ui/core/Typography';
-import TicketListPage from '../Tickets/TicketListPage';
 import { Popup } from '../UI/Popup';
 
 const useStyles = makeStyles({
