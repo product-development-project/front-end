@@ -1,19 +1,27 @@
 import React, { useState } from "react";
+import { useNavigate } from 'react-router-dom';
 import TopBar from './TopBar';
 import { Form, FormInput } from "./UI/Form";
 
 export default function LogIn() {
-    const [errorMessage, setErrorMessage] = useState('');
-    const [username, setUsername] = useState('');
-    const [password, setPassword] = useState('');
-    return (
+  const [errorMessage, setErrorMessage] = useState('');
+  const [username, setUsername] = useState('');
+  const [password, setPassword] = useState('');
+
+  const navigate = useNavigate();
+
+  const handleSave = event => {
+    event.preventDefault();
+  };
+
+  return (
     <>
-      <TopBar title='Log In'/>
+      <TopBar title='Programming competition website'/>
       <Form
         title='Log In'
         submitButtonTitle='Log In'
         errorMessage={errorMessage}
-        //onSubmit={handleSave}
+        onSubmit={handleSave}
       >
         <FormInput
           onChange={event => {
