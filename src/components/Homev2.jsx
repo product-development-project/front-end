@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react'
 import { useNavigate } from 'react-router-dom';
 import TopBar from './TopBar';
+import Footer from './Footer';
 import { Button } from './UI/Button';
 
 export default function Homev2() {
@@ -44,6 +45,8 @@ export default function Homev2() {
                     }}
                 />
             </TopBar>
+            <Footer>
+            </Footer>
         </>
     )
 }
