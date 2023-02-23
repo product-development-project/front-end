@@ -4,6 +4,7 @@ import LogIn from './components/LogIn';
 import Register from './components/Register';
 import Home from './components/Home'
 import Homev2 from './components/Homev2'
+import Homev3 from "./components/Homev3";
 import Profile from './components/Profile/Profile';
 import Help from './components/Help';
 import FAQ from './components/FAQ';
@@ -16,11 +17,12 @@ function App() {
       <Routes>
         <Route path="/">
           <Route index element={
-            <FileUploader/>
+            <Homev3/>
           } />
           <Route path="login" element={<LogIn/>} />
           <Route path="register" element={<Register/>} />
           <Route path="home" element={<Homev2/>} />
+          <Route path="jobTasksUpload" element={<FileUploader/>} />
 
           <Route path="faq" element={<FAQ/>} />
           <Route path="contacts" element={<Contacts/>} />
