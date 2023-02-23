@@ -1,0 +1,24 @@
+/* Button css */
+.button, .button-disabled {
+    display: inline-block;
+    padding: 0.3em 2.2em;
+    border: 0.1em solid black;
+    margin: 0 0.3em 0.3em 0;
+    border-radius: 1em;
+    box-sizing: border-box;
+    color: white;
+    text-align:center;
+    transition: all 0.2s;
+    background-color: black;
+    font-size: medium;
+  }
+  
+  .button-disabled {
+    background-color: grey;
+  }
+  
+  .button:hover {
+  color:black;
+  background-color:white;
+  cursor: pointer;
+  }
