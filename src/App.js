@@ -8,6 +8,7 @@ import Profile from './components/Profile/Profile';
 import Help from './components/Help';
 import FAQ from './components/FAQ';
 import Contacts from './components/Contacts';
+import { FileUploader } from "./components/FileUploader";
 
 function App() {
   return (
@@ -15,7 +16,7 @@ function App() {
       <Routes>
         <Route path="/">
           <Route index element={
-            <Home/>
+            <FileUploader/>
           } />
           <Route path="login" element={<LogIn/>} />
           <Route path="register" element={<Register/>} />
