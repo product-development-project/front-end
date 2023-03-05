@@ -6,12 +6,12 @@ export default function Register() {
     const [user, setUser] = useState(null);
     return (
         <>
-            <TopBar title='Register'/>
+            <TopBar title='Register' />
             <Form
                 title='Register'
                 submitButtonTitle='Register'
-                // errorMessage={this.state.errorMessage}
-                //onSubmit={handleSave}
+            // errorMessage={this.state.errorMessage}
+            //onSubmit={handleSave}
             >
                 <FormInput
                     //onChange={handleChange}
@@ -20,7 +20,7 @@ export default function Register() {
                     placeholder='Name'
                     name='name'
                     value={user?.name}
-                    errorMessage={user?.name.length > 0 ? 'Name must begint with an upper case letter and only contain letters' :'Field is required'}
+                    errorMessage={user?.name.length > 0 ? 'Name must begint with an upper case letter and only contain letters' : 'Field is required'}
                     required={true}
                     pattern='[A-ZŽĶĻŅČĢŠĪĀĒŪ]{1}[a-zžšķļņģčīāūē\\s]+'
                 />
@@ -31,7 +31,7 @@ export default function Register() {
                     placeholder='Surname'
                     name='surname'
                     value={user?.surname}
-                    errorMessage={user?.surname.length > 0 ? 'Surname must begint with an upper case letter and only contain letters' :'Field is required'}
+                    errorMessage={user?.surname.length > 0 ? 'Surname must begint with an upper case letter and only contain letters' : 'Field is required'}
                     required={true}
                     pattern='[A-ZŽĶĻŅČĢŠĪĀĒŪ]{1}[a-zžšķļņģčīāūē\\s]+'
                 />

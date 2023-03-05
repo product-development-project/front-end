@@ -8,7 +8,7 @@ export default function Home() {
     const navigate = useNavigate();
     return (
         <>
-            <TopBar 
+            <TopBar
                 title='Programming competition website'
                 backButtonDisabled={true}
             >
@@ -29,7 +29,8 @@ export default function Home() {
                     }}
                 />
             </TopBar>
-            <Footer >
+
+            <Footer>
             </Footer>
         </>
     )

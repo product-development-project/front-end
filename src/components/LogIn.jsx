@@ -16,7 +16,7 @@ export default function LogIn() {
 
   return (
     <>
-      <TopBar title='Programming competition website'/>
+      <TopBar title='Programming competition website' />
       <Form
         title='Log In'
         submitButtonTitle='Log In'

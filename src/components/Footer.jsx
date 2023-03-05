@@ -3,7 +3,7 @@ import { useNavigate } from 'react-router-dom';
 
 export default function Footer(props) {
     const navigate = useNavigate();
-    
+
     return (
         <div
             style={{
@@ -26,9 +26,9 @@ export default function Footer(props) {
                     display: 'flex',
                     marginLeft: '60px',
                     fontSize: '25px',
-                    cursor: 'pointer'     
+                    cursor: 'pointer'
                 }}>
-                <ul><li onClick={() => navigate('/FAQ')}>D.U.K</li></ul>
+                <ul><li onClick={() => navigate('/faq')}>FAQ</li></ul>
             </div>
             <div
                 style={{
@@ -36,7 +36,7 @@ export default function Footer(props) {
                     fontSize: '25px',
                     cursor: 'pointer'
                 }}>
-                <ul><li onClick={() => navigate('/Contacts')}>Kontaktai</li></ul>
+                <ul><li onClick={() => navigate('/contacts')}>Contacts</li></ul>
             </div>
             <div
                 style={{
@@ -45,9 +45,8 @@ export default function Footer(props) {
                     fontSize: '25px',
                     cursor: 'pointer'
                 }}>
-                <ul><li onClick={() => navigate('/Help')}>Pagalba</li></ul>
+                <ul><li onClick={() => navigate('/help')}>Help</li></ul>
             </div>
         </div>
-    )
-    
-}
+    );
+};
