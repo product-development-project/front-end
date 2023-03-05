@@ -1,18 +1,18 @@
-import React, { useState, useEffect } from 'react'
+import TopBar from '../TopBar';
+import { Button } from '../UI/Button';
+import Footer from '../Footer';
 import { useNavigate } from 'react-router-dom';
-import TopBar from './TopBar';
-import Footer from './Footer';
-import { Button } from './UI/Button';
 
-export default function Homev2() {
+export default function Leaderboard() {
     const navigate = useNavigate();
+
     return (
         <>
-            <TopBar
-                title='Programming competition website'
-                backButtonDisabled={true}
-            >
-                <Button
+        <TopBar 
+            title='Programming competition website'
+            backButtonDisabled={true}
+        >
+             <Button
                     value="Profile"
                     name="profile-button"
                     onClick={() => navigate('/profile')}
@@ -44,10 +44,11 @@ export default function Homev2() {
                         marginTop: '15px'
                     }}
                 />
-            </TopBar>
 
-            <Footer>
-            </Footer>
-        </>
-    )
-}
+        </TopBar>
+
+        <Footer>
+        </Footer>
+    </>
+    );
+};

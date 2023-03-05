@@ -3,19 +3,19 @@ import TopBar from '../TopBar';
 import { Button } from '../UI/Button';
 import Footer from '../Footer';
 
-export const FileUploader = ({}) => {
+export const FileUploader = ({ }) => {
     return (
         <div class="container">
             <div class="row">
                 <div class="col-md-6">
-                    <TopBar title='File Upload'/>
+                    <TopBar title='Upload job ad' />
 
                     <form method="post" action="#" id="#">
 
-                        <div className="form-group files" style={{fontSize: 28}}>
-                            <label style={{fontSize: 28}}>Upload Your File</label>
-                            
-                            <input style={{alignItems: 'center'}} type="file" className="form-control" multiple=""/>
+                        <div className="form-group files" style={{ fontSize: 28 }}>
+                            <label style={{ fontSize: 28 }}>Upload Your File</label>
+
+                            <input style={{ alignItems: 'center' }} type="file" className="form-control" multiple="" />
                         </div>
 
                         <Button
@@ -30,7 +30,6 @@ export const FileUploader = ({}) => {
                     <Footer/>
                 </div>
             </div>
-
         </div>
-    )
+    );
 };
