@@ -1,54 +1,20 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { Form, FormInput } from './UI/Form';
-import { useNavigate } from 'react-router-dom'
 import TopBar from "./TopBar";
-import axios from 'axios'
 
 export default function Register() {
-    const navigate = useNavigate()
     const [user, setUser] = useState(null);
-    const [errorMessage, setErrorMessage] = useState("");
-
-    const handleChange = (e) => {
-        setUser({
-            ...user,
-            [e.target.name]: e.target.value
-        })
-    }
-
-    const handleSave = (e) => {
-        e.preventDefault();
-
-        const request = {
-            //name: user.name,
-            //surname: user.surname,
-            email: user.email,
-            username: user.username,
-            password: user.password,
-        }
-
-        const URL = `http://localhost:5163/api/register`;
-
-        axios
-            .post(URL, request, { headers: { 'Content-Type': 'application/json' }})
-            .then(() => {
-                navigate('/login');
-            })
-            .catch(error => {
-                setErrorMessage(error.response.data);
-            })
-    }
-
     return (
         <>
             <TopBar title='Register' />
             <Form
                 title='Register'
                 submitButtonTitle='Register'
-                onSubmit={handleSave}
+            // errorMessage={this.state.errorMessage}
+            //onSubmit={handleSave}
             >
-                {/* <FormInput
-                    onChange={handleChange}
+                <FormInput
+                    //onChange={handleChange}
                     type='text'
                     label='Name'
                     placeholder='Name'
@@ -57,9 +23,9 @@ export default function Register() {
                     errorMessage={user?.name.length > 0 ? 'Name must begint with an upper case letter and only contain letters' : 'Field is required'}
                     required={true}
                     pattern='[A-ZŽĶĻŅČĢŠĪĀĒŪ]{1}[a-zžšķļņģčīāūē\\s]+'
-                /> */}
-                {/* <FormInput
-                    onChange={handleChange}
+                />
+                <FormInput
+                    //onChange={handleChange}
                     type='text'
                     label='Surname'
                     placeholder='Surname'
@@ -68,9 +34,20 @@ export default function Register() {
                     errorMessage={user?.surname.length > 0 ? 'Surname must begint with an upper case letter and only contain letters' : 'Field is required'}
                     required={true}
                     pattern='[A-ZŽĶĻŅČĢŠĪĀĒŪ]{1}[a-zžšķļņģčīāūē\\s]+'
-                /> */}
+                />
                 <FormInput
-                    onChange={handleChange}
+                    //onChange={handleChange}
+                    type='text'
+                    label='Social security number'
+                    placeholder='Social security number'
+                    name='socialSecurityNumber'
+                    value={user?.socialSecurityNumber}
+                    errorMessage={user?.socialSecurityNumber.length > 0 ? 'Social security number must be a positive integer' : 'Field is required'}
+                    required={true}
+                    pattern='^[0-9]*$'
+                />
+                <FormInput
+                    //onChange={handleChange}
                     type='text'
                     label='Email'
                     placeholder='Email'
@@ -81,18 +58,28 @@ export default function Register() {
                     pattern='^[a-zA-Z0-9+_.-]+@[a-zA-Z0-9.-]+$'
                 />
                 <FormInput
-                    onChange={handleChange}
+                    //onChange={handleChange}
+                    type='text'
+                    label='Phone number'
+                    placeholder='Phone number'
+                    name='phoneNumber'
+                    value={user?.phoneNumber}
+                    errorMessage='Field is required'
+                    required={true}
+                />
+                <FormInput
+                    //onChange={handleChange}
                     type='text'
                     label='Username'
                     placeholder='Username'
                     name='username'
-                    value={user && user.username}
+                    value={user?.username}
                     errorMessage={user?.username?.length > 0 ? 'Username must be between 5-20 characters and cannot contain _ and . caracters in front or end' : 'Field is required'}
                     required={true}
                     pattern='^(?=[a-zA-Z0-9._]{5,20}$)(?!.*[_.]{2})[^_.].*[^_.]$'
                 />
                 <FormInput
-                    onChange={handleChange}
+                    //onChange={handleChange}
                     type='password'
                     label='Password'
                     placeholder='Password'
@@ -102,7 +89,7 @@ export default function Register() {
                     pattern='^(?=.*[A-Za-z])(?=.*\d)(?=.*[@$!%*#?&])[A-Za-z\d@$!%*#?&]{8,20}$'
                 />
                 <FormInput
-                    onChange={handleChange}
+                    //onChange={handleChange}
                     type='password'
                     label='Confirm Password'
                     placeholder='Confirm password'
@@ -110,6 +97,16 @@ export default function Register() {
                     errorMessage={user?.confirmPassword?.length > 0 ? 'Passwords do not match' : 'Field is required'}
                     required={true}
                     pattern={user?.password}
+                />
+                <FormInput
+                    //onChange={handleChange}
+                    type='text'
+                    label='Address'
+                    placeholder='Address'
+                    name='address'
+                    value={user?.address}
+                    errorMessage='Field is required'
+                    required={true}
                 />
             </Form>
         </>

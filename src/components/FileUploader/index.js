@@ -1,5 +1,4 @@
 import './style.css'
-import React, { useState, useEffect } from 'react'
 import TopBar from '../TopBar';
 import { Button } from '../UI/Button';
 import Footer from '../Footer';

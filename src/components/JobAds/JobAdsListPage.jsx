@@ -1,5 +1,4 @@
 import TopBar from '../TopBar';
-import React, { useState, useEffect } from 'react'
 import { Button } from '../UI/Button';
 import Footer from '../Footer';
 import { useNavigate } from 'react-router-dom';
