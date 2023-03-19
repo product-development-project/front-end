@@ -1,3 +1,4 @@
+import zIndex from '@material-ui/core/styles/zIndex';
 import React from 'react'
 import { useNavigate } from "react-router-dom";
 import { Button } from "./UI/Button";
@@ -12,7 +13,9 @@ export default function TopBar(props) {
                 height: "50px",
                 display: "flex",
                 justifyContent: "space-between",
-                marginBottom: '20px'
+                marginBottom: '20px',
+                position: 'relative',
+                zIndex: '2'          
             }}
         >
             <div
