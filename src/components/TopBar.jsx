@@ -1,7 +1,6 @@
-import zIndex from '@material-ui/core/styles/zIndex';
 import React from 'react'
-import { useNavigate } from "react-router-dom";
-import { Button } from "./UI/Button";
+import { useNavigate } from 'react-router-dom';
+import { Button } from './UI/Button';
 
 export default function TopBar(props) {
     const navigate = useNavigate();

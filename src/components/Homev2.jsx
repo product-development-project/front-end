@@ -1,7 +1,10 @@
-import React, { useState, useEffect, useRef } from 'react'
+import React, { useRef } from 'react'
 import { useNavigate } from 'react-router-dom';
 import TopBar from './TopBar';
 import Footer from './Footer';
+import FAQ from './FAQ';
+import Contacts from './Contacts';
+import Help from './Help';
 import { Button } from './UI/Button';
 import VideoPlayer from "react-background-video-player";
 import Video from './Media/Videos/homeBackground.mp4'
@@ -17,7 +20,7 @@ export default function Homev2() {
         <>
             <section ref={section1Ref}></section>
             <TopBar
-                title='Programming competition website'
+                title='workIT'
                 backButtonDisabled={true}
             >
                 <Button
@@ -45,8 +48,8 @@ export default function Homev2() {
                     }}
                 />
                 <Button
-                    value="Job competition"
-                    name="job-competition-button"
+                    value="Job ads"
+                    name="job-ads-button"
                     onClick={() => navigate('/job/ads')}
                     style={{
                         marginTop: '15px'
@@ -56,32 +59,44 @@ export default function Homev2() {
             
             <main>
                 <div style={{height: '1000px', width:'100%'}}>
-                <VideoPlayer
-                    className="video"
-                    src={Video}
-                    autoPlay={true}
-                    muted={true}
-                />
-
-                <h1 style={{color:'red', position:'relative', zIndex:'2'}}>Home</h1>
-                    <p style={{color:'red',fontSize:'30px', fontWeight:'bold', position:'relative', zIndex:'2'}}>Norint kad rašytu ant video viršaus, reikia stiliuje uždėti position:'relative' ir zIndex:'2'</p>
+                    <div style={{opacity: 0.2}}>
+                        <VideoPlayer
+                        className="video"
+                        src={Video}
+                        autoPlay={true}
+                        muted={true}
+                        />
+                    </div>
+                    
+                    <h1 style={{color:'red', position:'relative', zIndex:'2'}}>Want to get started in IT industry?</h1>
+                    <p style={{color:'red',fontSize:'30px', fontWeight:'bold', position:'relative', zIndex:'2'}}>Checkout job ads and compete in the competition for the job position</p>
+                    <div style={{position:'relative', zIndex:'2'}}>
+                        <Button
+                        value="Job competition"
+                        name="job-competition-button"
+                        onClick={() => navigate('/job/ads')}
+                        style={{
+                            marginTop: '15px'
+                        }}
+                        />
+                    </div>
                 </div>
                 <div style={{height: '1000px'}}>
                     <section ref={section2Ref}>
-                        <h1>FAO</h1>
-                        <p>FAQ section</p>
+                        <h1>FAQ</h1>
+                        <FAQ></FAQ>
                     </section>
                 </div>
                 <div style={{height: '1000px'}}>
                     <section ref={section3Ref}>
                         <h1>Contacts</h1>
-                        <p>Contacts section</p>
+                        <Contacts></Contacts>
                     </section>
                 </div>
                 <div style={{height: '1000px'}}>
                     <section ref={section4Ref}>
                         <h1>Help</h1>
-                        <p>Help section</p>
+                        <Help></Help>
                     </section>
                 </div>
 

@@ -9,7 +9,9 @@ export const FileUploader = ({ }) => {
         <div class="container">
             <div class="row">
                 <div class="col-md-6">
-                    <TopBar title='Upload job ad' />
+                    <TopBar title='workIT'
+                    backButtonDisabled={true}
+                    />
 
                     <form method="post" action="#" id="#">
 

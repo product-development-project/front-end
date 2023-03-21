@@ -1,5 +1,4 @@
 import React from 'react';
-import { useNavigate } from 'react-router-dom';
 import styled from 'styled-components';
 
 const FooterContainer = styled.div`
@@ -17,13 +16,12 @@ const FooterContainer = styled.div`
 
 const LinkContainer = styled.div`
     padding-bottom: 5px;    
-
+    
     &:hover {
     transform: scale(1.1);
     border-top: 2px solid black;
     }
 `;
-
 
 const Link = styled.a`
     width: 120px;

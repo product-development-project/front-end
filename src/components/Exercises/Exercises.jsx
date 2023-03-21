@@ -32,7 +32,7 @@ export default function Exercises() {
   return (
     <>
       <TopBar
-        title='Programming competition website'
+        title='workIT'
         backButtonDisabled={true}
       >
         <Button

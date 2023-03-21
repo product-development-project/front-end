@@ -10,7 +10,7 @@ export default function Profile() {
     return (
         <>
             <TopBar
-                title='Programming competition website'
+                title='workIT'
                 backButtonDisabled={true}
             >
                 <Button
