@@ -9,7 +9,7 @@ import { Button } from './UI/Button';
 import VideoPlayer from "react-background-video-player";
 import Video from './Media/Videos/homeBackground.mp4'
 
-export default function Homev2() {
+export default function Home() {
     const navigate = useNavigate();
     const section1Ref = useRef(null);
     const section2Ref = useRef(null);
