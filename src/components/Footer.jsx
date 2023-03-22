@@ -2,7 +2,6 @@ import React from 'react';
 import styled from 'styled-components';
 
 const FooterContainer = styled.div`
-  background-color: green;
   height: 50px;
   display: flex;
   justify-content: space-between;
@@ -19,7 +18,8 @@ const LinkContainer = styled.div`
     
     &:hover {
     transform: scale(1.1);
-    border-top: 2px solid black;
+    border-top: 3px solid #ffffff;
+    
     }
 `;
 
@@ -28,15 +28,15 @@ const Link = styled.a`
     padding-bottom: 5px;
     transition: all 0.2s ease-in-out;
     font-size: 18px;
+    color: white;
 
     &:hover {
-    transform: scale(1.1);
-    border-top: 2px solid black;
-    margin-left: 10px;
-    margin-right: 10px;
-    color: yellow;
-    cursor: pointer;
-    font-size: 20px;
+      transform: scale(1.1);
+
+      margin-left: 10px;
+      margin-right: 10px;
+      cursor: pointer;
+      font-size: 20px;
     }
 `;
 
@@ -50,7 +50,7 @@ export default function Footer(props) {
   };
 
   return (
-    <FooterContainer>
+    <FooterContainer style={{background: 'rgb(25,57,118)', background: 'linear-gradient(112deg, rgba(25,57,118,1) 0%, rgba(56,84,137,1) 99%)', borderTop:'4px solid white'}}>
       <div style={{ display: 'flex', justifyContent: 'space-evenly', width: '100%' }}>
         <LinkContainer>
           <Link onClick={(event) => scrollToSection(props.sectionRefs[0], event)}>
