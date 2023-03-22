@@ -1,13 +1,13 @@
 import React, { useState } from "react";
 import { Form, FormInput } from './UI/Form';
 import { useNavigate } from 'react-router-dom'
-import TopBar from "./TopBar";
+import TopBar from './TopBar';
 import axios from 'axios'
 
 export default function Register() {
     const navigate = useNavigate()
     const [user, setUser] = useState(null);
-    const [errorMessage, setErrorMessage] = useState("");
+    const [errorMessage, setErrorMessage] = useState('');
 
     const handleChange = (e) => {
         setUser({
@@ -27,21 +27,32 @@ export default function Register() {
             password: user.password,
         }
 
-        const URL = `http://localhost:5163/api/register`;
-
         axios
-            .post(URL, request, { headers: { 'Content-Type': 'application/json' }})
+            .post(`http://localhost:5163/api/register`, request, { headers: { 'Content-Type': 'application/json' }})
             .then(() => {
                 navigate('/login');
             })
             .catch(error => {
-                setErrorMessage(error.response.data);
+                if (error.response) {
+                    console.log(user);
+                    console.log(request);
+                    console.warn(error.response.data);
+                    setErrorMessage(error.response.data);
+                } else if (error.request) {
+                    console.warn('Request failed:', error.request);
+                    setErrorMessage('Request failed');
+                } else {
+                    console.warn('Error:', error.message);
+                    setErrorMessage(error.message);
+                }
             })
     }
 
     return (
         <>
-            <TopBar title='Register' />
+            <TopBar title='workIT'
+            backButtonDisabled={true}
+            />
             <Form
                 title='Register'
                 submitButtonTitle='Register'
@@ -86,7 +97,7 @@ export default function Register() {
                     label='Username'
                     placeholder='Username'
                     name='username'
-                    value={user && user.username}
+                    value={user?.username}
                     errorMessage={user?.username?.length > 0 ? 'Username must be between 5-20 characters and cannot contain _ and . caracters in front or end' : 'Field is required'}
                     required={true}
                     pattern='^(?=[a-zA-Z0-9._]{5,20}$)(?!.*[_.]{2})[^_.].*[^_.]$'

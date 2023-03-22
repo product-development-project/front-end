@@ -8,10 +8,10 @@ import Profile from './components/Profile/Profile';
 import Help from './components/Help';
 import FAQ from './components/FAQ';
 import Contacts from './components/Contacts';
-import JobAds from "./components/JobAds/JobAdsListPage";
-import { FileUploader } from "./components/FileUploader";
-import Leaderboard from "./components/Leaderboard/Leaderboard";
-import Exercises from "./components/Exercises/Exercises";
+import JobAds from './components/JobAds/JobAdsListPage';
+import { FileUploader } from './components/FileUploader';
+import Leaderboard from './components/Leaderboard/Leaderboard';
+import Exercises from './components/Exercises/Exercises';
 
 function App() {
   return (
@@ -19,11 +19,13 @@ function App() {
       <Routes>
         <Route path="/">
           <Route index element={
-            <Homev2 />
+            <Home />
           } />
           <Route path="login" element={<LogIn />} />
           <Route path="register" element={<Register />} />
           <Route path="home" element={<Homev2 />} />
+
+          <Route path="profile" element={<Profile />} />
 
           <Route path="leaderboard" element={<Leaderboard />} />
 
@@ -35,7 +37,6 @@ function App() {
           <Route path="faq" element={<FAQ />} />
           <Route path="contacts" element={<Contacts />} />
           <Route path="help" element={<Help />} />
-          <Route path="profile" element={<Profile />} />
         </Route>
       </Routes>
     </Router>

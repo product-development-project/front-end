@@ -1,6 +1,14 @@
 import React from 'react'
-import { useNavigate } from "react-router-dom";
-import { Button } from "./UI/Button";
+import { Route, useNavigate } from 'react-router-dom';
+import { Button } from './UI/Button';
+import Logo from './Media/Photos/LogoTop.png'
+import styled from 'styled-components';
+
+const LogoContainer = styled.div`    
+    &:hover {
+    cursor: pointer;   
+    }
+`;
 
 export default function TopBar(props) {
     const navigate = useNavigate();
@@ -8,21 +16,27 @@ export default function TopBar(props) {
     return (
         <div
             style={{
-                backgroundColor: "green",
-                height: "50px",
+                background: 'rgb(23,55,117)',
+                background: 'linear-gradient(59deg, rgba(23,55,117,1) 0%, rgba(75,100,148,1) 100%)',
+                height: "60px",
                 display: "flex",
                 justifyContent: "space-between",
-                marginBottom: '20px'
+                marginBottom: '20px',
+                position: 'relative',
+                zIndex: '2',
+                borderBottom: '4px solid white'      
             }}
         >
-            <div
+            <LogoContainer
                 style={{
                     fontSize: '35px',
-                    paddingLeft: '10px'
+                    paddingLeft: '0px'
                 }}
             >
-                <b>{props.title}</b>
-            </div>
+                <btn onClick={() => navigate('/')}>
+                    <img src={Logo} style={{height:'100%', width:'350%', objectFit:'cover'}}></img>
+                </btn>
+            </LogoContainer>
             <div
                 style={{
                     display: 'flex'

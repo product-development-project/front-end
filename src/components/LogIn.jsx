@@ -2,6 +2,8 @@ import React, { useState } from "react";
 import { useNavigate } from 'react-router-dom';
 import TopBar from './TopBar';
 import { Form, FormInput } from "./UI/Form";
+import axios from 'axios'
+import { Buffer } from 'buffer';
 
 export default function LogIn() {
   const [errorMessage, setErrorMessage] = useState('');
@@ -9,17 +11,54 @@ export default function LogIn() {
   const [password, setPassword] = useState('');
 
   const navigate = useNavigate();
+  
+  function decodeJwt(token) {
+    const base64Payload = token.split('.')[1];
+    const payloadBuffer = Buffer.from(base64Payload, 'base64');
+    const payload = JSON.parse(payloadBuffer.toString('utf8'));
+    return payload;
+  }
 
   const handleSave = event => {
     event.preventDefault();
+    let request = JSON.stringify({ username, password });
+  
+    axios.post('http://localhost:5163/api/login', request, { headers: { 'Content-Type': 'application/json' } })
+        .then(response => {
+          let user = JSON.parse(JSON.stringify(response.data));
+          let data = decodeJwt(JSON.stringify(response.data));
+          localStorage.setItem("access-token", user.token);
+          localStorage.setItem("refresh-token", user.refreshToken);
+          localStorage.setItem("username", data[Object.keys(data)[0]]);
+          localStorage.setItem("roles", data[Object.keys(data)[3]]);
+          localStorage.setItem("id", data[Object.keys(data)[2]]);
+          navigate("/home");
+        })
+        .catch(error => {
+          if (error.response) {
+            console.log(username);
+            console.log(request);
+            console.warn(error.response.data);
+            setErrorMessage(error.response.data);
+          } else if (error.request) {
+            console.warn('Request failed:', error.request);
+            setErrorMessage('Request failed');
+          } else {
+            console.warn('Error:', error.message);
+            setErrorMessage(error.message);
+          }
+        });
   };
+
 
   return (
     <>
-      <TopBar title='Programming competition website' />
+      <TopBar title='workIT'
+      backButtonDisabled={true}
+      />
       <Form
-        title='Log In'
-        submitButtonTitle='Log In'
+        title='Login'
+        submitButtonTitle='Login'
         errorMessage={errorMessage}
         onSubmit={handleSave}
       >
