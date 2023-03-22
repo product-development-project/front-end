@@ -6,8 +6,6 @@ import FAQ from './FAQ';
 import Contacts from './Contacts';
 import Help from './Help';
 import { Button } from './UI/Button';
-import VideoPlayer from "react-background-video-player";
-import Video from './Media/Videos/homeBackgroundV2.mp4'
 import Logo from './Media/Photos/Logo.png'
 
 export default function Homev2() {
@@ -60,24 +58,11 @@ export default function Homev2() {
             <main>
                 <div style={{height: '1000px', width:'100%'}}>
                     <img src={Logo} style={{height:'100%', width:'100%', objectFit:'cover', position:'absolute', top:'0', bottom:'0', right:"0", left:"0"}}></img>
-                    {
-                    /* 
-                    <div style={{opacity: 1}}>
-                        <VideoPlayer
-                            className="video"
-                            src={Video}
-                            autoPlay={true}
-                            muted={true}
-                        />
-                    </div> 
-                    */
-                    }
-                    
                     <center>
                         <h1 style={{color:'white', position:'relative', zIndex:'2'}}>Want to get started in IT industry?</h1>
                         <p style={{color:'white',fontSize:'30px', fontWeight:'bold', position:'relative', zIndex:'2'}}>Checkout job ads and compete in the competition for the job position</p>
                     
-                        <div style={{position:'relative', zIndex:'2', marginTop:'600px'}}>
+                        <div style={{position:'relative', zIndex:'2', marginTop:'250px'}}>
                             <Button
                             id="buttonHome"
                             value="Job competition"
