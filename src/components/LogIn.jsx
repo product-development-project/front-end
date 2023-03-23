@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { useNavigate } from 'react-router-dom';
+import { json, useNavigate } from 'react-router-dom';
 import TopBar from './TopBar';
 import { Form, FormInput } from "./UI/Form";
 import axios from 'axios'
@@ -25,13 +25,12 @@ export default function LogIn() {
   
     axios.post('http://localhost:5163/api/login', request, { headers: { 'Content-Type': 'application/json' } })
         .then(response => {
-          let user = JSON.parse(JSON.stringify(response.data));
+          let user = JSON.parse(JSON.stringify(response.data))
           let data = decodeJwt(JSON.stringify(response.data));
-          localStorage.setItem("access-token", user.token);
-          localStorage.setItem("refresh-token", user.refreshToken);
-          localStorage.setItem("username", data[Object.keys(data)[0]]);
-          localStorage.setItem("roles", data[Object.keys(data)[3]]);
-          localStorage.setItem("id", data[Object.keys(data)[2]]);
+          localStorage.setItem('access-token', JSON.stringify(user.accessToken));
+          localStorage.setItem('username', data[Object.keys(data)[0]]);
+          localStorage.setItem('roles', data[Object.keys(data)[3]]);
+          localStorage.setItem('id', data[Object.keys(data)[2]]);
           navigate("/home");
         })
         .catch(error => {
@@ -49,7 +48,6 @@ export default function LogIn() {
           }
         });
   };
-
 
   return (
     <>

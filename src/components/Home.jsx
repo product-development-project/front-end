@@ -25,7 +25,7 @@ export default function Home() {
                 <Button
                     value="Job ads"
                     name="job-ads-button"
-                    onClick={() => navigate('/job/ads')}
+                    onClick={() => navigate('job/ads')}
                     style={{
                         marginTop: '15px'
                     }}

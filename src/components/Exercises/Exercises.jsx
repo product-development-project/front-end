@@ -38,7 +38,7 @@ export default function Exercises() {
         <Button
           value="Profile"
           name="profile-button"
-          onClick={() => navigate('/profile')}
+          onClick={() => navigate('/home/profile')}
           style={{
             marginTop: '15px'
           }}
@@ -46,7 +46,7 @@ export default function Exercises() {
         <Button
           value="Leaderboard"
           name="leaderboard-button"
-          onClick={() => navigate('/leaderboard')}
+          onClick={() => navigate('/home/leaderboard')}
           style={{
             marginTop: '15px'
           }}
@@ -54,7 +54,7 @@ export default function Exercises() {
         <Button
           value="Exercise"
           name="exercise-button"
-          onClick={() => navigate('/exercises')}
+          onClick={() => navigate('/home/exercises')}
           style={{
             marginTop: '15px'
           }}
@@ -62,7 +62,7 @@ export default function Exercises() {
         <Button
           value="Job competition"
           name="job-competition-button"
-          onClick={() => navigate('/job/ads')}
+          onClick={() => navigate('/home/job/ads')}
           style={{
             marginTop: '15px'
           }}

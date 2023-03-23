@@ -1,5 +1,5 @@
 import React from 'react'
-import { Route, useNavigate } from 'react-router-dom';
+import { useNavigate } from 'react-router-dom';
 import { Button } from './UI/Button';
 import Logo from './Media/Photos/LogoTop.png'
 import styled from 'styled-components';
@@ -16,7 +16,6 @@ export default function TopBar(props) {
     return (
         <div
             style={{
-                background: 'rgb(23,55,117)',
                 background: 'linear-gradient(59deg, rgba(23,55,117,1) 0%, rgba(75,100,148,1) 100%)',
                 height: "60px",
                 display: "flex",
@@ -33,7 +32,13 @@ export default function TopBar(props) {
                     paddingLeft: '0px'
                 }}
             >
-                <btn onClick={() => navigate('/')}>
+                <btn onClick={() => {
+                    if (!localStorage.getItem('access-token')) {
+                        navigate('/');
+                    } else {
+                        navigate('/home');
+                    }
+                    }}>
                     <img src={Logo} style={{height:'100%', width:'350%', objectFit:'cover'}}></img>
                 </btn>
             </LogoContainer>
