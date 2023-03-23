@@ -12,12 +12,16 @@ import { CgProfile } from 'react-icons/cg';
 import { IconContext } from 'react-icons';
 import { Popup } from '../UI/Popup';
 import ProfileForm from './ProfileForm';
-import axios from 'axios'
+import axios from 'axios';
+import Logo from '../Media/Photos/Logo.png';
+
   
 const useStyles = makeStyles({
     root: {
         width: '800px',
-        height: '380px'
+        height: '380px',
+        position:'relative',
+        zIndex:'2'
     },
     bullet: {
         display: 'inline-block',
@@ -42,8 +46,6 @@ export default function Profile() {
     const classes = useStyles();
 
     useEffect(() => {
-        setUsername(localStorage.getItem('username'))
-        console.log(username)
         if (!localStorage.getItem('access-token')) {
             navigate('/');
         }
@@ -57,24 +59,24 @@ export default function Profile() {
         setDeletePopupIsOpen(!deletePopupIsOpen);
     };
 
-    axios.defaults.headers.common['Authorization'] = "Bearer " + localStorage.getItem("access-token");
-    axios.get(`http://localhost:5163/api/User/${username}`, { headers: { 'Content-Type': 'application/json', 'Access-Control-Allow-Origin': '*'} })
-    .then(response => {
-      localStorage.setItem('user', JSON.stringify(response))
-    }
-    ).catch(error => {
-      if (error.response) {
-        console.log(username);
-        console.warn(error.response.data);
-        setErrorMessage(error.response.data);
-      } else if (error.request) {
-        console.warn('Request failed:', error.request);
-        setErrorMessage('Request failed');
-      } else {
-        console.warn('Error:', error.message);
-        setErrorMessage(error.message);
-      }
-    });
+    // axios.defaults.headers.common['Authorization'] = "Bearer " + localStorage.getItem("access-token");
+    // axios.get(`http://localhost:5163/api/User/${username}`, { headers: { 'Content-Type': 'application/json', 'Access-Control-Allow-Origin': '*'} })
+    // .then(response => {
+    //   localStorage.setItem('user', JSON.stringify(response))
+    // }
+    // ).catch(error => {
+    //   if (error.response) {
+    //     console.log(username);
+    //     console.warn(error.response.data);
+    //     setErrorMessage(error.response.data);
+    //   } else if (error.request) {
+    //     console.warn('Request failed:', error.request);
+    //     setErrorMessage('Request failed');
+    //   } else {
+    //     console.warn('Error:', error.message);
+    //     setErrorMessage(error.message);
+    //   }
+    // });
 
     return (
         <>
@@ -115,12 +117,14 @@ export default function Profile() {
                     }}
                 />
             </TopBar>
-
+                        
             <center>
+                <img src={Logo} style={{height:'100%', width:'100%', objectFit:'cover', position:'absolute', top:'0', bottom:'0', right:"0", left:"0"}}></img>
+
                 <Card className={classes.root}>
                     <CardContent>
                         <Typography variant="h6" component="h2" style={{marginBottom: '10px'}}>
-                            Hello {user.name} {user.surname}
+                            Hello, Marijus
                         </Typography>     
                         <div style={{float: 'left'}}>
                             <Card style={{width: '250px'}}>
@@ -129,13 +133,13 @@ export default function Profile() {
                                         <IconContext.Provider value={{ size: '1.2em', style: { verticalAlign: 'middle' }}}>
                                             <CgProfile />
                                         </IconContext.Provider>
-                                        {user.username}
+                                        petka77
                                     </Typography>
                                     <Typography className={classes.pos} color="initial">
                                         <IconContext.Provider value={{ size: '1.2em', style: { verticalAlign: 'middle' }}}>
                                             <CiMail />
                                         </IconContext.Provider>
-                                        {user.email}
+                                        test@gmail.com
                                     </Typography>
                                     <Typography className={classes.pos} color="initial">
                                         <IconContext.Provider value={{ size: '1.2em'}}>
@@ -172,7 +176,7 @@ export default function Profile() {
                         </div>
                     </CardContent>
                 </Card>
-                <div style={{marginRight: '10px', width: '800px'}}>
+                <div style={{marginRight: '10px', width: '800px', position:'relative', zIndex:'2'}}>
                     <Button
                     value="Edit information"
                     name="profile-edit-button"

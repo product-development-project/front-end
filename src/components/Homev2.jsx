@@ -71,7 +71,7 @@ export default function Homev2() {
                     <img src={Logo} style={{height:'100%', width:'100%', objectFit:'cover', position:'absolute', top:'0', bottom:'0', right:"0", left:"0"}}></img>
                     <center>
                         <h1 style={{color:'white', position:'relative', zIndex:'2'}}>Want to get started in IT industry?</h1>
-                        <p style={{color:'white',fontSize:'30px', fontWeight:'bold', position:'relative', zIndex:'2'}}>Checkout job ads and compete in the competition for the job position</p>
+                        <p style={{color:'white',fontSize:'30px', fontWeight:'bold', position:'relative', zIndex:'2'}}>Check out job ads and compete in the competition for the job position</p>
                     
                         <div style={{position:'relative', zIndex:'2', marginTop:'250px'}}>
                             <Button
