@@ -12,6 +12,7 @@ import { CgProfile } from 'react-icons/cg';
 import { IconContext } from 'react-icons';
 import { Popup } from '../UI/Popup';
 import ProfileForm from './ProfileForm';
+import axios from 'axios'
   
 const useStyles = makeStyles({
     root: {
@@ -33,7 +34,8 @@ const useStyles = makeStyles({
 
 export default function Profile() {
     const [editPopupIsOpen, setEditPopupIsOpen] = useState(false);
-    const [client, setClient] = useState(null);
+    const [deletePopupIsOpen, setDeletePopupIsOpen] = useState(false);
+    const [username, setUsername] = useState(null);
     const navigate = useNavigate();
     const classes = useStyles();
 
@@ -41,14 +43,16 @@ export default function Profile() {
         setEditPopupIsOpen(!editPopupIsOpen);
     };
 
-    const handlePopupClose = () => {
-        setEditPopupIsOpen(false);
+    const toggleDeletePopup = (username = null) => {
+        setUsername(localStorage.getItem('username'));
+        setDeletePopupIsOpen(!deletePopupIsOpen);
     };
 
     useEffect(() => {
         if (!localStorage.getItem('access-token')) {
             navigate('/');
         }
+        setUsername()
 
     }, [navigate]);
 
@@ -96,7 +100,7 @@ export default function Profile() {
                 <Card className={classes.root}>
                     <CardContent>
                         <Typography variant="h6" component="h2" style={{marginBottom: '10px'}}>
-                            Hello name surname {client?.name} {client?.surname}
+                            Hello name surname
                         </Typography>     
                         <div style={{float: 'left'}}>
                             <Card style={{width: '250px'}}>
@@ -117,7 +121,7 @@ export default function Profile() {
                                         <IconContext.Provider value={{ size: '1.2em'}}>
                                         <CiPhone/>
                                         </IconContext.Provider>
-                                        8686868686 {client?.phoneNumber}
+                                        8686868686
                                     </Typography>
                                 </CardContent>
                             </Card>
@@ -148,13 +152,23 @@ export default function Profile() {
                         </div>
                     </CardContent>
                 </Card>
-                <div style={{float: 'right', width: '900px'}}>
+                <div style={{marginRight: '10px', width: '800px'}}>
                     <Button
                     value="Edit information"
                     name="profile-edit-button"
                     onClick={() => toggleEditPopup()}
                     style={{
-                        marginTop: '10px'
+                        marginTop: '10px',
+                        float: 'right'
+                    }}
+                    />
+                    <Button
+                    value="Delete profile"
+                    name="profile-delete-button"
+                    onClick={() => toggleDeletePopup()}
+                    style={{
+                        marginTop: '10px',
+                        float: 'right'
                     }}
                     />
                 </div>
@@ -168,6 +182,40 @@ export default function Profile() {
                             onClose={() => setEditPopupIsOpen(false)}
                         />
                     }
+                    buttons={[
+                        {
+                            name: "Cancel",
+                            onClick: toggleEditPopup
+                        },
+                    ]}
+                />
+            }
+
+            {deletePopupIsOpen &&
+                <Popup
+                    content={<div>Are you sure you want to delete your profile?</div>}
+                    buttons={[
+                        {
+                        name: "Confirm",
+                        onClick: () => {
+                            axios
+                                .delete(`http://localhost:5163/api/profile/delete/${username}`, { headers: { 'Content-Type': 'application/json' },  })
+                                .then(() => {
+                                    console.log(`User with username: ${username} deleted`);
+                                    localStorage.clear();
+                                    navigate("/");
+                                })
+                                .catch(error => {
+                                    console.log(error);
+                                })
+                            toggleDeletePopup();
+                        }
+                        },
+                        {
+                        name: "Cancel",
+                        onClick: toggleDeletePopup
+                        },
+                    ]}
                 />
             }
 

@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { useNavigate } from 'react-router-dom';
+import { json, useNavigate } from 'react-router-dom';
 import TopBar from './TopBar';
 import { Form, FormInput } from "./UI/Form";
 import axios from 'axios'
@@ -27,7 +27,6 @@ export default function LogIn() {
         .then(response => {
           let data = decodeJwt(JSON.stringify(response.data));
           localStorage.setItem('access-token', JSON.stringify(response.data.accessToken));
-          //localStorage.setItem('refresh-token', response);
           localStorage.setItem('username', data[Object.keys(data)[0]]);
           localStorage.setItem('roles', data[Object.keys(data)[3]]);
           localStorage.setItem('id', data[Object.keys(data)[2]]);
@@ -47,8 +46,26 @@ export default function LogIn() {
             setErrorMessage(error.message);
           }
         });
-  };
 
+        axios.defaults.headers.common['Authorization'] = "Bearer " + localStorage.getItem("access-token");
+        axios.get(`http://localhost:5163/api/User/${username}`, { headers: { 'Content-Type': 'application/json', 'Access-Control-Allow-Origin': '*'} })
+        .then(response => {
+          localStorage.setItem('user', JSON.stringify(response))
+        }
+        ).catch(error => {
+          if (error.response) {
+            console.log(username);
+            console.warn(error.response.data);
+            setErrorMessage(error.response.data);
+          } else if (error.request) {
+            console.warn('Request failed:', error.request);
+            setErrorMessage('Request failed');
+          } else {
+            console.warn('Error:', error.message);
+            setErrorMessage(error.message);
+          }
+        });
+  };
 
   return (
     <>
