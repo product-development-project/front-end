@@ -33,28 +33,48 @@ const useStyles = makeStyles({
 });
 
 export default function Profile() {
+    const [errorMessage, setErrorMessage] = useState('');
     const [editPopupIsOpen, setEditPopupIsOpen] = useState(false);
+    const [user, setUser] = useState(null);
     const [deletePopupIsOpen, setDeletePopupIsOpen] = useState(false);
     const [username, setUsername] = useState(null);
     const navigate = useNavigate();
     const classes = useStyles();
+
+    useEffect(() => {
+        setUsername(localStorage.getItem('username'))
+        console.log(username)
+        if (!localStorage.getItem('access-token')) {
+            navigate('/');
+        }
+    }, [navigate]);
 
     const toggleEditPopup = () => {
         setEditPopupIsOpen(!editPopupIsOpen);
     };
 
     const toggleDeletePopup = (username = null) => {
-        setUsername(localStorage.getItem('username'));
         setDeletePopupIsOpen(!deletePopupIsOpen);
     };
 
-    useEffect(() => {
-        if (!localStorage.getItem('access-token')) {
-            navigate('/');
-        }
-        setUsername()
-
-    }, [navigate]);
+    axios.defaults.headers.common['Authorization'] = "Bearer " + localStorage.getItem("access-token");
+    axios.get(`http://localhost:5163/api/User/${username}`, { headers: { 'Content-Type': 'application/json', 'Access-Control-Allow-Origin': '*'} })
+    .then(response => {
+      localStorage.setItem('user', JSON.stringify(response))
+    }
+    ).catch(error => {
+      if (error.response) {
+        console.log(username);
+        console.warn(error.response.data);
+        setErrorMessage(error.response.data);
+      } else if (error.request) {
+        console.warn('Request failed:', error.request);
+        setErrorMessage('Request failed');
+      } else {
+        console.warn('Error:', error.message);
+        setErrorMessage(error.message);
+      }
+    });
 
     return (
         <>
@@ -100,7 +120,7 @@ export default function Profile() {
                 <Card className={classes.root}>
                     <CardContent>
                         <Typography variant="h6" component="h2" style={{marginBottom: '10px'}}>
-                            Hello name surname
+                            Hello {user.name} {user.surname}
                         </Typography>     
                         <div style={{float: 'left'}}>
                             <Card style={{width: '250px'}}>
@@ -109,13 +129,13 @@ export default function Profile() {
                                         <IconContext.Provider value={{ size: '1.2em', style: { verticalAlign: 'middle' }}}>
                                             <CgProfile />
                                         </IconContext.Provider>
-                                        username
+                                        {user.username}
                                     </Typography>
                                     <Typography className={classes.pos} color="initial">
                                         <IconContext.Provider value={{ size: '1.2em', style: { verticalAlign: 'middle' }}}>
                                             <CiMail />
                                         </IconContext.Provider>
-                                        test@gmail.com
+                                        {user.email}
                                     </Typography>
                                     <Typography className={classes.pos} color="initial">
                                         <IconContext.Provider value={{ size: '1.2em'}}>

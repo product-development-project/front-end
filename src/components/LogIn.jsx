@@ -25,8 +25,9 @@ export default function LogIn() {
   
     axios.post('http://localhost:5163/api/login', request, { headers: { 'Content-Type': 'application/json' } })
         .then(response => {
+          let user = JSON.parse(JSON.stringify(response.data))
           let data = decodeJwt(JSON.stringify(response.data));
-          localStorage.setItem('access-token', JSON.stringify(response.data.accessToken));
+          localStorage.setItem('access-token', JSON.stringify(user.accessToken));
           localStorage.setItem('username', data[Object.keys(data)[0]]);
           localStorage.setItem('roles', data[Object.keys(data)[3]]);
           localStorage.setItem('id', data[Object.keys(data)[2]]);
@@ -36,25 +37,6 @@ export default function LogIn() {
           if (error.response) {
             console.log(username);
             console.log(request);
-            console.warn(error.response.data);
-            setErrorMessage(error.response.data);
-          } else if (error.request) {
-            console.warn('Request failed:', error.request);
-            setErrorMessage('Request failed');
-          } else {
-            console.warn('Error:', error.message);
-            setErrorMessage(error.message);
-          }
-        });
-
-        axios.defaults.headers.common['Authorization'] = "Bearer " + localStorage.getItem("access-token");
-        axios.get(`http://localhost:5163/api/User/${username}`, { headers: { 'Content-Type': 'application/json', 'Access-Control-Allow-Origin': '*'} })
-        .then(response => {
-          localStorage.setItem('user', JSON.stringify(response))
-        }
-        ).catch(error => {
-          if (error.response) {
-            console.log(username);
             console.warn(error.response.data);
             setErrorMessage(error.response.data);
           } else if (error.request) {
