@@ -25,13 +25,12 @@ export default function LogIn() {
   
     axios.post('http://localhost:5163/api/login', request, { headers: { 'Content-Type': 'application/json' } })
         .then(response => {
-          let user = JSON.parse(JSON.stringify(response.data));
           let data = decodeJwt(JSON.stringify(response.data));
-          localStorage.setItem("access-token", user.token);
-          localStorage.setItem("refresh-token", user.refreshToken);
-          localStorage.setItem("username", data[Object.keys(data)[0]]);
-          localStorage.setItem("roles", data[Object.keys(data)[3]]);
-          localStorage.setItem("id", data[Object.keys(data)[2]]);
+          localStorage.setItem('access-token', JSON.stringify(response.data.accessToken));
+          //localStorage.setItem('refresh-token', response);
+          localStorage.setItem('username', data[Object.keys(data)[0]]);
+          localStorage.setItem('roles', data[Object.keys(data)[3]]);
+          localStorage.setItem('id', data[Object.keys(data)[2]]);
           navigate("/home");
         })
         .catch(error => {

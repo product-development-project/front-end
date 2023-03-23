@@ -16,7 +16,7 @@ export default function JobAds() {
                 <Button
                     value="Upload Job Advertisement"
                     name="job-ad-button"
-                    onClick={() => navigate('/job/ads/upload')}
+                    onClick={() => navigate('/home/job/ads/upload')}
                     style={{
                         marginTop: '15px'
                     }}
