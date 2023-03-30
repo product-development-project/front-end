@@ -47,7 +47,9 @@ export default function Profile() {
     const classes = useStyles();
     const [data, setData] = useState([]);
     let username = localStorage.getItem('username')
-    axios.defaults.headers.common['Authorization'] = "Bearer " + localStorage.getItem("access-token");
+    const tokenWithQuotes = localStorage.getItem('access-token');
+    const token = tokenWithQuotes.substring(1, tokenWithQuotes.length - 1);
+    axios.defaults.headers.common['Authorization'] = `Bearer ${token}`;
     useEffect(() => {
         if (!localStorage.getItem('access-token')) {
             navigate('/');
@@ -57,7 +59,7 @@ export default function Profile() {
     
     async function fetchUserInfo(username)
     {
-        let result = await axios.get(`http://localhost:5163/api/User/${username}`)
+        let result = await axios.get(`http://localhost:5163/api/User/${username}`, { headers: { 'Content-Type': 'application/json'}})
         setData(JSON.parse(JSON.stringify(result.data)));
     }
 
@@ -68,6 +70,7 @@ export default function Profile() {
     const toggleDeletePopup = (username = null) => {
         setDeletePopupIsOpen(!deletePopupIsOpen);
     };
+
 
 
     return (
