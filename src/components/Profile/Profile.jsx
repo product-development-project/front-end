@@ -14,6 +14,7 @@ import { Popup } from '../UI/Popup';
 import ProfileForm from './ProfileForm';
 import axios from 'axios';
 import Logo from '../Media/Photos/Logo.png';
+import { useParams } from 'react-router';
 
   
 const useStyles = makeStyles({
@@ -41,15 +42,24 @@ export default function Profile() {
     const [editPopupIsOpen, setEditPopupIsOpen] = useState(false);
     const [user, setUser] = useState(null);
     const [deletePopupIsOpen, setDeletePopupIsOpen] = useState(false);
-    const [username, setUsername] = useState(null);
+    //const [username, setUsername] = useState(null);
     const navigate = useNavigate();
     const classes = useStyles();
-
+    const [data, setData] = useState([]);
+    let username = localStorage.getItem('username')
+    axios.defaults.headers.common['Authorization'] = "Bearer " + localStorage.getItem("access-token");
     useEffect(() => {
         if (!localStorage.getItem('access-token')) {
             navigate('/');
         }
-    }, [navigate]);
+        fetchUserInfo(username)
+    }, [navigate, username]);
+    
+    async function fetchUserInfo(username)
+    {
+        let result = await axios.get(`http://localhost:5163/api/User/${username}`)
+        setData(JSON.parse(JSON.stringify(result.data)));
+    }
 
     const toggleEditPopup = () => {
         setEditPopupIsOpen(!editPopupIsOpen);
@@ -59,24 +69,6 @@ export default function Profile() {
         setDeletePopupIsOpen(!deletePopupIsOpen);
     };
 
-    // axios.defaults.headers.common['Authorization'] = "Bearer " + localStorage.getItem("access-token");
-    // axios.get(`http://localhost:5163/api/User/${username}`, { headers: { 'Content-Type': 'application/json', 'Access-Control-Allow-Origin': '*'} })
-    // .then(response => {
-    //   localStorage.setItem('user', JSON.stringify(response))
-    // }
-    // ).catch(error => {
-    //   if (error.response) {
-    //     console.log(username);
-    //     console.warn(error.response.data);
-    //     setErrorMessage(error.response.data);
-    //   } else if (error.request) {
-    //     console.warn('Request failed:', error.request);
-    //     setErrorMessage('Request failed');
-    //   } else {
-    //     console.warn('Error:', error.message);
-    //     setErrorMessage(error.message);
-    //   }
-    // });
 
     return (
         <>
@@ -124,7 +116,7 @@ export default function Profile() {
                 <Card className={classes.root}>
                     <CardContent>
                         <Typography variant="h6" component="h2" style={{marginBottom: '10px'}}>
-                            Hello, Marijus
+                            Hello, {data.name}
                         </Typography>     
                         <div style={{float: 'left'}}>
                             <Card style={{width: '250px'}}>
@@ -133,19 +125,19 @@ export default function Profile() {
                                         <IconContext.Provider value={{ size: '1.2em', style: { verticalAlign: 'middle' }}}>
                                             <CgProfile />
                                         </IconContext.Provider>
-                                        petka77
+                                        {data.name}
                                     </Typography>
                                     <Typography className={classes.pos} color="initial">
                                         <IconContext.Provider value={{ size: '1.2em', style: { verticalAlign: 'middle' }}}>
                                             <CiMail />
                                         </IconContext.Provider>
-                                        test@gmail.com
+                                        {data.email}
                                     </Typography>
                                     <Typography className={classes.pos} color="initial">
                                         <IconContext.Provider value={{ size: '1.2em'}}>
                                         <CiPhone/>
                                         </IconContext.Provider>
-                                        8686868686
+                                        {data.phonenumber}
                                     </Typography>
                                 </CardContent>
                             </Card>
@@ -223,7 +215,7 @@ export default function Profile() {
                         name: "Confirm",
                         onClick: () => {
                             axios
-                                .delete(`http://localhost:5163/api/profile/delete/${username}`, { headers: { 'Content-Type': 'application/json' },  })
+                                .delete(`http://localhost:5163/api/User/${username}`, { headers: { 'Content-Type': 'application/json' },  })
                                 .then(() => {
                                     console.log(`User with username: ${username} deleted`);
                                     localStorage.clear();
