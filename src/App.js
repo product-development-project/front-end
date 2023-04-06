@@ -2,8 +2,8 @@ import React from 'react';
 import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
 import LogIn from './components/LogIn';
 import Register from './components/Register';
-import Home from './components/Home'
-import Homev2 from './components/Homev2'
+import Home from './components/Home';
+import Homev2 from './components/Homev2';
 import Profile from './components/Profile/Profile';
 import Help from './components/Help';
 import FAQ from './components/FAQ';
@@ -43,7 +43,7 @@ function App() {
         </Route>
       </Routes>
     </Router>
-  )
+  );
 };
 
 export default App;
