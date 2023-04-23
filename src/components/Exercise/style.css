@@ -1,0 +1,74 @@
+.monaco-editor .monaco-scrollable-element .view-lines span {
+    display: inline !important;
+    font-size: 9.1px;
+    padding: 0%;
+    transform: scale(2);
+  }
+  
+.monaco-list-row .monaco-highlighted-label {
+    color: black !important;
+  }
+.monaco-list {
+    font-size: 9.1px;
+  }
+
+
+
+.monaco-editor {
+    line-height: 1.5;
+  }
+/* Split the screen in half */
+.split {
+    height: 100%;
+    width: 30%;
+    position: fixed;
+    z-index: 1;
+    top: 0;
+    overflow-x: hidden;
+  } 
+  
+  /* Control the left side */
+  .left {
+    left: 0;
+    border-right: #111;
+    border-right-style: solid;
+    border-width: 0.5em;
+  }
+  
+  /* Control the right side */
+  .right {
+    left: 30%;
+    width: 100%;
+    border-left: #111;
+  }
+  
+  /* If you want the content centered horizontally and vertically */
+  .centered {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    text-align: center;
+  }
+
+
+.codeField {
+    color: darkblue;
+    width: 100%;
+    display: block;
+    height: 15em;
+    /* transform: scale(2);
+    transform-origin: top left; */
+    padding-left: 0.2em;
+    /*zoom: 3;*/
+
+    
+  }
+.submitButtonDiv{
+    height: 5%;
+    width: 50%;
+    padding-top: 1em;
+    padding-left: 2%;
+    position: relative;
+    background-color: transparent;
+}
