@@ -50,12 +50,12 @@ export default function Exercise() {
   };
 
 
-
   return (
     <>
       <div className='Page'>
         <div className="split left">
           <div className="exercise">
+
           </div>
         </div>
 
@@ -84,6 +84,7 @@ export default function Exercise() {
                   onClick={() => submitCode()}  
                   
               />       
+
             </div>
         </div>
         

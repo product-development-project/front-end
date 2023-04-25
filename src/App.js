@@ -12,6 +12,7 @@ import JobAds from './components/JobAds/JobAdsListPage';
 import { FileUploader } from './components/FileUploader';
 import Leaderboard from './components/Leaderboard/Leaderboard';
 import Exercises from './components/Exercises/Exercises';
+import Task from './components/Exercise/Exercise';
 import ProfileForm from './components/Profile/ProfileForm';
 
 function App() {
@@ -32,6 +33,7 @@ function App() {
           <Route path="home/leaderboard" element={<Leaderboard />} />
 
           <Route path="home/exercises" element={<Exercises />} />
+          <Route path="home/task/:id" element={<Task />} />
 
           <Route path="job/ads" element={<JobAds />} />
           <Route path="home/job/ads" element={<JobAds />} />
