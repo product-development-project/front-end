@@ -39,7 +39,7 @@ export default function TopBar(props) {
                         navigate('/home');
                     }
                     }}>
-                    <img src={Logo} style={{height:'100%', width:'350%', objectFit:'cover'}}></img>
+                    <img src={Logo} alt='img' style={{height:'100%', width:'350%', objectFit:'cover'}}></img>
                 </btn>
             </LogoContainer>
             <div

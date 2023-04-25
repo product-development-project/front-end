@@ -1,17 +1,20 @@
 import React, { useState, useEffect } from 'react';
 import { Button } from '../UI/Button';
-import Editor from "@monaco-editor/react";
+import CodeMirror from "@uiw/react-codemirror";
 import './style.css';
 
 
 
+
 export default function Exercise() {
-  const [code, setCode] = useState('a = 0');
+  const [code, setCode] = useState('const a = 0;' +'\n'.repeat(47));
 
 
   const submitCode = () => {
     console.log(code);
   }
+
+ 
 
   const editorOptions = {
     automaticLayout: true,
@@ -20,38 +23,42 @@ export default function Exercise() {
     quickSuggestionsDelay: 0,
     // Add any other custom editor options here
   };
-  
 
   return (
-    <div className='Page'>
-      <div className="split left">
-        <div className="centered">
+    <>
+      <div className='Page'>
+        <div className="split left">
+          <div className="centered">
 
-          <h1>Exercise</h1>
+            <h1>Exercise</h1>
 
+          </div>
         </div>
-      </div>
 
-      <div className="split right">
-          <div className="codeField" contenteditable="false">
-            <Editor className='monaco-editor'
-              language="javascript"
-              theme="vs-dark"
-              defaultValue="// start coding here"
-              onChange={setCode}
-              options={editorOptions}
-            />
-          </div>
-          <div className="submitButtonDiv">
-            <Button 
-                value="Submit"
-                name="submit-task"
-                onClick={() => submitCode()}
-                
-            />
-          </div>
+        <div className="split right">
+            <div className="codeField">
+              <CodeMirror className='CodeMirror'
+                value={code}
+                maxHeight='55em'
+                minHeight='2em'
+                options={{
+                  mode: 'javascript',
+                  globalVars: true
+                  
+                }}
+              />
+            </div>
+            <div className="submitButtonDiv">
+              <Button 
+                  value="Submit"
+                  name="submit-task"
+                  onClick={() => submitCode()}
+                  
+              />
+            </div>
+        </div>
+        
       </div>
-      
-    </div>
+    </>
   );
 }
