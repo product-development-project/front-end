@@ -1,0 +1,91 @@
+/* .monaco-editor .monaco-scrollable-element .view-lines span {
+    display: inline !important;
+    font-size: 9.1px !important;
+    padding: 0%;
+  }
+  
+.monaco-list-row .monaco-highlighted-label {
+    color: black !important;
+  }
+.monaco-list {
+    font-size: 9.1px !important;
+  } */
+
+  .cm-o-replacement {
+    display: "inline-block";
+    width: ".5em";
+    height: ".5em";
+    border-radius: ".25em";
+}
+
+.CodeMirror {
+  border: 1px solid #eee;
+  height: auto;
+}
+
+/* Split the screen in half */
+.split {
+    height: 100%;
+    width: 40%;
+    position: fixed;
+    z-index: 1;
+    top: 0;
+    overflow-x: hidden;
+  } 
+  
+  /* Control the left side */
+  .left {
+    left: 0;
+    border-right: #111;
+    border-right-style: solid;
+    border-width: 0.5em;
+    width: 39%;
+    background-color: #100c0c;
+  }
+  
+  /* Control the right side */
+  .right {
+    left: 39%;
+    width: 100%;
+    padding-left: 0.30em;
+
+  }
+  
+  /* If you want the content centered horizontally and vertically */
+  .centered {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    text-align: center;
+  }
+
+
+.codeField {
+    color: darkblue;
+    background-color: #111;
+    width: 100%;
+    padding-left: 0.2em;
+
+    
+  }
+.submitButtonDiv{
+    height: 5%;
+    width: 57%;
+    padding-left: 2%;
+    margin-top: 1em;
+    position: relative;
+    background-color: transparent;
+}
+.exercise {
+  max-width: 100%;
+  max-height: 100%;
+
+}
+.exercise > img {
+  object-fit: contain;
+  max-width: 100%;
+  max-height: 100%;
+  width: 100%;
+
+}

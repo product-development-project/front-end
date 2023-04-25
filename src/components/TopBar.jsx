@@ -20,7 +20,6 @@ export default function TopBar(props) {
                 height: "60px",
                 display: "flex",
                 justifyContent: "space-between",
-                marginBottom: '20px',
                 position: 'relative',
                 zIndex: '2',
                 borderBottom: '4px solid white'      
