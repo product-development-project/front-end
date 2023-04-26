@@ -113,9 +113,7 @@ export default function Profile() {
                 />
             </TopBar>
                         
-            <center>
-                <img src={Logo} style={{height:'100%', width:'100%', objectFit:'cover', position:'absolute', top:'0', bottom:'0', right:"0", left:"0"}}></img>
-
+            <center style={{marginTop: '5%'}}>
                 <Card className={classes.root}>
                     <CardContent>
                         <Typography variant="h6" component="h2" style={{marginBottom: '10px'}}>
