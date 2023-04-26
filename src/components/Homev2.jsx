@@ -66,47 +66,75 @@ export default function Homev2() {
                 />
             </TopBar>
             
-            <main>
-                <div style={{height: '1000px', width:'100%'}}>
-                    <img src={Logo} style={{height:'100%', width:'100%', objectFit:'cover', position:'absolute', top:'0', bottom:'0', right:"0", left:"0"}}></img>
-                    <center>
-                        <h1 style={{color:'white', position:'relative', zIndex:'2'}}>Want to get started in IT industry?</h1>
-                        <p style={{color:'white',fontSize:'30px', fontWeight:'bold', position:'relative', zIndex:'2'}}>Check out job ads and compete in the competition for the job position</p>
-                    
-                        <div style={{position:'relative', zIndex:'2', marginTop:'250px'}}>
-                            <Button
-                            id="buttonHome"
-                            value="Job competition"
-                            name="job-competition-button"
-                            onClick={() => navigate('/home/job/ads')}
-                            style={{
-                                marginTop: '15px'
-                            }}
-                            />
-                        </div>
-                    </center>
-                </div>
-                <div style={{height: '1000px'}}>
-                    <section ref={section2Ref}>
-                        <h1>FAQ</h1>
-                        <FAQ></FAQ>
-                    </section>
-                </div>
-                <div style={{height: '1000px'}}>
-                    <section ref={section3Ref}>
-                        <h1>Contacts</h1>
-                        <Contacts></Contacts>
-                    </section>
-                </div>
-                <div style={{height: '1000px'}}>
-                    <section ref={section4Ref}>
-                        <h1>Help</h1>
-                        <Help></Help>
-                    </section>
-                </div>
+        <main style={{ display: 'grid', gridTemplateRows: '2fr 2fr 2fr 2fr' }}>
+            <div style={{ position: 'relative' }}>
+                <img
+                    src={Logo}
+                    style={{
+                    height: '100%',
+                    width: '100%',
+                    objectFit: 'cover',
+                    position: 'absolute',
+                    top: '0',
+                    bottom: '0',
+                    right: '0',
+                    left: '0',
+                    }}
+                    alt="Logo"
+                />
+                <center>
+                    <h1 style={{ color: 'white', position: 'relative', zIndex: '2', marginTop: '0%' }}>
+                    Want to get started in IT industry?
+                    </h1>
+                    <p
+                    style={{
+                        color: 'white',
+                        fontSize: '30px',
+                        fontWeight: 'bold',
+                        position: 'relative',
+                        zIndex: '2',
+                    }}
+                    >
+                    Check out job ads and compete in the competition for the job position
+                    </p>
 
-            </main>
-            <div style={{paddingBottom: '80px'}}></div>
+                    <div
+                    style={{
+                        position: 'relative',
+                        zIndex: 2,
+                        top: '50%',
+                        transform: 'translateY(-50%)',
+                        left: '50%',
+                        transform: 'translateX(-50%)',
+                        marginTop: '20%',
+                        marginBottom: '20%',
+                    }}
+                    >
+                    <Button
+                        id="buttonHome"
+                        value="Job competition"
+                        name="job-competition-button"
+                        onClick={() => navigate('/home/job/ads')}
+                    />
+                </div>
+            </center>
+            </div>
+
+            <section ref={section2Ref} style={{ backgroundColor: 'lightgray' }}>
+            <h1>FAQ</h1>
+            <FAQ></FAQ>
+            </section>
+
+            <section ref={section3Ref} style={{ backgroundColor: 'lightblue' }}>
+            <h1>Contacts</h1>
+            <Contacts></Contacts>
+            </section>
+
+            <section ref={section4Ref} style={{ backgroundColor: 'lightgreen' }}>
+            <h1>Help</h1>
+            <Help></Help>
+            </section>
+        </main>
             <Footer sectionRefs={[section1Ref, section2Ref, section3Ref, section4Ref]} />
         </>
     )
