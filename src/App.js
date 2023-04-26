@@ -14,6 +14,8 @@ import Leaderboard from './components/Leaderboard/Leaderboard';
 import Exercises from './components/Exercises/Exercises';
 import Task from './components/Exercise/Exercise';
 import ProfileForm from './components/Profile/ProfileForm';
+import CompanyFunctions from './components/Company/Functions';
+import ViewAds from './components/Company/ViewAds';
 
 function App() {
   return (
@@ -42,6 +44,9 @@ function App() {
           <Route path="home/faq" element={<FAQ />} />
           <Route path="home/contacts" element={<Contacts />} />
           <Route path="home/help" element={<Help />} />
+
+          <Route path="home/Company" element={<CompanyFunctions />} />
+          <Route path="home/Company/ViewAds" element={<ViewAds/>}/>
         </Route>
       </Routes>
     </Router>
