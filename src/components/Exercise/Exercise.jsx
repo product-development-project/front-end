@@ -2,36 +2,60 @@ import React, { useState, useEffect } from 'react';
 import { Button } from '../UI/Button';
 import CodeMirror from "@uiw/react-codemirror";
 import './style.css';
-
-
+import axios from 'axios';
 
 
 export default function Exercise() {
-  const [code, setCode] = useState('const a = 0;' +'\n'.repeat(47));
+  const [code, setCode] = useState('const a = 0;' +'\n'.repeat(10));
+  const [data, setData] = useState([]);
+  const [responseMessage, setResponse] = useState('');
+  var parts = window.location.href.split("/");
+  var currentTaskId = (parts[parts.length - 1]).toString();
+  const language = "csharp";
 
+  useEffect(() => {
+    axios(`http://localhost:5163/api/Task/${currentTaskId}`)
+      .then(result => {
+        setData(JSON.parse(JSON.stringify(result.data)));
+        const image = new Image();
+        image.src = `data:image/jpeg;base64,${result.data['problem']}`;
+        const imgDiv = document.querySelector('.exercise');
+        if(!imgDiv.hasChildNodes())
+        {
+          imgDiv.appendChild(image);
+        }
+      })
+    }, []);    
 
-  const submitCode = () => {
-    console.log(code);
-  }
+  const submitCode = event => {
+    data['language'] = language;
+    data['code'] = code;
+    delete data['problem'];
+    var request = data;
 
- 
-
-  const editorOptions = {
-    automaticLayout: true,
-    renderLineHighlight: 'none',
-    quickSuggestions: false, // disables autocompletion
-    quickSuggestionsDelay: 0,
-    // Add any other custom editor options here
+    axios.post('http://localhost:5163/api/code/checker', request, { headers: { 'Content-Type': 'application/json' } })
+        .then(response => {
+          console.log(response);
+          setResponse(response);
+        })
+        .catch(error => {
+          if (error.request) {
+            console.warn('Request failed:', error.request);
+            setResponse('Request failed');
+          } else {
+            console.warn('Error:', error.message);
+            setResponse(error.message);
+          }
+        });    
   };
+
+
 
   return (
     <>
       <div className='Page'>
         <div className="split left">
-          <div className="centered">
-
-            <h1>Exercise</h1>
-
+          <div className="exercise">
           </div>
         </div>
 
@@ -44,20 +68,25 @@ export default function Exercise() {
                 options={{
                   mode: 'javascript',
                   globalVars: true
-                  
+
+                }}
+                onChange={(editor, change) => {
+                  setCode(editor.valueOf())
                 }}
               />
             </div>
             <div className="submitButtonDiv">
+            <p style={{paddingLeft: '0.2em'}}>{responseMessage}</p>
               <Button 
+                  style={{width: '100%'}}
                   value="Submit"
                   name="submit-task"
-                  onClick={() => submitCode()}
-                  
-              />
+                  onClick={() => submitCode()}  
+
+              />       
             </div>
         </div>
-        
+
       </div>
     </>
   );
