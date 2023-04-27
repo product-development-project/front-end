@@ -2,9 +2,10 @@ import TopBar from '../TopBar';
 import { Button } from '../UI/Button';
 import { useNavigate } from 'react-router-dom';
 import React, { useState, useEffect, useCallback } from 'react';
-import './style.css';
+import './styleExercises.css';
 import axios from 'axios';
-
+import Table from './OrderedTable'; // Import the Table component
+import Header from '../Header';
 //NEKISTI KONSTANTOS IŠ VISO BE MANO LEIDIMO AČIŪ
 const difficulties = {
   difficultiesInner:[
@@ -95,45 +96,12 @@ export default function Exercises() {
   }
 
 
+
+  
+
   return (
     <>
-      <TopBar
-        title='workIT'
-        backButtonDisabled={true}
-      >
-        <Button
-          value="Profile"
-          name="profile-button"
-          onClick={() => navigate('/home/profile')}
-          style={{
-            marginTop: '15px'
-          }}
-        />
-        <Button
-          value="Leaderboard"
-          name="leaderboard-button"
-          onClick={() => navigate('/home/leaderboard')}
-          style={{
-            marginTop: '15px'
-          }}
-        />
-        <Button
-          value="Exercise"
-          name="exercise-button"
-          onClick={() => navigate('/home/exercises')}
-          style={{
-            marginTop: '15px'
-          }}
-        />
-        <Button
-          value="Job competition"
-          name="job-competition-button"
-          onClick={() => navigate('/home/job/ads')}
-          style={{
-            marginTop: '15px'
-          }}
-        />
-      </TopBar>
+    <Header></Header>
 
       <div className="App">
         <div className="columns-container">
@@ -155,27 +123,7 @@ export default function Exercises() {
           </div>
         </div>
         <div className='Exercises'>
-        <table>
-          {
-            data.map((task) =>
-              <tr>
-                <td>{task.id}</td>
-                <td>{task.name}</td>
-                <td>{task.difficulty}</td>
-                <td>{types.map((t) => {
-                    if (task.type_id === t.id) {
-                      return t.name;
-                    }})}
-                </td>
-                <td><Button
-                    value="Try out"
-                    name="go-to-task"
-                    onClick={() => navigate('/home/task/'+task.id)}
-                /></td>
-              </tr>
-              )
-          }
-        </table>
+        <Table data={data} types={types} navigate={navigate} />
         </div>
 
       </div>

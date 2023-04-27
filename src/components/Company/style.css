@@ -1,0 +1,38 @@
+.DivBox{
+    border: 1px solid blue;
+    display: inline-block;
+    padding: 10px;
+    align-self: center;
+    position: absolute;
+    top: 5em;
+    left: 45%;
+    
+    justify-content: center;
+}
+
+.delayed-animation {
+    animation: fadeIn 0.3s ease-in-out;
+    animation-fill-mode: both;
+    opacity: 0;
+    
+}
+tr.border-bottom td {
+    border: 1pt solid;
+    border-image-slice: 1;
+    border-image-source: linear-gradient(to bottom, black, blue);
+    border-radius: 5px;
+    text-align: center;
+    padding: 10px;
+}
+
+@keyframes fadeIn {
+    0% {
+        opacity: 0;
+        transform: translateY(10px);
+    }
+
+    100% {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
