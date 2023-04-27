@@ -17,16 +17,16 @@ export default function CompanyFunctions() {
 
                 <Button
                 className="delayed-animation"
-                value="For company"
+                value="View Ads"
                 name="company-button"
                 onClick={() => navigate('/home/Company/ViewAds')}
                 style={{animationDelay: `${15 * 50}ms`}}
                 />
         <Button
-          value="For company"
+          value="Create Ads"
           className="delayed-animation"
           name="company-button"
-          onClick={() => navigate('/home/company')}
+          onClick={() => navigate('/home/Company/CreateAds')}
           style={{
             marginTop: '15px',
             animationDelay: `${6 * 50}ms`

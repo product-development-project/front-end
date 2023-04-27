@@ -16,6 +16,8 @@ import Task from './components/Exercise/Exercise';
 import ProfileForm from './components/Profile/ProfileForm';
 import CompanyFunctions from './components/Company/Functions';
 import ViewAds from './components/Company/ViewAds';
+import ViewLogged from './components/Company/ViewLogged';
+import CreateAdds from './components/Company/CreateAds';
 
 function App() {
   return (
@@ -47,6 +49,8 @@ function App() {
 
           <Route path="home/Company" element={<CompanyFunctions />} />
           <Route path="home/Company/ViewAds" element={<ViewAds/>}/>
+          <Route path="home/Company/ViewAds/:id" element={<ViewLogged/>}/>
+          <Route path="home/Company/CreateAds" element={<CreateAdds/>}/>
         </Route>
       </Routes>
     </Router>

@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import TopBar from '../TopBar';
 import { Button } from '../UI/Button';
 import { useNavigate } from 'react-router-dom';
-import './style.css';
+import './styleExercises.css';
 import axios from 'axios';
 
 

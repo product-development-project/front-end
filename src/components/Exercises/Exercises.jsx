@@ -2,7 +2,7 @@ import TopBar from '../TopBar';
 import { Button } from '../UI/Button';
 import { useNavigate } from 'react-router-dom';
 import React, { useState, useEffect, useCallback } from 'react';
-import './style.css';
+import './styleExercises.css';
 import axios from 'axios';
 import Table from './OrderedTable'; // Import the Table component
 import Header from '../Header';

@@ -8,7 +8,7 @@ import './style.css';
 import axios from 'axios';
 
 
-export default function ViewAds() {
+export default function ViewLogged() {
     const navigate = useNavigate();
     const [errorMessage, setErrorMessage] = useState('');
     const [editPopupIsOpen, setEditPopupIsOpen] = useState(false);
@@ -16,7 +16,9 @@ export default function ViewAds() {
     const [deletePopupIsOpen, setDeletePopupIsOpen] = useState(false);
     const [data, setData] = useState([]);
     const [types, setTypes] = useState([]);
-
+    var parts = window.location.href.split("/");
+    var currentId = (parts[parts.length - 1]).toString();
+    console.log(currentId);
 
     let username = localStorage.getItem('username')
     const tokenWithQuotes = localStorage.getItem('access-token');
@@ -26,14 +28,15 @@ export default function ViewAds() {
         if (!localStorage.getItem('access-token')) {
             navigate('/');
         }
-        fetchCompanyAds(username);
+        fetchCompanyAdsLogged(username, currentId);
         fetchExercisesTypes();
-        console.log(data);
-    }, [navigate, username]);
+        console.log("asdasda", data);
+    }, [navigate, username, currentId]);
     
-    async function fetchCompanyAds(username)
+
+    async function fetchCompanyAdsLogged(username, currentId)
     {
-        let result = await axios.get(`http://localhost:5163/api/Ad/CompanyAds`, { headers: { 'Content-Type': 'application/json'}})
+        let result = await axios.get(`http://localhost:5163/api/Ad/CompanyAds/`+currentId+`/Logged`, { headers: { 'Content-Type': 'application/json'}})
         setData(JSON.parse(JSON.stringify(result.data)));
     }
 
@@ -48,18 +51,13 @@ export default function ViewAds() {
         <Header></Header>
         <table>
             {data.map((dataa, index) => (
-                <tr key={dataa.id} className="border-bottom delayed-animation" style={{animationDelay: `${index * 50}ms`}}>
-                    <td>{dataa.id}</td>
-                    <td>{dataa.name}</td>
-                    <td>{dataa.start}</td>
-                    <td>{dataa.end}</td>
-                    <td>
-                        <Button
-                            value="View LoggedUsers"
-                            name="go-to-task"
-                            onClick={() => navigate(`/home/Company/ViewAds/${dataa.id}`)}
-                        />
-                    </td>
+                <tr key={index} className="border-bottom delayed-animation" style={{animationDelay: `${index * 50}ms`}}>
+                    <td>{dataa.userName}</td>
+                    <td>{dataa.correctnesPoints}</td>
+                    <td>{dataa.recourcesPoints}</td>
+                    <td>{dataa.timePoints}</td>
+                    <td>{dataa.totalPoints}</td>
+
                 </tr>
             ))}
         </table>
