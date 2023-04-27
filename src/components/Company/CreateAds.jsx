@@ -44,7 +44,7 @@ export default function CreateAdds() {
             <Container>
                 <br />
                 <div className="col-sm-6 offset-sm-3">
-                    <h2>create a kob add</h2>
+                    <h2>create a job AD </h2>
                     <br />
                     <Form onSubmit={addAdds}>
                         <fieldset>
