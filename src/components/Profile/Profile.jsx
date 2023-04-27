@@ -71,8 +71,6 @@ export default function Profile() {
         setDeletePopupIsOpen(!deletePopupIsOpen);
     };
 
-
-
     return (
         <>
             <TopBar

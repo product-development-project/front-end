@@ -4,12 +4,13 @@ import CodeMirror from "@uiw/react-codemirror";
 import './style.css';
 import axios from 'axios';
 import { python } from '@codemirror/lang-python';
-
+import { useNavigate } from 'react-router-dom';
 
 
 export default function Exercise() {
-  const [code, setCode] = useState('const a = 0;' +'\n'.repeat(10));
+  const navigate = useNavigate();
   const [data, setData] = useState([]);
+  const [code, setCode] = useState('\n'.repeat(5));
   const [responseMessage, setResponse] = useState('');
   const [passedMessage, setPassed] = useState('');
   const [failedMessage, setFailed] = useState('');
@@ -17,7 +18,7 @@ export default function Exercise() {
   var parts = window.location.href.split("/");
   var currentTaskId = (parts[parts.length - 1]).toString();
   const extensions = [python()];
-  const language = "python";
+  const language = "python3";
 
   useEffect(() => {
     axios(`http://localhost:5163/api/Task/${currentTaskId}`)
@@ -34,28 +35,20 @@ export default function Exercise() {
     }, []);    
 
   const submitCode = event => {
-    data['language'] = language;
-    data['code'] = code;
-    data['type'] = 'exercise';
-    var request = data;
-    delete request['confirmed'];
-    delete request['date'];
-    delete request['difficulty'];
-    delete request['educational'];
-    delete request['id'];
-    delete request['problem'];
-    delete request['type_id'];
-    console.log(request);
+    var exerciseName = data['name'];
+    var request = {
+      'language': language,
+      'type': 'exercise',
+      'name': exerciseName,
+      'code': code
+    }
 
     axios
         .post('http://localhost:5163/api/code/checker', request, { headers: { 'Content-Type': 'application/json' } })
         .then(response => {
         
-          console.log(response);
           setPassed(response.data["passed"]);
           setFailed(response.data["failed"]);
-          console.log(passedMessage);
-          console.log(failedMessage);
         })
         .catch(error => {
           if (error.request) {
@@ -67,8 +60,6 @@ export default function Exercise() {
           }
         });    
   };
-
-
 
   return (
     <>
@@ -85,9 +76,7 @@ export default function Exercise() {
                 maxHeight='40em'
                 minHeight='2em'
                 maxWidth='60.6%'
-                
                 extensions={extensions}
-                hintOptions="false"
                 onChange={(editor, change) => {
                   setCode(editor.valueOf())
                 }}
@@ -124,6 +113,14 @@ export default function Exercise() {
                   onClick={() => {
                     submitCode();
                     setButtonPressed(true);
+                  }}  
+            />
+            <Button 
+                  style={{width: '100%'}}
+                  value="Back"
+                  name="back-button"
+                  onClick={() => {
+                    navigate("/home/exercises")
                   }}  
             />       
             </div>
