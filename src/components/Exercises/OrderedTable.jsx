@@ -61,7 +61,7 @@ export default function Table({ data, types, navigate }) {
 
     // generate the rows based on the sorted data
     return sortedData.map((task, index) => (
-    <tr key={task.id} className="border-bottom delayed-animation" style={{animationDelay: `${index * 50}ms`}}>
+    <tr key={task.id} className="border-bottom delayed-animation" style={{animationDelay: `${index * 60}ms`}}>
       <td>{task.id}</td>
       <td>{task.name}</td>
       <td className={`difficulty ${task.difficulty.toLowerCase()}`}>{task.difficulty}</td>

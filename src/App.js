@@ -18,6 +18,8 @@ import CompanyFunctions from './components/Company/Functions';
 import ViewAds from './components/Company/ViewAds';
 import ViewLogged from './components/Company/ViewLogged';
 import CreateAdds from './components/Company/CreateAds';
+import ViewTaskForCompetitionFunction from './components/Company/ViewTaskForCompetition';
+import AddTaskForCompetitionFunction from './components/Company/AddTaskToAds';
 
 function App() {
   return (
@@ -51,6 +53,8 @@ function App() {
           <Route path="home/Company/ViewAds" element={<ViewAds/>}/>
           <Route path="home/Company/ViewAds/:id" element={<ViewLogged/>}/>
           <Route path="home/Company/CreateAds" element={<CreateAdds/>}/>
+          <Route path="home/Company/ViewAds/tasks/:id" element={<ViewTaskForCompetitionFunction/>}/>
+          <Route path="/home/Company/ViewAds/Addtask/:id" element={<AddTaskForCompetitionFunction></AddTaskForCompetitionFunction>}></Route>
         </Route>
       </Routes>
     </Router>

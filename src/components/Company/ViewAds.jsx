@@ -7,6 +7,13 @@ import { useNavigate } from 'react-router-dom';
 import './style.css';
 import axios from 'axios';
 
+function formatDate(dateString) {
+  const date = new Date(dateString);
+  const year = date.getFullYear();
+  const month = ('0' + (date.getMonth() + 1)).slice(-2);
+  const day = ('0' + date.getDate()).slice(-2);
+  return `${year}-${month}-${day}`;
+}
 
 export default function ViewAds() {
     const navigate = useNavigate();
@@ -47,17 +54,39 @@ export default function ViewAds() {
         <>
         <Header></Header>
         <table>
+            <tr className="border-bottom delayed-animation" style={{animationDelay: `${50}ms`}}>
+                <td>Ad Id</td>
+                    <td>Ad name</td>
+                    <td>Start date</td>
+                    <td>End date</td>
+                    <td></td>
+                    <td></td>
+            </tr>
             {data.map((dataa, index) => (
                 <tr key={dataa.id} className="border-bottom delayed-animation" style={{animationDelay: `${index * 50}ms`}}>
                     <td>{dataa.id}</td>
                     <td>{dataa.name}</td>
-                    <td>{dataa.start}</td>
-                    <td>{dataa.end}</td>
+                    <td>{formatDate(dataa.start)}</td>
+                    <td>{formatDate(dataa.end)}</td>
                     <td>
                         <Button
-                            value="View LoggedUsers"
+                            value="View Logged Users"
                             name="go-to-task"
                             onClick={() => navigate(`/home/Company/ViewAds/${dataa.id}`)}
+                        />
+                    </td>
+                    <td>
+                        <Button
+                            value="View Tasks"
+                            name="go-to-task"
+                            onClick={() => navigate(`/home/Company/ViewAds/tasks/${dataa.id}`)}
+                        />
+                    </td>
+                    <td>
+                        <Button
+                            value="Add Task"
+                            name="go-to-task"
+                            onClick={() => navigate(`/home/Company/ViewAds/Addtask/${dataa.id}`)}
                         />
                     </td>
                 </tr>

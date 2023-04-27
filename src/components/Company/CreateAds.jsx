@@ -8,6 +8,7 @@ import { Link } from 'react-router-dom';
 import Footer from '../Footer';
 import DatePicker from 'react-datepicker';
 import 'react-datepicker/dist/react-datepicker.css';
+import moment from 'moment';
 
 export default function CreateAdds() {
 
@@ -22,10 +23,11 @@ export default function CreateAdds() {
     const [EndDate, setEndDate] = useState("");
     async function addAdds(e) {
         e.preventDefault();
-
-        let details = {Name, Description, StartDate, EndDate}
+        const start = moment(StartDate).format("YYYY-MM-DDTHH:mm:ss");
+        const end = moment(EndDate).format("YYYY-MM-DDTHH:mm:ss");
+        let details = {Name, Description, start, end};
         let json = JSON.stringify(details);
-
+        console.log(StartDate);
         await axios.post('http://localhost:5163/api/Ad', json, { headers: { 'Content-Type': 'application/json' } })
             .then(response => {
                 navigate('/home/Company/ViewAds')
@@ -42,7 +44,7 @@ export default function CreateAdds() {
             <Container>
                 <br />
                 <div className="col-sm-6 offset-sm-3">
-                    <h2>Prideti saskaita</h2>
+                    <h2>create a kob add</h2>
                     <br />
                     <Form onSubmit={addAdds}>
                         <fieldset>
