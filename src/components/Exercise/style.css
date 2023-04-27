@@ -1,17 +1,14 @@
-/* .monaco-editor .monaco-scrollable-element .view-lines span {
-    display: inline !important;
-    font-size: 9.1px !important;
-    padding: 0%;
-  }
-  
-.monaco-list-row .monaco-highlighted-label {
-    color: black !important;
-  }
-.monaco-list {
-    font-size: 9.1px !important;
-  } */
-
-  .cm-o-replacement {
+span{
+  display: inline !important;
+}
+.cm-selectionMatch
+{
+  display: inline !important;
+}
+.cm-matchingBracket{
+  display: inline !important;
+}
+.cm-o-replacement {
     display: "inline-block";
     width: ".5em";
     height: ".5em";
@@ -21,6 +18,11 @@
 .CodeMirror {
   border: 1px solid #eee;
   height: auto;
+}
+.CodeMirror-hints {
+  display: inline !important;
+  color: #100c0c;
+
 }
 
 /* Split the screen in half */
@@ -62,11 +64,8 @@
 
 
 .codeField {
-    color: darkblue;
-    background-color: #111;
     width: 100%;
     padding-left: 0.2em;
-
 
   }
 .submitButtonDiv{

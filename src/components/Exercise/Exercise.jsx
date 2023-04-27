@@ -3,15 +3,21 @@ import { Button } from '../UI/Button';
 import CodeMirror from "@uiw/react-codemirror";
 import './style.css';
 import axios from 'axios';
+import { python } from '@codemirror/lang-python';
+
 
 
 export default function Exercise() {
   const [code, setCode] = useState('const a = 0;' +'\n'.repeat(10));
   const [data, setData] = useState([]);
   const [responseMessage, setResponse] = useState('');
+  const [passedMessage, setPassed] = useState('');
+  const [failedMessage, setFailed] = useState('');
+  const [buttonPressed, setButtonPressed] = useState(false);
   var parts = window.location.href.split("/");
   var currentTaskId = (parts[parts.length - 1]).toString();
-  const language = "csharp";
+  const extensions = [python()];
+  const language = "python";
 
   useEffect(() => {
     axios(`http://localhost:5163/api/Task/${currentTaskId}`)
@@ -30,13 +36,26 @@ export default function Exercise() {
   const submitCode = event => {
     data['language'] = language;
     data['code'] = code;
-    delete data['problem'];
+    data['type'] = 'exercise';
     var request = data;
+    delete request['confirmed'];
+    delete request['date'];
+    delete request['difficulty'];
+    delete request['educational'];
+    delete request['id'];
+    delete request['problem'];
+    delete request['type_id'];
+    console.log(request);
 
-    axios.post('http://localhost:5163/api/code/checker', request, { headers: { 'Content-Type': 'application/json' } })
+    axios
+        .post('http://localhost:5163/api/code/checker', request, { headers: { 'Content-Type': 'application/json' } })
         .then(response => {
+        
           console.log(response);
-          setResponse(response);
+          setPassed(response.data["passed"]);
+          setFailed(response.data["failed"]);
+          console.log(passedMessage);
+          console.log(failedMessage);
         })
         .catch(error => {
           if (error.request) {
@@ -63,13 +82,12 @@ export default function Exercise() {
             <div className="codeField">
               <CodeMirror className='CodeMirror'
                 value={code}
-                maxHeight='55em'
+                maxHeight='40em'
                 minHeight='2em'
-                options={{
-                  mode: 'javascript',
-                  globalVars: true
-
-                }}
+                maxWidth='60.6%'
+                
+                extensions={extensions}
+                hintOptions="false"
                 onChange={(editor, change) => {
                   setCode(editor.valueOf())
                 }}
@@ -77,13 +95,37 @@ export default function Exercise() {
             </div>
             <div className="submitButtonDiv">
             <p style={{paddingLeft: '0.2em'}}>{responseMessage}</p>
-              <Button 
+            {buttonPressed && passedMessage.length > 0 && (
+              <table>
+                <tbody style={{color: 'green'}}>
+                  {passedMessage.map((message, index) => (
+                    <tr key={index}>
+                      <td>{message}</td>
+                    </tr>
+                  ))}
+                </tbody>
+              </table>
+            )}
+            {buttonPressed && failedMessage.length > 0 && (
+              <table>
+                <tbody style={{color: 'red'}}>
+                  {failedMessage.map((message, index) => (
+                    <tr key={index}>
+                      <td>{message}</td>
+                    </tr>
+                  ))}
+                </tbody>
+              </table>
+            )}
+            <Button 
                   style={{width: '100%'}}
                   value="Submit"
                   name="submit-task"
-                  onClick={() => submitCode()}  
-
-              />       
+                  onClick={() => {
+                    submitCode();
+                    setButtonPressed(true);
+                  }}  
+            />       
             </div>
         </div>
 
