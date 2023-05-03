@@ -1,12 +1,11 @@
 import React from 'react'
 import { useNavigate } from 'react-router-dom';
 import { Button } from './UI/Button';
-import Logo from './Media/Photos/LogoTop.png'
-import styled from 'styled-components';
 import TopBar from './TopBar';
 
 export default function Header(props) {
     const navigate = useNavigate();
+    let role = localStorage.getItem('roles');
 
     return (
     <TopBar
@@ -21,6 +20,8 @@ export default function Header(props) {
             marginTop: '15px'
           }}
         />
+        {
+        role.includes("Company") ?
         <Button
           value="For company"
           name="company-button"
@@ -29,6 +30,10 @@ export default function Header(props) {
             marginTop: '15px'
           }}
         />
+        :
+        <>
+        </>
+        }
         <Button
           value="Leaderboard"
           name="leaderboard-button"

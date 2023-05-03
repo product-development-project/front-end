@@ -3,15 +3,22 @@ import { Button } from '../UI/Button';
 import CodeMirror from "@uiw/react-codemirror";
 import './style.css';
 import axios from 'axios';
+import { python } from '@codemirror/lang-python';
+import { useNavigate } from 'react-router-dom';
 
 
 export default function Exercise() {
-  const [code, setCode] = useState('const a = 0;' +'\n'.repeat(10));
+  const navigate = useNavigate();
   const [data, setData] = useState([]);
+  const [code, setCode] = useState('\n'.repeat(5));
   const [responseMessage, setResponse] = useState('');
+  const [passedMessage, setPassed] = useState('');
+  const [failedMessage, setFailed] = useState('');
+  const [buttonPressed, setButtonPressed] = useState(false);
   var parts = window.location.href.split("/");
   var currentTaskId = (parts[parts.length - 1]).toString();
-  const language = "csharp";
+  const extensions = [python()];
+  const language = "python3";
 
   useEffect(() => {
     axios(`http://localhost:5163/api/Task/${currentTaskId}`)
@@ -28,15 +35,20 @@ export default function Exercise() {
     }, []);    
 
   const submitCode = event => {
-    data['language'] = language;
-    data['code'] = code;
-    delete data['problem'];
-    var request = data;
+    var exerciseName = data['name'];
+    var request = {
+      'language': language,
+      'type': 'exercise',
+      'name': exerciseName,
+      'code': code
+    }
 
-    axios.post('http://localhost:5163/api/code/checker', request, { headers: { 'Content-Type': 'application/json' } })
+    axios
+        .post('http://localhost:5163/api/code/checker', request, { headers: { 'Content-Type': 'application/json' } })
         .then(response => {
-          console.log(response);
-          setResponse(response);
+        
+          setPassed(response.data["passed"]);
+          setFailed(response.data["failed"]);
         })
         .catch(error => {
           if (error.request) {
@@ -48,8 +60,6 @@ export default function Exercise() {
           }
         });    
   };
-
-
 
   return (
     <>
@@ -63,13 +73,10 @@ export default function Exercise() {
             <div className="codeField">
               <CodeMirror className='CodeMirror'
                 value={code}
-                maxHeight='55em'
+                maxHeight='40em'
                 minHeight='2em'
-                options={{
-                  mode: 'javascript',
-                  globalVars: true
-
-                }}
+                maxWidth='60.6%'
+                extensions={extensions}
                 onChange={(editor, change) => {
                   setCode(editor.valueOf())
                 }}
@@ -77,13 +84,45 @@ export default function Exercise() {
             </div>
             <div className="submitButtonDiv">
             <p style={{paddingLeft: '0.2em'}}>{responseMessage}</p>
-              <Button 
+            {buttonPressed && passedMessage.length > 0 && (
+              <table>
+                <tbody style={{color: 'green'}}>
+                  {passedMessage.map((message, index) => (
+                    <tr key={index}>
+                      <td>{message}</td>
+                    </tr>
+                  ))}
+                </tbody>
+              </table>
+            )}
+            {buttonPressed && failedMessage.length > 0 && (
+              <table>
+                <tbody style={{color: 'red'}}>
+                  {failedMessage.map((message, index) => (
+                    <tr key={index}>
+                      <td>{message}</td>
+                    </tr>
+                  ))}
+                </tbody>
+              </table>
+            )}
+            <Button 
                   style={{width: '100%'}}
                   value="Submit"
                   name="submit-task"
-                  onClick={() => submitCode()}  
-
-              />       
+                  onClick={() => {
+                    submitCode();
+                    setButtonPressed(true);
+                  }}  
+            />
+            <Button 
+                  style={{width: '100%'}}
+                  value="Back"
+                  name="back-button"
+                  onClick={() => {
+                    navigate("/home/exercises")
+                  }}  
+            />       
             </div>
         </div>
 

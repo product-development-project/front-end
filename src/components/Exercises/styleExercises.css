@@ -5,11 +5,12 @@
 
 .column {
   margin: 0 20px;
-  
 }
+
 .tr{
   text-align: center;
 }
+
 tr.border-bottom td {
   border: 1pt solid;
   border-image-slice: 1;
@@ -18,14 +19,15 @@ tr.border-bottom td {
   text-align: center;
   padding: 10px;
 }
+
 table {
   margin: 0 auto;
 }
 
 .delayed-animation-Exercise {
   animation: fadeIn 0.3s ease-in-out;
-    animation-fill-mode: both;
-    opacity: 0;
+  animation-fill-mode: both;
+  opacity: 0;
 }
 
 @keyframes fade-in {
@@ -37,6 +39,7 @@ table {
     opacity: 1;
   }
 }
+
 td.difficulty {
   font-weight: bold;
   text-align: center;
