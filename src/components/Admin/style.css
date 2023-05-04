@@ -24,7 +24,21 @@ tr.border-bottom td {
     text-align: center;
     padding: 10px;
 }
-
+tr {
+    border: 1px solid black;
+}
+.row-with-border {
+    border: 1px solid black;
+}
+table {
+    border-collapse: separate;
+    border-spacing: 10px;
+}
+table td {
+    white-space: normal;
+    width: 200px;
+    word-break: break-all;
+}
 @keyframes fadeIn {
     0% {
         opacity: 0;
