@@ -47,16 +47,6 @@ export default function TopBar(props) {
                 }}
             >
                 {props.children}
-                {!props.backButtonDisabled &&
-                    <Button
-                        value="Back"
-                        name="back-button"
-                        onClick={() => navigate(-1)}
-                        style={{
-                            marginTop: '10px'
-                        }}
-                    />
-                }
             </div>
         </div>
     )
