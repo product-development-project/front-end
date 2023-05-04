@@ -34,6 +34,20 @@ export default function Header(props) {
         <>
         </>
         }
+        {
+        role.includes("Admin") ?
+        <Button
+          value="For Admin"
+          name="company-button"
+          onClick={() => navigate('/home/Admin')}
+          style={{
+            marginTop: '15px'
+          }}
+        />
+        :
+        <>
+        </>
+        }
         <Button
           value="Leaderboard"
           name="leaderboard-button"
