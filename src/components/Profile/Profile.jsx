@@ -1,7 +1,5 @@
 import React, { useState, useEffect } from 'react'
 import { useNavigate } from 'react-router-dom';
-import Footer from '../Footer';
-import TopBar from '../TopBar';
 import { Button } from '../UI/Button';
 import { makeStyles } from '@material-ui/core/styles';
 import Card from '@material-ui/core/Card';
@@ -15,7 +13,7 @@ import ProfileForm from './ProfileForm';
 import axios from 'axios';
 import Logo from '../Media/Photos/Logo.png';
 import { useParams } from 'react-router';
-
+import Header from '../Header';
   
 const useStyles = makeStyles({
     root: {
@@ -75,43 +73,7 @@ export default function Profile() {
 
     return (
         <>
-            <TopBar
-                title='workIT'
-                backButtonDisabled={true}
-            >
-                <Button
-                    value="Profile"
-                    name="profile-button"
-                    onClick={() => navigate('/home/profile')}
-                    style={{
-                        marginTop: '15px'
-                    }}
-                />
-                <Button
-                    value="Leaderboard"
-                    name="leaderboard-button"
-                    onClick={() => navigate('/home/leaderboard')}
-                    style={{
-                        marginTop: '15px'
-                    }}
-                />
-                <Button
-                    value="Exercise"
-                    name="exercise-button"
-                    onClick={() => navigate('/home/exercises')}
-                    style={{
-                        marginTop: '15px'
-                    }}
-                />
-                <Button
-                    value="Job competition"
-                    name="job-competition-button"
-                    onClick={() => navigate('/home/job/ads')}
-                    style={{
-                        marginTop: '15px'
-                    }}
-                />
-            </TopBar>
+            <Header></Header>
                         
             <center style={{marginTop: '5%'}}>
                 <Card className={classes.root}>
@@ -235,9 +197,6 @@ export default function Profile() {
                     ]}
                 />
             }
-
-            <Footer>
-            </Footer>
         </>
     );
 };

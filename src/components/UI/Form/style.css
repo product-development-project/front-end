@@ -60,7 +60,7 @@
     transition: all 0.2s;
     background-color: black;
     margin-top: 15px;
-    margin-bottom: 30px;
+    margin-bottom: 5px;
     font-size: 20px;
   }
   .submitButton:hover{

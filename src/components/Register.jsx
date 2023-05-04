@@ -3,6 +3,7 @@ import { Form, FormInput } from './UI/Form';
 import { useNavigate } from 'react-router-dom'
 import TopBar from './TopBar';
 import axios from 'axios'
+import { Button } from "react-bootstrap";
 
 export default function Register() {
     const navigate = useNavigate()
@@ -53,7 +54,7 @@ export default function Register() {
             <TopBar title='workIT'
             backButtonDisabled={true}
             />
-            <Form
+            <Form 
                 title='Register'
                 submitButtonTitle='Register'
                 onSubmit={handleSave}
@@ -123,6 +124,14 @@ export default function Register() {
                     pattern={user?.password}
                 />
             </Form>
+            <center style={{paddingLeft:'60px', paddingRight: '60px'}}>
+            <Button
+                id="submitButton"
+                value="Login"
+                name="login-button"
+                onClick={() => navigate('/login')}
+            >Login</Button>
+            </center>
         </>
     );
 };

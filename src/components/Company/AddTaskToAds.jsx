@@ -8,7 +8,11 @@ import './style.css';
 import axios from 'axios';
 
 const tokenWithQuotes = localStorage.getItem('access-token');
-const token = tokenWithQuotes.substring(1, tokenWithQuotes.length - 1);
+const token = tokenWithQuotes ? tokenWithQuotes.substring(1, tokenWithQuotes.length - 1) : null;
+
+if (token) {
+  axios.defaults.headers.common['Authorization'] = `Bearer${token}`;
+}
 
 axios.defaults.headers.common['Authorization'] = `Bearer ${token}`;
 export default function AddTaskForCompetitionFunction() {

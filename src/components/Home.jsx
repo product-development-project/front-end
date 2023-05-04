@@ -23,9 +23,9 @@ export default function Home() {
                 backButtonDisabled={true}
             >
                 <Button
-                    value="Job ads"
-                    name="job-ads-button"
-                    onClick={() => navigate('job/ads')}
+                    value="Register"
+                    name="register-button"
+                    onClick={() => navigate('/register')}
                     style={{
                         marginTop: '15px'
                     }}
