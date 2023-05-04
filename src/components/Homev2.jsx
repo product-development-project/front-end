@@ -56,12 +56,11 @@ export default function Homev2() {
                     <div
                     style={{
                         position: 'relative',
-                        zIndex: 2,
                         top: '50%',
                         transform: 'translateY(-50%)',
                         left: '50%',
                         transform: 'translateX(-50%)',
-                        marginTop: '20%',
+                        marginTop: '25%',
                         marginBottom: '20%',
                     }}
                     >

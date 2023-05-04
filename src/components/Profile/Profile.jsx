@@ -69,8 +69,6 @@ export default function Profile() {
         setDeletePopupIsOpen(!deletePopupIsOpen);
     };
 
-
-
     return (
         <>
             <Header></Header>
