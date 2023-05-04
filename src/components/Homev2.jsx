@@ -7,6 +7,7 @@ import Contacts from './Contacts';
 import Help from './Help';
 import { Button } from './UI/Button';
 import Logo from './Media/Photos/Logo.png'
+import Header from './Header';
 
 export default function Homev2() {
     const navigate = useNavigate();
@@ -18,53 +19,7 @@ export default function Homev2() {
     return (
         <>
             <section ref={section1Ref}></section>
-            <TopBar
-                backButtonDisabled={true}
-            >
-                <Button
-                    value="Profile"
-                    name="profile-button"
-                    onClick={() => navigate('/home/profile')}
-                    style={{
-                        marginTop: '15px'
-                    }}
-                />
-                <Button
-                    value="Logout"
-                    name="logout-button"
-                    onClick={() => {
-                        localStorage.clear();
-                        navigate("/");
-                    }}
-                    style={{
-                        marginTop: '15px'
-                    }}
-                />
-                <Button
-                    value="Leaderboard"
-                    name="leaderboard-button"
-                    onClick={() => navigate('/home/leaderboard')}
-                    style={{
-                        marginTop: '15px'
-                    }}
-                />
-                <Button
-                    value="Exercise"
-                    name="exercise-button"
-                    onClick={() => navigate('/home/exercises')}
-                    style={{
-                        marginTop: '15px'
-                    }}
-                />
-                <Button
-                    value="Job ads"
-                    name="job-ads-button"
-                    onClick={() => navigate('/home/job/ads')}
-                    style={{
-                        marginTop: '15px'
-                    }}
-                />
-            </TopBar>
+            <Header></Header>
             
         <main style={{ display: 'grid', gridTemplateRows: '2fr 2fr 2fr 2fr' }}>
             <div style={{ position: 'relative' }}>

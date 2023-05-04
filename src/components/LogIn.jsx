@@ -4,6 +4,7 @@ import TopBar from './TopBar';
 import { Form, FormInput } from "./UI/Form";
 import axios from 'axios'
 import { Buffer } from 'buffer';
+import { Button } from "react-bootstrap";
 
 export default function LogIn() {
   const [errorMessage, setErrorMessage] = useState('');
@@ -87,6 +88,14 @@ export default function LogIn() {
           required={true}
         />
       </Form>
+      <center style={{paddingLeft:'60px', paddingRight: '60px'}}>
+            <Button
+                id="submitButton"
+                value="Register"
+                name="register-button"
+                onClick={() => navigate('/register')}
+            >Register</Button>
+        </center>
     </>
   );
 };

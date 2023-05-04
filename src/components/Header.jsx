@@ -12,14 +12,6 @@ export default function Header(props) {
         title='workIT'
         backButtonDisabled={true}
       >
-        <Button
-          value="Profile"
-          name="profile-button"
-          onClick={() => navigate('/home/profile')}
-          style={{
-            marginTop: '15px'
-          }}
-        />
         {
         role.includes("Company") ?
         <Button
@@ -49,17 +41,17 @@ export default function Header(props) {
         </>
         }
         <Button
-          value="Leaderboard"
-          name="leaderboard-button"
-          onClick={() => navigate('/home/leaderboard')}
+          value="Exercise"
+          name="exercise-button"
+          onClick={() => navigate('/home/exercises')}
           style={{
             marginTop: '15px'
           }}
         />
         <Button
-          value="Exercise"
-          name="exercise-button"
-          onClick={() => navigate('/home/exercises')}
+          value="Leaderboard"
+          name="leaderboard-button"
+          onClick={() => navigate('/home/leaderboard')}
           style={{
             marginTop: '15px'
           }}
@@ -72,6 +64,25 @@ export default function Header(props) {
             marginTop: '15px'
           }}
         />
+         <Button
+          value="Profile"
+          name="profile-button"
+          onClick={() => navigate('/home/profile')}
+          style={{
+            marginTop: '15px'
+          }}
+        />
+        <Button
+                    value="Logout"
+                    name="logout-button"
+                    onClick={() => {
+                        localStorage.clear();
+                        navigate("/");
+                    }}
+                    style={{
+                        marginTop: '15px'
+                    }}
+                />
       </TopBar>
     )
 }
