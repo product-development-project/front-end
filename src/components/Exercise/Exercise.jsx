@@ -5,7 +5,7 @@ import './style.css';
 import axios from 'axios';
 import { python } from '@codemirror/lang-python';
 import { useNavigate } from 'react-router-dom';
-
+import Boilerplate from './CodeGeneration';
 
 export default function Exercise() {
   const navigate = useNavigate();
@@ -31,6 +31,7 @@ export default function Exercise() {
         {
           imgDiv.appendChild(image);
         }
+        setCode(Boilerplate({ taskName: result.data['name'], type: result.data['type_id']}));
       })
     }, []);    
 
