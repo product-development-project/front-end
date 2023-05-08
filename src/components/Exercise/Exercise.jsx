@@ -17,10 +17,12 @@ export default function Exercise() {
   const [memoryUsage, setMemory] = useState(0.0);
   const [failedMessage, setFailed] = useState('');
   const [buttonPressed, setButtonPressed] = useState(false);
+  const [language, setLanguage] = useState("python3");
   var parts = window.location.href.split("/");
   var currentTaskId = (parts[parts.length - 1]).toString();
   const extensions = [python()];
-  const language = "python3";
+
+  const languages = ['python3'];
 
   useEffect(() => {
     axios(`http://localhost:5163/api/Task/${currentTaskId}`)
@@ -43,7 +45,8 @@ export default function Exercise() {
       'language': language,
       'type': 'exercise',
       'name': exerciseName,
-      'code': code
+      'code': code,
+      'taskId': currentTaskId
     }
 
     axios
@@ -75,6 +78,15 @@ export default function Exercise() {
         </div>
 
         <div className="split right">
+          <div className="dropdownContainer" style={{paddingLeft: '0.8em'}}>
+            <select
+            className="dropdown"
+            value={language}
+            onChange={event => setLanguage(event.target.value)}
+            >
+              <option value="python3">Python 3</option>
+              </select>
+          </div>
             <div className="codeField">
               <CodeMirror className='CodeMirror'
                 value={code}
@@ -90,7 +102,7 @@ export default function Exercise() {
             <div className="submitButtonDiv">
             <p style={{paddingLeft: '0.2em'}}>{responseMessage}</p>
             {buttonPressed && passedMessage.length > 0 && (
-              <table>
+              <table style={{width: '100%'}}>
                 <tbody style={{color: 'green'}}>
                   {passedMessage.map((message, index) => (
                     <tr key={index}>
@@ -101,7 +113,7 @@ export default function Exercise() {
               </table>
             )}
             {buttonPressed && failedMessage.length > 0 && (
-              <table>
+              <table style={{width: '100%'}}>
                 <tbody style={{color: 'red'}}>
                   {failedMessage.map((message, index) => (
                     <tr key={index}>
@@ -134,7 +146,6 @@ export default function Exercise() {
             />       
             </div>
         </div>
-
       </div>
     </>
   );
