@@ -5,14 +5,16 @@ import './style.css';
 import axios from 'axios';
 import { python } from '@codemirror/lang-python';
 import { useNavigate } from 'react-router-dom';
-
+import Boilerplate from './CodeGeneration';
 
 export default function Exercise() {
   const navigate = useNavigate();
   const [data, setData] = useState([]);
-  const [code, setCode] = useState('\n'.repeat(5));
+  const [code, setCode] = useState();
   const [responseMessage, setResponse] = useState('');
   const [passedMessage, setPassed] = useState('');
+  const [runTime, setRunTime] = useState(0.0);
+  const [memoryUsage, setMemory] = useState(0.0);
   const [failedMessage, setFailed] = useState('');
   const [buttonPressed, setButtonPressed] = useState(false);
   var parts = window.location.href.split("/");
@@ -31,6 +33,7 @@ export default function Exercise() {
         {
           imgDiv.appendChild(image);
         }
+        setCode(Boilerplate({ taskName: result.data['name'], type: result.data['type_id']}));
       })
     }, []);    
 
@@ -46,9 +49,11 @@ export default function Exercise() {
     axios
         .post('http://localhost:5163/api/code/checker', request, { headers: { 'Content-Type': 'application/json' } })
         .then(response => {
-        
+          console.log(response.data);
           setPassed(response.data["passed"]);
           setFailed(response.data["failed"]);
+          setRunTime(response.data["runTime"]);
+          setMemory(response.data["memoryUsage"]);
         })
         .catch(error => {
           if (error.request) {
@@ -106,8 +111,12 @@ export default function Exercise() {
                 </tbody>
               </table>
             )}
+            <div className="stats">
+              <p>Run Time: {runTime}ms</p>
+              <p>Memory Usage: {memoryUsage}KB</p>
+            </div>
             <Button 
-                  style={{width: '100%'}}
+                  style={{width: '30%', float: 'right'}}
                   value="Submit"
                   name="submit-task"
                   onClick={() => {
@@ -116,7 +125,7 @@ export default function Exercise() {
                   }}  
             />
             <Button 
-                  style={{width: '100%'}}
+                  style={{width: '30%'}}
                   value="Back"
                   name="back-button"
                   onClick={() => {
