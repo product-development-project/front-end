@@ -32,8 +32,17 @@ const Boilerplate = ({ taskName, type }) => {
                 break; 
             }
         case 'Array manipulation':
-            boilerplateCode = `// Add your code here`;
-            break;
+            console.log(taskName);
+            if (taskName === 'SumCombinations') {
+                boilerplateCode = `input = input()\nvalues = input.split(',')\ncoins = [int(x) for x in values[0].split()]\nsum = int(values[1])`;
+                break;
+            } else if (taskName === 'SubarraySum') {
+                boilerplateCode = `input = input()\nvalues = input.split(',')\nA = [int(x) for x in values[0].split()]\nS = int(values[1])`;
+                break;
+            } else {
+                boilerplateCode = `input = input()\narray = [int(x) for x in input.split()]`;
+                break;
+            }
         case 'Date manipulation':
             boilerplateCode =
 `def get_days(date1, date2):
@@ -99,7 +108,39 @@ print(print_linked_list(merged_list))`;
                 break; 
             }
             else if (taskName === 'LinkedListNode') {
-                boilerplateCode = ``;
+                boilerplateCode = 
+`from typing import List
+
+class ListNode:
+    def __init__(self, val=0, next=None):
+        self.val = val
+        self.next = next
+    
+def create_linked_list(input_str):
+    vals = input_str.split()
+    head = ListNode(int(vals[0]))
+    curr = head
+    for val in vals[1:]:
+        curr.next = ListNode(int(val))
+        curr = curr.next
+    return head
+
+def print_linked_list(head: ListNode) -> List[int]:
+    values = []
+    while head:
+      values.append(head.val)
+      head = head.next
+    return values
+
+def reverseKGroup(self, head: Optional[ListNode], k: int) -> Optional[ListNode]:
+    # finish code
+
+input = input()
+input_list = input.split(',')
+head = create_linked_list(input_list[0])
+k = int(input_list[1])
+reversed_list = reverseKGroup(head, k)
+print(print_linked_list(reversed_list))`;
                 break;
             }
         case 'Regular Expression':
