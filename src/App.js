@@ -20,6 +20,11 @@ import ViewLogged from './components/Company/ViewLogged';
 import CreateAdds from './components/Company/CreateAds';
 import ViewTaskForCompetitionFunction from './components/Company/ViewTaskForCompetition';
 import AddTaskForCompetitionFunction from './components/Company/AddTaskToAds';
+import AdminFunctionsFunction from './components/Admin/AdminFunctions';
+import ApproveCompanies from './components/Admin/ApproveCompaniesFunction';
+import ApproveTasks from './components/Admin/ApproveTasksFunction';
+import CreateTask from './components/Admin/CreateTaskFunction';
+import HelpSectionList from './components/Admin/HelpSectionListFunction';
 
 function App() {
   return (
@@ -55,6 +60,12 @@ function App() {
           <Route path="home/Company/CreateAds" element={<CreateAdds/>}/>
           <Route path="home/Company/ViewAds/tasks/:id" element={<ViewTaskForCompetitionFunction/>}/>
           <Route path="/home/Company/ViewAds/Addtask/:id" element={<AddTaskForCompetitionFunction></AddTaskForCompetitionFunction>}></Route>
+
+          <Route path="/home/Admin" element={<AdminFunctionsFunction></AdminFunctionsFunction>}></Route>
+          <Route path="/home/Admin/ApproveCompanies" element={<ApproveCompanies></ApproveCompanies>} ></Route>
+          <Route path="/home/Admin/ApproveTasks" element={<ApproveTasks></ApproveTasks>}></Route>
+          <Route path="/home/Admin/CreateTask" element={<CreateTask></CreateTask>}></Route>
+          <Route path="/home/Admin/HelpSection" element={<HelpSectionList></HelpSectionList>}></Route>
         </Route>
       </Routes>
     </Router>

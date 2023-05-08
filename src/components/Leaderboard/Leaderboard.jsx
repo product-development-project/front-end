@@ -1,5 +1,4 @@
 import React, { useState, useEffect } from 'react'
-import Footer from '../Footer';
 import { useNavigate } from 'react-router-dom';
 import Header from '../Header';
 import axios from 'axios';
@@ -79,7 +78,6 @@ export default function Leaderboard() {
         ))}
         </tbody>
         </table>
-        <Footer></Footer>
         </>
     )
 }
