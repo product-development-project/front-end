@@ -46,7 +46,8 @@ export default function Exercise() {
       'type': 'exercise',
       'name': exerciseName,
       'code': code,
-      'taskId': currentTaskId
+      'taskId': currentTaskId,
+      'userId': localStorage.getItem('id')
     }
 
     axios
@@ -124,8 +125,8 @@ export default function Exercise() {
               </table>
             )}
             <div className="stats">
-              <p>Run Time: {runTime}ms</p>
-              <p>Memory Usage: {memoryUsage}KB</p>
+              <p>Run Time: {runTime}s</p>
+              <p>Memory Usage: {memoryUsage.toFixed(4)}KB</p>
             </div>
             <Button 
                   style={{width: '30%', float: 'right'}}
