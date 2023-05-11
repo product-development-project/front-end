@@ -19,7 +19,9 @@ tr.border-bottom td {
   text-align: center;
   padding: 10px;
 }
-
+tr.table-header:hover {
+  cursor: pointer;
+}
 table {
   margin: 0 auto;
 }
@@ -28,6 +30,7 @@ table {
   animation: fadeIn 0.3s ease-in-out;
   animation-fill-mode: both;
   opacity: 0;
+
 }
 
 @keyframes fade-in {
