@@ -8,7 +8,8 @@ import Profile from './components/Profile/Profile';
 import Help from './components/Help';
 import FAQ from './components/FAQ';
 import Contacts from './components/Contacts';
-import JobAds from './components/JobAds/JobAdsListPage';
+import JobAdsListPageV2 from './components/JobAds/JobAdsListPageV2';
+import JobAdsListPage from './components/JobAds/JobAdsListPage';
 import { FileUploader } from './components/FileUploader';
 import Leaderboard from './components/Leaderboard/Leaderboard';
 import Exercises from './components/Exercises/Exercises';
@@ -46,8 +47,8 @@ function App() {
           <Route path="home/exercises" element={<Exercises />} />
           <Route path="home/task/:id" element={<Task />} />
 
-          <Route path="job/ads" element={<JobAds />} />
-          <Route path="home/job/ads" element={<JobAds />} />
+          <Route path="job/ads" element={<JobAdsListPageV2 />} />
+          <Route path="home/job/ads" element={<JobAdsListPage />} />
           <Route path="home/job/ads/upload" element={<FileUploader />} />
 
           <Route path="home/faq" element={<FAQ />} />
@@ -55,10 +56,10 @@ function App() {
           <Route path="home/help" element={<Help />} />
 
           <Route path="home/Company" element={<CompanyFunctions />} />
-          <Route path="home/Company/ViewAds" element={<ViewAds/>}/>
-          <Route path="home/Company/ViewAds/:id" element={<ViewLogged/>}/>
-          <Route path="home/Company/CreateAds" element={<CreateAdds/>}/>
-          <Route path="home/Company/ViewAds/tasks/:id" element={<ViewTaskForCompetitionFunction/>}/>
+          <Route path="home/Company/ViewAds" element={<ViewAds />} />
+          <Route path="home/Company/ViewAds/:id" element={<ViewLogged />} />
+          <Route path="home/Company/CreateAds" element={<CreateAdds />} />
+          <Route path="home/Company/ViewAds/tasks/:id" element={<ViewTaskForCompetitionFunction />} />
           <Route path="/home/Company/ViewAds/Addtask/:id" element={<AddTaskForCompetitionFunction></AddTaskForCompetitionFunction>}></Route>
 
           <Route path="/home/Admin" element={<AdminFunctionsFunction></AdminFunctionsFunction>}></Route>

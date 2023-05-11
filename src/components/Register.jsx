@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { Form, FormInput } from './UI/Form';
 import { useNavigate } from 'react-router-dom'
 import TopBar from './TopBar';
@@ -17,6 +17,10 @@ export default function Register() {
         })
     }
 
+    useEffect(() => {
+        setErrorMessage("");
+    }, []);
+
     const handleSave = (e) => {
         e.preventDefault();
 
@@ -29,15 +33,12 @@ export default function Register() {
         }
 
         axios
-            .post(`http://localhost:5163/api/register`, request, { headers: { 'Content-Type': 'application/json' }})
+            .post(`http://localhost:5163/api/register`, request, { headers: { 'Content-Type': 'application/json' } })
             .then(() => {
                 navigate('/login');
             })
             .catch(error => {
                 if (error.response) {
-                    console.log(user);
-                    console.log(request);
-                    console.warn(error.response.data);
                     setErrorMessage(error.response.data);
                 } else if (error.request) {
                     console.warn('Request failed:', error.request);
@@ -52,9 +53,9 @@ export default function Register() {
     return (
         <>
             <TopBar title='workIT'
-            backButtonDisabled={true}
+                backButtonDisabled={true}
             />
-            <Form 
+            <Form
                 title='Register'
                 submitButtonTitle='Register'
                 onSubmit={handleSave}
@@ -66,7 +67,7 @@ export default function Register() {
                     placeholder='Name'
                     name='name'
                     value={user?.name}
-                    errorMessage={user?.name.length > 0 ? 'Name must begint with an upper case letter and only contain letters' : 'Field is required'}
+                    errorMessage={user?.name.length > 0 ? 'Name must begint with an upper case letter and only contain letters' : ''}
                     required={true}
                     pattern='[A-ZŽĶĻŅČĢŠĪĀĒŪ]{1}[a-zžšķļņģčīāūē\\s]+'
                 /> */}
@@ -77,7 +78,7 @@ export default function Register() {
                     placeholder='Surname'
                     name='surname'
                     value={user?.surname}
-                    errorMessage={user?.surname.length > 0 ? 'Surname must begint with an upper case letter and only contain letters' : 'Field is required'}
+                    errorMessage={user?.surname.length > 0 ? 'Surname must begint with an upper case letter and only contain letters' : ''}
                     required={true}
                     pattern='[A-ZŽĶĻŅČĢŠĪĀĒŪ]{1}[a-zžšķļņģčīāūē\\s]+'
                 /> */}
@@ -88,7 +89,7 @@ export default function Register() {
                     placeholder='Email'
                     name='email'
                     value={user?.email}
-                    errorMessage={user?.email?.length > 0 ? 'Email is not valid' : 'Field is required'}
+                    errorMessage={user?.email?.length > 0 ? 'Email is not valid' : ''}
                     required={true}
                     pattern='^[a-zA-Z0-9+_.-]+@[a-zA-Z0-9.-]+$'
                 />
@@ -99,7 +100,7 @@ export default function Register() {
                     placeholder='Username'
                     name='username'
                     value={user?.username}
-                    errorMessage={user?.username?.length > 0 ? 'Username must be between 5-20 characters and cannot contain _ and . caracters in front or end' : 'Field is required'}
+                    errorMessage={user?.username?.length > 0 ? 'Username must be between 5-20 characters and cannot contain _ and . caracters in front or end' : ''}
                     required={true}
                     pattern='^(?=[a-zA-Z0-9._]{5,20}$)(?!.*[_.]{2})[^_.].*[^_.]$'
                 />
@@ -109,7 +110,7 @@ export default function Register() {
                     label='Password'
                     placeholder='Password'
                     name='password'
-                    errorMessage={user?.password?.length > 0 ? 'Password must be 8-20 characters long and contain at least one letter, number and special character' : 'Field is required'}
+                    errorMessage={user?.password?.length > 0 ? 'Password must be 8-20 characters long and contain at least one letter, number and special character' : ''}
                     required={true}
                     pattern='^(?=.*[A-Za-z])(?=.*\d)(?=.*[@$!%*#?&])[A-Za-z\d@$!%*#?&]{8,20}$'
                 />
@@ -119,18 +120,18 @@ export default function Register() {
                     label='Confirm Password'
                     placeholder='Confirm password'
                     name='confirmPassword'
-                    errorMessage={user?.confirmPassword?.length > 0 ? 'Passwords do not match' : 'Field is required'}
+                    errorMessage={user?.confirmPassword?.length > 0 ? 'Passwords do not match' : ''}
                     required={true}
                     pattern={user?.password}
                 />
             </Form>
-            <center style={{paddingLeft:'60px', paddingRight: '60px'}}>
-            <Button
-                id="submitButton"
-                value="Login"
-                name="login-button"
-                onClick={() => navigate('/login')}
-            >Login</Button>
+            <center style={{ paddingLeft: '60px', paddingRight: '60px' }}>
+                <Button
+                    id="submitButton"
+                    value="Login"
+                    name="login-button"
+                    onClick={() => navigate('/login')}
+                >Login</Button>
             </center>
         </>
     );

@@ -44,8 +44,8 @@ export default function Table({ data, types, navigate }) {
       const valueB = b[sortKey];
 
       if (sortKey === 'difficulty') {
-      const order = { Easy: 1, Medium: 2, Hard: 3 };
-      return sortOrder === 'asc' ? order[valueA] - order[valueB] : order[valueB] - order[valueA];
+        const order = { Easy: 1, Medium: 2, Hard: 3 };
+        return sortOrder === 'asc' ? order[valueA] - order[valueB] : order[valueB] - order[valueA];
       }
 
       if (valueA < valueB) {
@@ -61,17 +61,17 @@ export default function Table({ data, types, navigate }) {
 
     // generate the rows based on the sorted data
     return sortedData.map((task, index) => (
-    <tr key={task.id} className="border-bottom delayed-animation" style={{animationDelay: `${index * 60}ms`}}>
-      <td>{task.id}</td>
-      <td>{task.name}</td>
-      <td className={`difficulty ${task.difficulty.toLowerCase()}`}>{task.difficulty}</td>
-      <td>{types.find(t => t.id === task.type_id)?.name}</td>
-      <td><Button
-        value="Try out"
-        name="go-to-task"
-        onClick={() => navigate(`/home/task/${task.id}`)}
-      /></td>
-    </tr>
+      <tr key={task.id} className="border-bottom delayed-animation" style={{ animationDelay: `${index * 60}ms` }}>
+        <td>{task.id}</td>
+        <td>{task.name}</td>
+        <td className={`difficulty ${task.difficulty.toLowerCase()}`}>{task.difficulty}</td>
+        <td>{types.find(t => t.id === task.type_id)?.name}</td>
+        <td><Button
+          value="Try out"
+          name="go-to-task"
+          onClick={() => navigate(`/home/task/${task.id}`)}
+        /></td>
+      </tr>
     ));
   };
 

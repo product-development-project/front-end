@@ -50,7 +50,7 @@ export default function Footer(props) {
   };
 
   return (
-    <FooterContainer style={{background: 'rgb(25,57,118)', background: 'linear-gradient(112deg, rgba(25,57,118,1) 0%, rgba(56,84,137,1) 99%)', borderTop:'4px solid white'}}>
+    <FooterContainer style={{ background: 'rgb(25,57,118)', background: 'linear-gradient(112deg, rgba(25,57,118,1) 0%, rgba(56,84,137,1) 99%)', borderTop: '4px solid white' }}>
       <div style={{ display: 'flex', justifyContent: 'space-evenly', width: '100%' }}>
         <LinkContainer>
           <Link onClick={(event) => scrollToSection(props.sectionRefs[0], event)}>

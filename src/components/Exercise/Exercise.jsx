@@ -31,13 +31,12 @@ export default function Exercise() {
         const image = new Image();
         image.src = `data:image/jpeg;base64,${result.data['problem']}`;
         const imgDiv = document.querySelector('.exercise');
-        if(!imgDiv.hasChildNodes())
-        {
+        if (!imgDiv.hasChildNodes()) {
           imgDiv.appendChild(image);
         }
-        setCode(Boilerplate({ taskName: result.data['name'], type: result.data['type_id']}));
+        setCode(Boilerplate({ taskName: result.data['name'], type: result.data['type_id'] }));
       })
-    }, []);    
+  }, []);
 
   const submitCode = event => {
     var exerciseName = data['name'];
@@ -51,23 +50,23 @@ export default function Exercise() {
     }
 
     axios
-        .post('http://localhost:5163/api/code/checker', request, { headers: { 'Content-Type': 'application/json' } })
-        .then(response => {
-          console.log(response.data);
-          setPassed(response.data["passed"]);
-          setFailed(response.data["failed"]);
-          setRunTime(response.data["runTime"]);
-          setMemory(response.data["memoryUsage"]);
-        })
-        .catch(error => {
-          if (error.request) {
-            console.warn('Request failed:', error.request);
-            setResponse('Request failed');
-          } else {
-            console.warn('Error:', error.message);
-            setResponse(error.message);
-          }
-        });    
+      .post('http://localhost:5163/api/code/checker', request, { headers: { 'Content-Type': 'application/json' } })
+      .then(response => {
+        console.log(response.data);
+        setPassed(response.data["passed"]);
+        setFailed(response.data["failed"]);
+        setRunTime(response.data["runTime"]);
+        setMemory(response.data["memoryUsage"]);
+      })
+      .catch(error => {
+        if (error.request) {
+          console.warn('Request failed:', error.request);
+          setResponse('Request failed');
+        } else {
+          console.warn('Error:', error.message);
+          setResponse(error.message);
+        }
+      });
   };
 
   return (
@@ -79,32 +78,32 @@ export default function Exercise() {
         </div>
 
         <div className="split right">
-          <div className="dropdownContainer" style={{paddingLeft: '0.8em'}}>
+          <div className="dropdownContainer" style={{ paddingLeft: '0.8em' }}>
             <select
-            className="dropdown"
-            value={language}
-            onChange={event => setLanguage(event.target.value)}
+              className="dropdown"
+              value={language}
+              onChange={event => setLanguage(event.target.value)}
             >
               <option value="python3">Python 3</option>
-              </select>
+            </select>
           </div>
-            <div className="codeField">
-              <CodeMirror className='CodeMirror'
-                value={code}
-                maxHeight='40em'
-                minHeight='2em'
-                maxWidth='60.6%'
-                extensions={extensions}
-                onChange={(editor, change) => {
-                  setCode(editor.valueOf())
-                }}
-              />
-            </div>
-            <div className="submitButtonDiv">
-            <p style={{paddingLeft: '0.2em'}}>{responseMessage}</p>
+          <div className="codeField">
+            <CodeMirror className='CodeMirror'
+              value={code}
+              maxHeight='40em'
+              minHeight='2em'
+              maxWidth='60.6%'
+              extensions={extensions}
+              onChange={(editor, change) => {
+                setCode(editor.valueOf())
+              }}
+            />
+          </div>
+          <div className="submitButtonDiv">
+            <p style={{ paddingLeft: '0.2em' }}>{responseMessage}</p>
             {buttonPressed && passedMessage.length > 0 && (
-              <table style={{width: '100%'}}>
-                <tbody style={{color: 'green'}}>
+              <table style={{ width: '100%' }}>
+                <tbody style={{ color: 'green' }}>
                   {passedMessage.map((message, index) => (
                     <tr key={index}>
                       <td>{message}</td>
@@ -114,8 +113,8 @@ export default function Exercise() {
               </table>
             )}
             {buttonPressed && failedMessage.length > 0 && (
-              <table style={{width: '100%'}}>
-                <tbody style={{color: 'red'}}>
+              <table style={{ width: '100%' }}>
+                <tbody style={{ color: 'red' }}>
                   {failedMessage.map((message, index) => (
                     <tr key={index}>
                       <td>{message}</td>
@@ -128,24 +127,24 @@ export default function Exercise() {
               <p>Run Time: {runTime}s</p>
               <p>Memory Usage: {memoryUsage.toFixed(4)}KB</p>
             </div>
-            <Button 
-                  style={{width: '30%', float: 'right'}}
-                  value="Submit"
-                  name="submit-task"
-                  onClick={() => {
-                    submitCode();
-                    setButtonPressed(true);
-                  }}  
+            <Button
+              style={{ width: '30%', float: 'right' }}
+              value="Submit"
+              name="submit-task"
+              onClick={() => {
+                submitCode();
+                setButtonPressed(true);
+              }}
             />
-            <Button 
-                  style={{width: '30%'}}
-                  value="Back"
-                  name="back-button"
-                  onClick={() => {
-                    navigate("/home/exercises")
-                  }}  
-            />       
-            </div>
+            <Button
+              style={{ width: '30%' }}
+              value="Back"
+              name="back-button"
+              onClick={() => {
+                navigate("/home/exercises")
+              }}
+            />
+          </div>
         </div>
       </div>
     </>

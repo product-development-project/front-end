@@ -7,7 +7,7 @@
   margin: 0 20px;
 }
 
-.tr{
+.tr {
   text-align: center;
 }
 
@@ -19,9 +19,11 @@ tr.border-bottom td {
   text-align: center;
   padding: 10px;
 }
+
 tr.table-header:hover {
   cursor: pointer;
 }
+
 table {
   margin: 0 auto;
 }

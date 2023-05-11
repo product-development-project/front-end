@@ -1,89 +1,95 @@
 /* Form css */
 .formInput {
-    display: flex;
-    flex-direction: column;
-    width: 100%;
-  }
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+}
 
-  select {
-    background-color: white;
-  }
-  
-  input, select {
-    padding: 15px;
-    margin: 10px 0px;
-    border-radius: 5px;
-    border: 1px solid grey;
-  }
-  
-  label {
-    font-size: 12px;
-    color: black;
-  }
-  span {
-    font-size: 12px;
-    color: red;
-    padding: 3px;
-    display: none;
-  }
-  
-  input:invalid[focused=true] ~ span, select:invalid[focused=true] ~ span {
-    display: block;
-  }
-  
-  input:invalid[focused=true], select:invalid[focused=true]{
-    border: 1px solid red;
-  }
-  
-  .form {
-    background-color: white;
-    padding: 0px 60px;
-    border-radius: 10px;
-    display: flex;
-    justify-content: center;
-  }
-  
-  .formTitle {
-    color: black;
-    text-align: center;
-  }
+select {
+  background-color: white;
+}
 
-  .submitButton {
-    width: 100%;
-    height: 50px;
-    padding: 10px;
-    border:0.1em solid black;
-    border-radius: 5px;
-    box-sizing: border-box;
-    color: white;
-    text-align:center;
-    transition: all 0.2s;
-    background-color: black;
-    margin-top: 15px;
-    margin-bottom: 5px;
-    font-size: 20px;
-  }
-  .submitButton:hover{
-  color:black;
-  background-color:white;
+input,
+select {
+  padding: 15px;
+  margin: 10px 0px;
+  border-radius: 5px;
+  border: 1px solid grey;
+}
+
+label {
+  font-size: 12px;
+  color: black;
+}
+
+span {
+  font-size: 12px;
+  color: red;
+  padding: 3px;
+  display: none;
+}
+
+input:invalid[focused=true]~span,
+select:invalid[focused=true]~span {
+  display: block;
+}
+
+input:invalid[focused=true],
+select:invalid[focused=true] {
+  border: 1px solid red;
+}
+
+.form {
+  background-color: white;
+  padding: 0px 60px;
+  border-radius: 10px;
+  display: flex;
+  justify-content: center;
+}
+
+.formTitle {
+  color: black;
+  text-align: center;
+}
+
+.submitButton {
+  width: 100%;
+  height: 50px;
+  padding: 10px;
+  border: 0.1em solid black;
+  border-radius: 5px;
+  box-sizing: border-box;
+  color: white;
+  text-align: center;
+  transition: all 0.2s;
+  background-color: black;
+  margin-top: 15px;
+  margin-bottom: 5px;
+  font-size: 20px;
+}
+
+.submitButton:hover {
+  color: black;
+  background-color: white;
   cursor: pointer;
 }
 
-.popup-buttons{
-    display:inline-block;
-    padding:0.35em 1.2em;
-    border:0.1em solid black;
-    margin:0 0.3em 0.3em 0;
-    border-radius:1em;
-    box-sizing: border-box;
-    color: white;
-    text-align:center;
-    transition: all 0.2s;
-    background-color: black;
-  }
-.popup-buttons:hover{
-  color:black;
-  background-color:white;
+.popup-buttons {
+  display: inline-block;
+  padding: 0.35em 1.2em;
+  border: 0.1em solid black;
+  margin: 0 0.3em 0.3em 0;
+  border-radius: 1em;
+  box-sizing: border-box;
+  color: white;
+  text-align: center;
+  transition: all 0.2s;
+  background-color: black;
+}
+
+.popup-buttons:hover {
+  color: black;
+  background-color: white;
   cursor: pointer;
 }
 

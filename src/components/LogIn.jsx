@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { useNavigate } from 'react-router-dom';
 import TopBar from './TopBar';
 import { Form, FormInput } from "./UI/Form";
@@ -12,7 +12,11 @@ export default function LogIn() {
   const [password, setPassword] = useState('');
 
   const navigate = useNavigate();
-  
+
+  useEffect(() => {
+    setErrorMessage("");
+  }, []);
+
   function decodeJwt(token) {
     const base64Payload = token.split('.')[1];
     const payloadBuffer = Buffer.from(base64Payload, 'base64');
@@ -23,37 +27,37 @@ export default function LogIn() {
   const handleSave = event => {
     event.preventDefault();
     let request = JSON.stringify({ username, password });
-  
+
     axios.post('http://localhost:5163/api/login', request, { headers: { 'Content-Type': 'application/json' } })
-        .then(response => {
-          let user = JSON.parse(JSON.stringify(response.data))
-          let data = decodeJwt(JSON.stringify(response.data));
-          localStorage.setItem('access-token', JSON.stringify(user.accessToken));
-          localStorage.setItem('username', data[Object.keys(data)[0]]);
-          localStorage.setItem('roles', data[Object.keys(data)[3]]);
-          localStorage.setItem('id', data[Object.keys(data)[2]]);
-          navigate("/home");
-        })
-        .catch(error => {
-          if (error.response) {
-            console.log(username);
-            console.log(request);
-            console.warn(error.response.data);
-            setErrorMessage(error.response.data);
-          } else if (error.request) {
-            console.warn('Request failed:', error.request);
-            setErrorMessage('Request failed');
-          } else {
-            console.warn('Error:', error.message);
-            setErrorMessage(error.message);
-          }
-        });
+      .then(response => {
+        let user = JSON.parse(JSON.stringify(response.data))
+        let data = decodeJwt(JSON.stringify(response.data));
+        localStorage.setItem('access-token', JSON.stringify(user.accessToken));
+        localStorage.setItem('username', data[Object.keys(data)[0]]);
+        localStorage.setItem('roles', data[Object.keys(data)[3]]);
+        localStorage.setItem('id', data[Object.keys(data)[2]]);
+        navigate("/home");
+      })
+      .catch(error => {
+        if (error.response) {
+          console.log(username);
+          console.log(request);
+          console.warn(error.response.data);
+          setErrorMessage(error.response.data);
+        } else if (error.request) {
+          console.warn('Request failed:', error.request);
+          setErrorMessage('Request failed');
+        } else {
+          console.warn('Error:', error.message);
+          setErrorMessage(error.message);
+        }
+      });
   };
 
   return (
     <>
       <TopBar title='workIT'
-      backButtonDisabled={true}
+        backButtonDisabled={true}
       />
       <Form
         title='Login'
@@ -71,7 +75,6 @@ export default function LogIn() {
           placeholder='Username'
           name='username'
           value={username}
-          errorMessage='Field is required'
           required={true}
         />
         <FormInput
@@ -84,18 +87,17 @@ export default function LogIn() {
           placeholder='Password'
           name='password'
           value={password}
-          errorMessage='Field is required'
           required={true}
         />
       </Form>
-      <center style={{paddingLeft:'60px', paddingRight: '60px'}}>
-            <Button
-                id="submitButton"
-                value="Register"
-                name="register-button"
-                onClick={() => navigate('/register')}
-            >Register</Button>
-        </center>
+      <center style={{ paddingLeft: '60px', paddingRight: '60px' }}>
+        <Button
+          id="submitButton"
+          value="Register"
+          name="register-button"
+          onClick={() => navigate('/register')}
+        >Register</Button>
+      </center>
     </>
   );
 };

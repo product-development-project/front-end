@@ -1,4 +1,4 @@
-.DivBox{
+.DivBox {
     border: 1px solid blue;
     display: inline-block;
     padding: 10px;
@@ -6,7 +6,7 @@
     position: absolute;
     top: 5em;
     left: 45%;
-    
+
     justify-content: center;
 }
 
@@ -14,8 +14,9 @@
     animation: fadeIn 0.3s ease-in-out;
     animation-fill-mode: both;
     opacity: 0;
-    
+
 }
+
 tr.border-bottom td {
     border: 1pt solid;
     border-image-slice: 1;

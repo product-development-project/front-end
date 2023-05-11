@@ -1,7 +1,6 @@
 import React, { useState, useEffect } from 'react'
-import { useNavigate } from 'react-router-dom';
-import Header from '../Header';
 import axios from 'axios';
+import HeaderV2 from '../HeaderV2';
 import '../JobAds/style.css';
 import { Button } from '../UI/Button';
 
@@ -13,28 +12,15 @@ function formatDate(dateString) {
     return `${year}-${month}-${day}`;
 }
 
-export default function JobAdsListPage() {
-    const navigate = useNavigate();
-
+export default function JobAdsListPageV2() {
     const [errorMessage, setErrorMessage] = useState('');
-    const [editPopupIsOpen, setEditPopupIsOpen] = useState(false);
-    const [user, setUser] = useState(null);
-    const [deletePopupIsOpen, setDeletePopupIsOpen] = useState(false);
     const [data, setData] = useState([]);
-    const [types, setTypes] = useState([]);
     const [sortColumn, setSortColumn] = useState(null);
     const [sortOrder, setSortOrder] = useState(1);
 
-    let username = localStorage.getItem('username')
-    const tokenWithQuotes = localStorage.getItem('access-token');
-    const token = tokenWithQuotes.substring(1, tokenWithQuotes.length - 1);
-    axios.defaults.headers.common['Authorization'] = `Bearer ${token}`;
     useEffect(() => {
-        if (!localStorage.getItem('access-token')) {
-            navigate('/');
-        }
         fetchLeaderboard();
-    }, [navigate, username]);
+    });
 
     async function fetchLeaderboard() {
         try {
@@ -64,14 +50,13 @@ export default function JobAdsListPage() {
 
     return (
         <>
-            <Header></Header>
+            <HeaderV2></HeaderV2>
             <table>
                 <tr className="border-bottom-JobList delayed-animation-JobList" style={{ animationDelay: `${50}ms` }}>
                     <td onClick={() => sortData('name')}>Name{sortColumn === 'name' && sortOrder === 1 ? ' ▲' : sortColumn === 'name' ? ' ▼' : ''}</td>
                     <td onClick={() => sortData('description')}>Description{sortColumn === 'description' && sortOrder === 1 ? ' ▲' : sortColumn === 'description' ? ' ▼' : ''}</td>
                     <td onClick={() => sortData('start')}>Start date{sortColumn === 'start' && sortOrder === 1 ? ' ▲' : sortColumn === 'start' ? ' ▼' : ''}</td>
                     <td onClick={() => sortData('end')}>End date{sortColumn === 'end' && sortOrder === 1 ? ' ▲' : sortColumn === 'end' ? ' ▼' : ''}</td>
-                    <td className='viewButton'>View competition</td>
                 </tr>
                 <tbody>
                     {data.map((item, index) => (
@@ -80,7 +65,6 @@ export default function JobAdsListPage() {
                             <td>{item.description}</td>
                             <td>{formatDate(item.start)}</td>
                             <td>{formatDate(item.end)}</td>
-                            <td><Button value="View" name="go-to-ad" onClick={() => navigate(`/home/ad/${item.id}`)} /></td>
                         </tr>
                     ))}
                 </tbody>

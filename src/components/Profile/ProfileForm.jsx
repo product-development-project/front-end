@@ -10,17 +10,16 @@ export default function ProfileForm({ onClose }) {
     const [user, setUser] = useState(null);
     const [errorMessage, setErrorMessage] = useState('');
     const navigate = useNavigate();
-    
+
     useEffect(() => {
         fetchUserInfo(username);
     });
 
-    async function fetchUserInfo(username)
-    {
-        let result = await axios.get(`http://localhost:5163/api/User/${username}`, { headers: { 'Content-Type': 'application/json'}})
+    async function fetchUserInfo(username) {
+        let result = await axios.get(`http://localhost:5163/api/User/${username}`, { headers: { 'Content-Type': 'application/json' } })
         setData(JSON.parse(JSON.stringify(result.data)));
     }
-    
+
     const handleChange = (e) => {
         setUser({
             ...user,
@@ -31,12 +30,12 @@ export default function ProfileForm({ onClose }) {
     const handleSave = (e) => {
         e.preventDefault();
         let request = {
-                name: user.name,
-                email: user.email,
-                username: user.username,
-                phoneNumber: user.phoneNumber
-            }
-            axios
+            name: user.name,
+            email: user.email,
+            username: user.username,
+            phoneNumber: user.phoneNumber
+        }
+        axios
             .put(`http://localhost:5163/api/User/${user.username}`, request, { headers: { 'Content-Type': 'application/json' } })
             .then((result) => {
                 onClose();
@@ -45,21 +44,21 @@ export default function ProfileForm({ onClose }) {
                 if (error.response) {
                     console.warn(error.response.data);
                     setErrorMessage(error.response.data);
-                  } else if (error.request) {
+                } else if (error.request) {
                     console.warn('Request failed:', error.request);
                     setErrorMessage('Request failed');
-                  } else {
+                } else {
                     console.warn('Error:', error.message);
                     setErrorMessage(error.message);
-                  }
+                }
             })
-        }
+    }
 
     return (
         <>
             <TopBar
-            title='workIT'
-            backButtonDisabled={true} />
+                title='workIT'
+                backButtonDisabled={true} />
             <Form
                 title={'Edit profile'}
                 submitButtonTitle={'Save'}
@@ -72,7 +71,7 @@ export default function ProfileForm({ onClose }) {
                     placeholder='Name'
                     name='name'
                     value={data?.name}
-                    errorMessage={data?.name?.length > 0 ? 'Name must begin with an upper case letter and only contain letters' :'Field is required'}
+                    errorMessage={data?.name?.length > 0 ? 'Name must begin with an upper case letter and only contain letters' : 'Field is required'}
                     required={true}
                     pattern='[A-ZŽĶĻŅČĢŠĪĀĒŪ]{1}[a-zžšķļņģčīāūē\\s]+'
                 />
@@ -83,7 +82,7 @@ export default function ProfileForm({ onClose }) {
                     placeholder='Surname'
                     name='surname'
                     value={data?.surname}
-                    errorMessage={data?.surname?.length > 0 ? 'Surname must begin with an upper case letter and only contain letters' :'Field is required'}
+                    errorMessage={data?.surname?.length > 0 ? 'Surname must begin with an upper case letter and only contain letters' : 'Field is required'}
                     required={true}
                     pattern='[A-ZŽĶĻŅČĢŠĪĀĒŪ]{1}[a-zžšķļņģčīāūē\\s]+'
                 />

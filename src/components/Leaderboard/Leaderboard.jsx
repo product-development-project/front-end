@@ -28,13 +28,12 @@ export default function Leaderboard() {
         fetchLeaderboard();
     }, [navigate, username]);
 
-    async function fetchLeaderboard()
-    {
+    async function fetchLeaderboard() {
         try {
-            let result = await axios.get(`http://localhost:5163/api/Ratings`, { headers: { 'Content-Type': 'application/json'}});
+            let result = await axios.get(`http://localhost:5163/api/Ratings`, { headers: { 'Content-Type': 'application/json' } });
             setData(JSON.parse(JSON.stringify(result.data)));
         }
-        catch(error) {
+        catch (error) {
             console.log(error);
             setErrorMessage("Failed to fetch data");
         }
@@ -57,27 +56,27 @@ export default function Leaderboard() {
 
     return (
         <>
-        <Header></Header>
-        <table>
-        <tr className="border-bottom-Leaderboard delayed-animation-Leaderboard" style={{animationDelay: `${50}ms`}}>
-            <td onClick={() => sortData('userName')}>Username{sortColumn === 'userName' && sortOrder === 1 ? ' ▲' : sortColumn === 'userName' ? ' ▼' : ''}</td>
-            <td onClick={() => sortData('correctnesPoints')}>Correctness points{sortColumn === 'correctnesPoints' && sortOrder === 1 ? ' ▲' : sortColumn === 'correctnesPoints' ? ' ▼' : ''}</td>
-            <td onClick={() => sortData('recourcesPoints')}>Resources points{sortColumn === 'recourcesPoints' && sortOrder === 1 ? ' ▲' : sortColumn === 'recourcesPoints' ? ' ▼' : ''}</td>
-            <td onClick={() => sortData('timePoints')}>Time points{sortColumn === 'timePoints' && sortOrder === 1 ? ' ▲' : sortColumn === 'timePoints' ? ' ▼' : ''}</td>
-            <td onClick={() => sortData('totalPoints')}>Total points{sortColumn === 'totalPoints' && sortOrder === 1 ? ' ▲' : sortColumn === 'totalPoints' ? ' ▼' : ''}</td>
-        </tr>
-        <tbody>
-        {data.map((item, index) => (
-            <tr key={item.id} className="delayed-animation" style={{animationDelay: `${50 * (index + 1)}ms`}}>
-                <td>{item.userName}</td>
-                <td>{item.correctnesPoints}</td>
-                <td>{item.recourcesPoints}</td>
-                <td>{item.timePoints}</td>
-                <td>{item.totalPoints}</td>
-            </tr>
-        ))}
-        </tbody>
-        </table>
+            <Header></Header>
+            <table>
+                <tr className="border-bottom-Leaderboard delayed-animation-Leaderboard" style={{ animationDelay: `${50}ms` }}>
+                    <td onClick={() => sortData('userName')}>Username{sortColumn === 'userName' && sortOrder === 1 ? ' ▲' : sortColumn === 'userName' ? ' ▼' : ''}</td>
+                    <td onClick={() => sortData('correctnesPoints')}>Correctness points{sortColumn === 'correctnesPoints' && sortOrder === 1 ? ' ▲' : sortColumn === 'correctnesPoints' ? ' ▼' : ''}</td>
+                    <td onClick={() => sortData('recourcesPoints')}>Resources points{sortColumn === 'recourcesPoints' && sortOrder === 1 ? ' ▲' : sortColumn === 'recourcesPoints' ? ' ▼' : ''}</td>
+                    <td onClick={() => sortData('timePoints')}>Time points{sortColumn === 'timePoints' && sortOrder === 1 ? ' ▲' : sortColumn === 'timePoints' ? ' ▼' : ''}</td>
+                    <td onClick={() => sortData('totalPoints')}>Total points{sortColumn === 'totalPoints' && sortOrder === 1 ? ' ▲' : sortColumn === 'totalPoints' ? ' ▼' : ''}</td>
+                </tr>
+                <tbody>
+                    {data.map((item, index) => (
+                        <tr key={item.id} className="delayed-animation" style={{ animationDelay: `${50 * (index + 1)}ms` }}>
+                            <td>{item.userName}</td>
+                            <td>{item.correctnesPoints}</td>
+                            <td>{item.recourcesPoints}</td>
+                            <td>{item.timePoints}</td>
+                            <td>{item.totalPoints}</td>
+                        </tr>
+                    ))}
+                </tbody>
+            </table>
         </>
     )
 }

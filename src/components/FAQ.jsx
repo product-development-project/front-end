@@ -10,8 +10,8 @@ import Typography from '@material-ui/core/Typography';
 import ExpandMoreIcon from '@material-ui/icons/ExpandMore';
 
 export default function FAQ() {
-    return (
-     <div>
+  return (
+    <div>
       <Accordion>
         <AccordionSummary
           expandIcon={<ExpandMoreIcon />}
@@ -40,7 +40,7 @@ export default function FAQ() {
           </Typography>
         </AccordionDetails>
       </Accordion>
-            <Accordion>
+      <Accordion>
         <AccordionSummary
           expandIcon={<ExpandMoreIcon />}
           aria-controls="panel2a-content"
@@ -51,11 +51,11 @@ export default function FAQ() {
         <AccordionDetails>
           <Typography>
             Companies can use this system as a means to discover talented programmers and identify potential employees. Participants who have good programming skills and can cope well with tasks can be potential candidates for jobs in the company.
-Companies can organize competitions for jobs, submit tasks or use system tasks that will be checked automatically. The company will be able to review the code and the effectiveness of the code.
+            Companies can organize competitions for jobs, submit tasks or use system tasks that will be checked automatically. The company will be able to review the code and the effectiveness of the code.
           </Typography>
         </AccordionDetails>
       </Accordion>
-            <Accordion>
+      <Accordion>
         <AccordionSummary
           expandIcon={<ExpandMoreIcon />}
           aria-controls="panel2a-content"
@@ -65,7 +65,7 @@ Companies can organize competitions for jobs, submit tasks or use system tasks t
         </AccordionSummary>
         <AccordionDetails>
           <Typography>
-           The achievements of the participants in the competition are evaluated according to the speed, correctness and efficiency of their decisions. The faster and more correctly the participant solves the task, the more points he gets. Points can be used on a leaderboard where participants rank, leading to prizes or recognition.
+            The achievements of the participants in the competition are evaluated according to the speed, correctness and efficiency of their decisions. The faster and more correctly the participant solves the task, the more points he gets. Points can be used on a leaderboard where participants rank, leading to prizes or recognition.
           </Typography>
         </AccordionDetails>
       </Accordion>

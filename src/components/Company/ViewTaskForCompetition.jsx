@@ -1,12 +1,11 @@
-import TopBar from '../TopBar';
 import Header from '../Header';
 import { Button } from '../UI/Button';
 import React, { useState, useEffect } from 'react'
-import Footer from '../Footer';
 import { useNavigate } from 'react-router-dom';
 import './style.css';
 import axios from 'axios';
-import Table from '../Exercises/OrderedTable'; 
+import Table from '../Exercises/OrderedTable';
+
 export default function ViewTaskForCompetitionFunction() {
     const navigate = useNavigate();
     const [data, setData] = useState([]);
@@ -25,28 +24,24 @@ export default function ViewTaskForCompetitionFunction() {
         fetchExercises(username, currentId);
         fetchExercisesTypes();
     }, [navigate, username, currentId]);
-    
 
-    async function fetchExercises(username, currentId)
-    {
-        let result = await axios.get(`http://localhost:5163/api/Task/Competition/`+currentId, { headers: { 'Content-Type': 'application/json'}})
+
+    async function fetchExercises(username, currentId) {
+        let result = await axios.get(`http://localhost:5163/api/Task/Competition/` + currentId, { headers: { 'Content-Type': 'application/json' } })
         setData(JSON.parse(JSON.stringify(result.data)));
     }
 
-      async function fetchExercisesTypes()
-  {
-        let result = await axios.get(`http://localhost:5163/api/TaskType`, { headers: { 'Content-Type': 'application/json'}})
+    async function fetchExercisesTypes() {
+        let result = await axios.get(`http://localhost:5163/api/TaskType`, { headers: { 'Content-Type': 'application/json' } })
         setTypes(JSON.parse(JSON.stringify(result.data)));
-  }
+    }
 
     return (
         <>
-        <Header></Header>
-        <div className='Exercises'>
-        <Table data={data} types={types} navigate={navigate} />
-        </div>
-        <Footer>
-        </Footer>
+            <Header></Header>
+            <div className='Exercises'>
+                <Table data={data} types={types} navigate={navigate} />
+            </div>
         </>
     );
 };

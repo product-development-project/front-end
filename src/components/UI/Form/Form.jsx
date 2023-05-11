@@ -6,8 +6,8 @@ export default function Form(props) {
     return (
         <div className='form'>
             <form style={{
-                    width: '60%'
-                }}
+                width: '60%'
+            }}
                 onSubmit={props.onSubmit}
             >
                 <h1 className='formTitle'>{props.title}</h1>

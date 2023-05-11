@@ -1,12 +1,9 @@
-import TopBar from '../TopBar';
 import Header from '../Header';
 import { Button } from '../UI/Button';
 import React, { useState, useEffect } from 'react'
-import Footer from '../Footer';
 import { useNavigate } from 'react-router-dom';
 import './style.css';
 import axios from 'axios';
-
 
 export default function ViewLogged() {
     const navigate = useNavigate();
@@ -30,36 +27,32 @@ export default function ViewLogged() {
         fetchCompanyAdsLogged(username, currentId);
         fetchExercisesTypes();
     }, [navigate, username, currentId]);
-    
 
-    async function fetchCompanyAdsLogged(username, currentId)
-    {
-        let result = await axios.get(`http://localhost:5163/api/Ad/CompanyAds/`+currentId+`/Logged`, { headers: { 'Content-Type': 'application/json'}})
+
+    async function fetchCompanyAdsLogged(username, currentId) {
+        let result = await axios.get(`http://localhost:5163/api/Ad/CompanyAds/` + currentId + `/Logged`, { headers: { 'Content-Type': 'application/json' } })
         setData(JSON.parse(JSON.stringify(result.data)));
     }
 
-      async function fetchExercisesTypes()
-  {
-        let result = await axios.get(`http://localhost:5163/api/TaskType`, { headers: { 'Content-Type': 'application/json'}})
+    async function fetchExercisesTypes() {
+        let result = await axios.get(`http://localhost:5163/api/TaskType`, { headers: { 'Content-Type': 'application/json' } })
         setTypes(JSON.parse(JSON.stringify(result.data)));
-  }
+    }
 
     return (
         <>
-        <Header></Header>
-        <table>
-            {data.map((dataa, index) => (
-                <tr key={index} className="border-bottom delayed-animation" style={{animationDelay: `${index * 50}ms`}}>
-                    <td>{dataa.userName}</td>
-                    <td>{dataa.correctnesPoints}</td>
-                    <td>{dataa.recourcesPoints}</td>
-                    <td>{dataa.timePoints}</td>
-                    <td>{dataa.totalPoints}</td>
-                </tr>
-            ))}
-        </table>
-        <Footer>
-        </Footer>
+            <Header></Header>
+            <table>
+                {data.map((dataa, index) => (
+                    <tr key={index} className="border-bottom delayed-animation" style={{ animationDelay: `${index * 50}ms` }}>
+                        <td>{dataa.userName}</td>
+                        <td>{dataa.correctnesPoints}</td>
+                        <td>{dataa.recourcesPoints}</td>
+                        <td>{dataa.timePoints}</td>
+                        <td>{dataa.totalPoints}</td>
+                    </tr>
+                ))}
+            </table>
         </>
     );
 };

@@ -8,17 +8,17 @@ import Table from './OrderedTable'; // Import the Table component
 import Header from '../Header';
 //NEKISTI KONSTANTOS IŠ VISO BE MANO LEIDIMO AČIŪ
 const difficulties = {
-  difficultiesInner:[
+  difficultiesInner: [
     'Choose',
     'Easy',
     'Medium',
     'Hard'
-    ]
+  ]
 };
 
 //NEKISTI KONSTANTOS IŠ VISO BE MANO LEIDIMO AČIŪ
 const exercises = {
-  exercisesInner:[
+  exercisesInner: [
     'Choose',
     'Integer manipulation',
     'Array manipulation',
@@ -33,7 +33,7 @@ const exercises = {
 
 export default function Exercises() {
 
-  
+
   const navigate = useNavigate();
   const [difficultiesSelection, setDifficulty] = useState(difficulties.difficultiesInner[0])
   const [exerciseTypeSelection, setTopic] = useState(exercises.exercisesInner[0]);
@@ -45,7 +45,7 @@ export default function Exercises() {
       .then(result => {
         setData(JSON.parse(JSON.stringify(result.data)));
       })
-    }, []);     
+  }, []);
 
 
   useEffect(() => {
@@ -53,55 +53,45 @@ export default function Exercises() {
     fetchExercisesTypes();
   }, [navigate, difficultiesSelection, exerciseTypeSelection]);
 
-  async function fetchExercises()
-  {
-        //NEKISTI METODO IŠ VISO BE MANO LEIDIMO AČIŪ
-        let test = 0;
-        if(exerciseTypeSelection === 'Choose')
-        {
-          test = 0;
-        }else if(exerciseTypeSelection === 'Integer manipulation')
-        {
-          test = 1;
-        }else if(exerciseTypeSelection === 'Array manipulation')
-        {
-          test = 2;
-        }else if(exerciseTypeSelection === 'Date manipulation')
-        {
-          test = 3;
-        }else if(exerciseTypeSelection === 'Nested array manipulation')
-        {
-          test = 4;
-        }else if(exerciseTypeSelection === 'String manipulation')
-        {
-          test = 5;
-        }else if(exerciseTypeSelection === 'Linked list manipulation')
-        {
-          test = 6;
-        }else if(exerciseTypeSelection === 'Regular expressions')
-        {
-          test = 7;
-        }
-        //NEKISTI METODO IŠ VISO BE MANO LEIDIMO AČIŪ
-        let result = await axios.get(`http://localhost:5163/api/Task/${difficultiesSelection}/${test}`, { headers: { 'Content-Type': 'application/json'}})
-        setData(JSON.parse(JSON.stringify(result.data)));
-        console.log(difficultiesSelection);
-        console.log(exerciseTypeSelection);
+  async function fetchExercises() {
+    //NEKISTI METODO IŠ VISO BE MANO LEIDIMO AČIŪ
+    let test = 0;
+    if (exerciseTypeSelection === 'Choose') {
+      test = 0;
+    } else if (exerciseTypeSelection === 'Integer manipulation') {
+      test = 1;
+    } else if (exerciseTypeSelection === 'Array manipulation') {
+      test = 2;
+    } else if (exerciseTypeSelection === 'Date manipulation') {
+      test = 3;
+    } else if (exerciseTypeSelection === 'Nested array manipulation') {
+      test = 4;
+    } else if (exerciseTypeSelection === 'String manipulation') {
+      test = 5;
+    } else if (exerciseTypeSelection === 'Linked list manipulation') {
+      test = 6;
+    } else if (exerciseTypeSelection === 'Regular expressions') {
+      test = 7;
+    }
+    //NEKISTI METODO IŠ VISO BE MANO LEIDIMO AČIŪ
+    let result = await axios.get(`http://localhost:5163/api/Task/${difficultiesSelection}/${test}`, { headers: { 'Content-Type': 'application/json' } })
+    setData(JSON.parse(JSON.stringify(result.data)));
+    console.log(difficultiesSelection);
+    console.log(exerciseTypeSelection);
   }
 
-  async function fetchExercisesTypes()
-  {
-        let result = await axios.get(`http://localhost:5163/api/TaskType`, { headers: { 'Content-Type': 'application/json'}})
-        setTypes(JSON.parse(JSON.stringify(result.data)));
+  async function fetchExercisesTypes() {
+    let result = await axios.get(`http://localhost:5163/api/TaskType`, { headers: { 'Content-Type': 'application/json' } })
+    setTypes(JSON.parse(JSON.stringify(result.data)));
   }
 
 
 
-  
+
 
   return (
     <>
-    <Header></Header>
+      <Header></Header>
 
       <div className="App">
         <div className="columns-container">
@@ -123,7 +113,7 @@ export default function Exercises() {
           </div>
         </div>
         <div className='Exercises'>
-        <Table data={data} types={types} navigate={navigate} />
+          <Table data={data} types={types} navigate={navigate} />
         </div>
 
       </div>

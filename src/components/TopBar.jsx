@@ -22,7 +22,7 @@ export default function TopBar(props) {
                 justifyContent: "space-between",
                 position: 'relative',
                 zIndex: '2',
-                borderBottom: '4px solid white'      
+                borderBottom: '4px solid white'
             }}
         >
             <LogoContainer
@@ -37,8 +37,8 @@ export default function TopBar(props) {
                     } else {
                         navigate('/home');
                     }
-                    }}>
-                    <img src={Logo} alt='img' style={{height:'100%', width:'350%', objectFit:'cover'}}></img>
+                }}>
+                    <img src={Logo} alt='img' style={{ height: '100%', width: '350%', objectFit: 'cover' }}></img>
                 </btn>
             </LogoContainer>
             <div

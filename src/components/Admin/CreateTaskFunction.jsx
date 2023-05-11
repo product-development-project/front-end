@@ -1,24 +1,25 @@
-import TopBar from '../TopBar';
 import Header from '../Header';
 import { Button } from '../UI/Button';
 import React, { useState, useEffect } from 'react'
-import Footer from '../Footer';
 import { useNavigate } from 'react-router-dom';
 import './style.css';
 import axios from 'axios';
-
 
 export default function CreateTask() {
   const navigate = useNavigate();
   const [types, setTypes] = useState([]);
 
-const handleFileChange = (event) => {
-  const file = event.target.files[0];
-  const arrayBuffer = file.arrayBuffer();
-  const bytes = new Uint8Array(arrayBuffer);
-  const byteString = bytes.toString();
-  setFormData({ ...formData, problem: byteString });
-};
+  const handleFileChange = (event) => {
+    const file = event.target.files[0];
+    const reader = new FileReader();
+    reader.onload = (event) => {
+      const buffer = reader.result;
+      const bytes = new Uint8Array(buffer).toString();
+      setFormData({ ...formData, problem: bytes });
+    };
+    reader.readAsArrayBuffer(file);
+  };
+
   const tokenWithQuotes = localStorage.getItem('access-token');
   const token = tokenWithQuotes.substring(1, tokenWithQuotes.length - 1);
   axios.defaults.headers.common['Authorization'] = `Bearer ${token}`;
@@ -50,8 +51,6 @@ const handleFileChange = (event) => {
     const value = event.target.type === 'checkbox' ? event.target.checked : event.target.value;
     setFormData({ ...formData, [name]: value });
   };
-
-  
 
   const handleSubmit = async (event) => {
     event.preventDefault();
@@ -111,9 +110,9 @@ const handleFileChange = (event) => {
               Difficulty:
               <select name="difficulty" value={formData.difficulty} onChange={handleChange} required>
                 <option value="">-- Select difficulty --</option>
-                <option value="easy">Easy</option>
-                <option value="medium">Medium</option>
-                <option value="hard">Hard</option>
+                <option value="Easy">Easy</option>
+                <option value="Medium">Medium</option>
+                <option value="Hard">Hard</option>
               </select>
             </label>
           </td>
