@@ -5,7 +5,7 @@ import { makeStyles } from '@material-ui/core/styles';
 import Card from '@material-ui/core/Card';
 import CardContent from '@material-ui/core/CardContent';
 import Typography from '@material-ui/core/Typography';
-import { CiPhone, CiMail } from 'react-icons/ci';
+import { CiPhone, CiMail, CiDesktop, CiHome } from 'react-icons/ci';
 import { CgProfile } from 'react-icons/cg';
 import { IconContext } from 'react-icons';
 import { Popup } from '../UI/Popup';
@@ -44,11 +44,14 @@ export default function Profile() {
     const navigate = useNavigate();
     const classes = useStyles();
     const [data, setData] = useState([]);
+    const [companyData, setCompanyData] = useState([]);
     const [graphData, setGraphData] = useState([]);
     let username = localStorage.getItem('username')
     const tokenWithQuotes = localStorage.getItem('access-token');
     const token = tokenWithQuotes.substring(1, tokenWithQuotes.length - 1);
     axios.defaults.headers.common['Authorization'] = `Bearer ${token}`;
+
+    let role = localStorage.getItem('roles');
 
     useEffect(() => {
         if (!localStorage.getItem('access-token')) {
@@ -56,6 +59,7 @@ export default function Profile() {
         }
         fetchUserInfo(username);
         fetchUserCompletedTasks(username);
+        fetchCompanyInfo(username)
         createGraph();
     }, [navigate, username]);
     
@@ -69,6 +73,13 @@ export default function Profile() {
     {
         let result = await axios.get(`http://localhost:5163/api/TaskCount/${username}`, { headers: { 'Content-Type': 'application/json'}})
         setTaskCount(JSON.parse(JSON.stringify(result.data)));
+    }
+
+    async function fetchCompanyInfo(username)
+    {
+        let result = await axios.get(`http://localhost:5163/api/Company/${username}`, { headers: { 'Content-Type': 'application/json'}})
+        setCompanyData(JSON.parse(JSON.stringify(result.data)));
+        console.log(companyData);
     }
 
     async function createGraph()
@@ -121,7 +132,9 @@ export default function Profile() {
     return (
         <>
             <Header></Header>
-                        
+            
+            {
+            role.includes("User") ?            
             <center style={{marginTop: '5%'}}>
                 <Card className={classes.root}>
                     <CardContent>
@@ -216,6 +229,226 @@ export default function Profile() {
                     />
                 </div>
             </center>
+            :
+            <>
+            </>
+            }
+
+            {
+            role.includes("Company") ?            
+            <center style={{marginTop: '5%'}}>
+                <Card className={classes.root}>
+                    <CardContent>
+                        <Typography variant="h6" component="h2" style={{marginBottom: '10px'}}>
+                            Hello, {data.name}
+                        </Typography>     
+                        <div style={{float: 'left'}}>
+                            <Card style={{width: '300px', height: '190px'}}>
+                                <CardContent>
+                                    <Typography className={classes.pos} color="initial">
+                                        <IconContext.Provider value={{ size: '1.2em', style: { verticalAlign: 'middle' }}}>
+                                            <CgProfile />
+                                        </IconContext.Provider>
+                                            {companyData.pavadinimas}
+                                    </Typography>
+                                    <Typography className={classes.pos} color="initial">
+                                        <IconContext.Provider value={{ size: '1.2em', style: { verticalAlign: 'middle' }}}>
+                                            <CiMail />
+                                        </IconContext.Provider>
+                                        {companyData.email}
+                                    </Typography>
+                                    <Typography className={classes.pos} color="initial">
+                                        <IconContext.Provider value={{ size: '1.2em'}}>
+                                        <CiDesktop />
+                                        </IconContext.Provider>
+                                        {companyData.svetaine}
+                                    </Typography>
+                                    <Typography className={classes.pos} color="initial">
+                                        <IconContext.Provider value={{ size: '1.2em'}}>
+                                        <CiHome />
+                                        </IconContext.Provider>
+                                        {companyData.adresas}
+                                    </Typography>
+                                    <Typography className={classes.pos} color="initial">
+                                        <IconContext.Provider value={{ size: '1.2em'}}>
+                                        <CiPhone/>
+                                        </IconContext.Provider>
+                                        {companyData.telefonas}
+                                    </Typography>
+                                </CardContent>
+                            </Card>
+                        </div>
+                        <div style={{ position: 'absolute', paddingTop: '200px'}}>
+                            <Card style={{width: '300px', height: '150px'}}>
+                                <CardContent>
+                                    <Typography className={classes.pos} color="initial">
+                                        Milestones on workIT page
+                                    </Typography> 
+                                    <Typography className={classes.pos} color="initial">
+                                        Place in leaderboard: 8
+                                    </Typography>
+                                    <Typography className={classes.pos} color="initial">
+                                        Exercices completed: {taskCount.count}
+                                    </Typography> 
+                                </CardContent>
+                            </Card>
+                        </div>
+                        <div>
+                            <Card style={{width: '550px', height: '350px'}}>
+                                <CardContent>
+                                    <Typography className={classes.pos} color="initial">
+                                        Code analysis between other users
+                                    </Typography>
+                                    {graphData.datasets && graphData.datasets.length > 0 &&
+                                    <div style={{paddingTop: '1em'}}>
+                                        <Bar
+                                        data={graphData}
+                                        options={{
+                                            title: {
+                                                display: true,
+                                                fontSize: 20
+                                            },
+                                            legend: {
+                                                display: true,
+                                                position: 'right'
+                                            }
+                                        }}
+                                        />
+                                    </div>
+                                    }
+                                </CardContent>
+                            </Card>
+                        </div>
+                    </CardContent>
+                </Card>
+                <div style={{marginRight: '10px', width: '800px', position:'relative', zIndex:'2'}}>
+                    <Button
+                    value="Edit information"
+                    name="profile-edit-button"
+                    onClick={() => toggleEditPopup()}
+                    style={{
+                        marginTop: '10px',
+                        float: 'right'
+                    }}
+                    />
+                    <Button
+                    value="Delete profile"
+                    name="profile-delete-button"
+                    onClick={() => toggleDeletePopup()}
+                    style={{
+                        marginTop: '10px',
+                        float: 'right'
+                    }}
+                    />
+                </div>
+            </center>
+            :
+            <>
+            </>
+            }
+
+            {
+            role.includes("Admin") ?            
+            <center style={{marginTop: '5%'}}>
+                <Card className={classes.root}>
+                    <CardContent>
+                        <Typography variant="h6" component="h2" style={{marginBottom: '10px'}}>
+                            Hello, {data.name}
+                        </Typography>     
+                        <div style={{float: 'left'}}>
+                            <Card style={{width: '300px', height: '150px'}}>
+                                <CardContent>
+                                    <Typography className={classes.pos} color="initial">
+                                        <IconContext.Provider value={{ size: '1.2em', style: { verticalAlign: 'middle' }}}>
+                                            <CgProfile />
+                                        </IconContext.Provider>
+                                        {data.name}
+                                    </Typography>
+                                    <Typography className={classes.pos} color="initial">
+                                        <IconContext.Provider value={{ size: '1.2em', style: { verticalAlign: 'middle' }}}>
+                                            <CiMail />
+                                        </IconContext.Provider>
+                                        {data.email}
+                                    </Typography>
+                                    <Typography className={classes.pos} color="initial">
+                                        <IconContext.Provider value={{ size: '1.2em'}}>
+                                        <CiPhone/>
+                                        </IconContext.Provider>
+                                        {data.phonenumber}
+                                    </Typography>
+                                </CardContent>
+                            </Card>
+                        </div>
+                        <div style={{ position: 'absolute', paddingTop: '200px'}}>
+                            <Card style={{width: '300px', height: '150px'}}>
+                                <CardContent>
+                                    <Typography className={classes.pos} color="initial">
+                                        Milestones on workIT page
+                                    </Typography> 
+                                    <Typography className={classes.pos} color="initial">
+                                        Place in leaderboard: 8
+                                    </Typography>
+                                    <Typography className={classes.pos} color="initial">
+                                        Exercices completed: {taskCount.count}
+                                    </Typography> 
+                                </CardContent>
+                            </Card>
+                        </div>
+                        <div>
+                            <Card style={{width: '550px', height: '350px'}}>
+                                <CardContent>
+                                    <Typography className={classes.pos} color="initial">
+                                        Code analysis between other users
+                                    </Typography>
+                                    {graphData.datasets && graphData.datasets.length > 0 &&
+                                    <div style={{paddingTop: '1em'}}>
+                                        <Bar
+                                        data={graphData}
+                                        options={{
+                                            title: {
+                                                display: true,
+                                                fontSize: 20
+                                            },
+                                            legend: {
+                                                display: true,
+                                                position: 'right'
+                                            }
+                                        }}
+                                        />
+                                    </div>
+                                    }
+                                </CardContent>
+                            </Card>
+                        </div>
+                    </CardContent>
+                </Card>
+                <div style={{marginRight: '10px', width: '800px', position:'relative', zIndex:'2'}}>
+                    <Button
+                    value="Edit information"
+                    name="profile-edit-button"
+                    onClick={() => toggleEditPopup()}
+                    style={{
+                        marginTop: '10px',
+                        float: 'right'
+                    }}
+                    />
+                    <Button
+                    value="Delete profile"
+                    name="profile-delete-button"
+                    onClick={() => toggleDeletePopup()}
+                    style={{
+                        marginTop: '10px',
+                        float: 'right'
+                    }}
+                    />
+                </div>
+            </center>
+            :
+            <>
+            </>
+            }
+
+           
 
             {editPopupIsOpen &&
                 <Popup
