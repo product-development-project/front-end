@@ -43,7 +43,6 @@ export default function Exercises() {
   useEffect(() => {
     axios("http://localhost:5163/api/Task")
       .then(result => {
-        console.log(result);
         setData(JSON.parse(JSON.stringify(result.data)));
       })
     }, []);     
