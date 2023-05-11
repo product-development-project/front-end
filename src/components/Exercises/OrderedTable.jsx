@@ -78,7 +78,7 @@ export default function Table({ data, types, navigate }) {
   return (
     <table>
       <thead>
-        <tr className="border-bottom delayed-animation">{generateHeaders()}</tr>
+        <tr className="table-header delayed-animation">{generateHeaders()}</tr>
       </thead>
       <tbody>{generateRows()}</tbody>
     </table>

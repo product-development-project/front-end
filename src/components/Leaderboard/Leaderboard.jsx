@@ -59,7 +59,7 @@ export default function Leaderboard() {
         <>
         <Header></Header>
         <table>
-        <tr className="border-bottom delayed-animation" style={{animationDelay: `${50}ms`}}>
+        <tr className="border-bottom-Leaderboard delayed-animation-Leaderboard" style={{animationDelay: `${50}ms`}}>
             <td onClick={() => sortData('userName')}>Username{sortColumn === 'userName' && sortOrder === 1 ? ' ▲' : sortColumn === 'userName' ? ' ▼' : ''}</td>
             <td onClick={() => sortData('correctnesPoints')}>Correctness points{sortColumn === 'correctnesPoints' && sortOrder === 1 ? ' ▲' : sortColumn === 'correctnesPoints' ? ' ▼' : ''}</td>
             <td onClick={() => sortData('recourcesPoints')}>Resources points{sortColumn === 'recourcesPoints' && sortOrder === 1 ? ' ▲' : sortColumn === 'recourcesPoints' ? ' ▼' : ''}</td>
