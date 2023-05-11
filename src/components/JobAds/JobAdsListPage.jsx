@@ -13,7 +13,7 @@ function formatDate(dateString) {
     return `${year}-${month}-${day}`;
   }
 
-export default function Leaderboard() {
+export default function JobAdsListPage() {
     const navigate = useNavigate();
 
     const [errorMessage, setErrorMessage] = useState('');
