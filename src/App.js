@@ -26,6 +26,8 @@ import ApproveCompanies from './components/Admin/ApproveCompaniesFunction';
 import ApproveTasks from './components/Admin/ApproveTasksFunction';
 import CreateTask from './components/Admin/CreateTaskFunction';
 import HelpSectionList from './components/Admin/HelpSectionListFunction';
+import JobAdsPage from './components/JobAds/JobAdPage';
+import AdExercise from './components/Exercise/AdExercise';
 
 function App() {
   return (
@@ -67,6 +69,9 @@ function App() {
           <Route path="/home/Admin/ApproveTasks" element={<ApproveTasks></ApproveTasks>}></Route>
           <Route path="/home/Admin/CreateTask" element={<CreateTask></CreateTask>}></Route>
           <Route path="/home/Admin/HelpSection" element={<HelpSectionList></HelpSectionList>}></Route>
+
+          <Route path="/home/ad/:id" element={<JobAdsPage></JobAdsPage>}></Route>
+          <Route path="/home/ad/:adId/task/:taskId" element={<AdExercise></AdExercise>}></Route>
         </Route>
       </Routes>
     </Router>
