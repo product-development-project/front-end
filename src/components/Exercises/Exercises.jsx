@@ -39,12 +39,35 @@ export default function Exercises() {
   const [exerciseTypeSelection, setTopic] = useState(exercises.exercisesInner[0]);
   const [data, setData] = useState([]);
   const [types, setTypes] = useState([]);
+  let username = localStorage.getItem('username')
 
   useEffect(() => {
-    axios("http://localhost:5163/api/Task")
-      .then(result => {
-        setData(JSON.parse(JSON.stringify(result.data)));
+    let tasks;
+    axios.get("http://localhost:5163/api/Task")
+      .then(taskResponse => {
+        tasks = taskResponse.data; // Assign the data to the 'tasks' variable
+        axios.get(`http://localhost:5163/api/Logged/user/${username}`)
+          .then(userResponse => {
+            userResponse.data.forEach(user => {
+              tasks.forEach(task => {
+                if(task.id == user.task_id)
+                {
+                  task.completed = 1;
+                  task.solution = true;
+                }else if (task.id !== user.task_id && !task.solution){
+                  task.completed = 0;                
+                }
+              })
+            });
+          })
+          .catch(error => {
+            console.log(error);
+          });
+          setData(tasks);
       })
+      .catch(error => {
+        console.log(error);
+      });
   }, []);
 
 
@@ -74,20 +97,38 @@ export default function Exercises() {
       test = 7;
     }
     //NEKISTI METODO IŠ VISO BE MANO LEIDIMO AČIŪ
-    let result = await axios.get(`http://localhost:5163/api/Task/${difficultiesSelection}/${test}`, { headers: { 'Content-Type': 'application/json' } })
-    setData(JSON.parse(JSON.stringify(result.data)));
-    console.log(difficultiesSelection);
-    console.log(exerciseTypeSelection);
+    let tasks;
+    axios.get(`http://localhost:5163/api/Task/${difficultiesSelection}/${test}`)
+      .then(taskResponse => {
+        tasks = taskResponse.data; // Assign the data to the 'tasks' variable
+        axios.get(`http://localhost:5163/api/Logged/user/${username}`)
+          .then(userResponse => {
+            userResponse.data.forEach(user => {
+              tasks.forEach(task => {
+                if(task.id == user.task_id)
+                {
+                  task.completed = 1;
+                  task.solution = true;
+                }else if (task.id !== user.task_id && !task.solution){
+                  task.completed = 0;                
+                }
+              })
+            });
+          })
+          .catch(error => {
+            console.log(error);
+          });
+          setData(tasks);
+      })
+      .catch(error => {
+        console.log(error);
+      });
   }
 
   async function fetchExercisesTypes() {
     let result = await axios.get(`http://localhost:5163/api/TaskType`, { headers: { 'Content-Type': 'application/json' } })
     setTypes(JSON.parse(JSON.stringify(result.data)));
   }
-
-
-
-
 
   return (
     <>

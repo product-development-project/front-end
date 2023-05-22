@@ -29,6 +29,7 @@ export default function Table({ data, types, navigate }) {
       { key: 'difficulty', label: 'Difficulty' },
       { key: 'type', label: 'Task type' },
       { key: '', label: '' },
+      { key: '', label:''}
     ];
 
     return headers.map(({ key, label }) => (
@@ -71,6 +72,7 @@ export default function Table({ data, types, navigate }) {
           name="go-to-task"
           onClick={() => navigate(`/home/task/${task.id}`)}
         /></td>
+        <td>{task.completed == "1" ? <span style={{ color: 'green' }}>&#10004;</span> : <span style={{ color: 'red' }}>&#10008;</span>}</td>
       </tr>
     ));
   };
