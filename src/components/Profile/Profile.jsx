@@ -220,55 +220,71 @@ export default function Profile() {
             {
                 role.includes("Company") ?
                     <center style={{ marginTop: '5%' }}>
-                        <Card className={classes.root} style={{ height: '280px' }}>
-                            <CardContent>
-                                <Typography variant="h6" component="h2" style={{ marginBottom: '10px' }}>
-                                    Hello, {data.name}
-                                </Typography>
-                                <Typography className={classes.pos} color="initial">
-                                    <IconContext.Provider value={{ size: '1.2em', style: { verticalAlign: 'middle' } }}>
-                                        <CgProfile />
-                                    </IconContext.Provider>
-                                    {companyData.pavadinimas}
-                                </Typography>
-                                <Typography className={classes.pos} color="initial">
-                                    <IconContext.Provider value={{ size: '1.2em', style: { verticalAlign: 'middle' } }}>
-                                        <CiMail />
-                                    </IconContext.Provider>
-                                    {companyData.email}
-                                </Typography>
-                                <Typography className={classes.pos} color="initial">
-                                    <IconContext.Provider value={{ size: '1.2em' }}>
-                                        <CiDesktop />
-                                    </IconContext.Provider>
-                                    {companyData.svetaine}
-                                </Typography>
-                                <Typography className={classes.pos} color="initial">
-                                    <IconContext.Provider value={{ size: '1.2em' }}>
-                                        <CiHome />
-                                    </IconContext.Provider>
-                                    {companyData.adresas}
-                                </Typography>
-                                <Typography className={classes.pos} color="initial">
-                                    <IconContext.Provider value={{ size: '1.2em' }}>
-                                        <CiPhone />
-                                    </IconContext.Provider>
-                                    {companyData.telefonas}
-                                </Typography>
-                            </CardContent>
-                        </Card>
-                        <div style={{ marginRight: '10px', width: '800px', position: 'relative', zIndex: '2' }}>
+                    <Card
+                    className={classes.root}
+                    style={{
+                        height: '280px',
+                        background: 'linear-gradient(59deg, rgba(75,100,148,1) 0%, rgba(15,15,15,1) 100%)',
+                        padding: '0 10px',
+                        borderRadius: '40px' // Increase the borderRadius value to round more corners
+                    }}
+                    >
+                    <div>
+                        <CardContent>
+                        <Typography variant="h6" component="h2" style={{ marginBottom: '10px', color: 'white', textDecoration: 'underline' }}>
+                            Hello, {data.name}
+                        </Typography>
+                        <div style={{display: 'flex',alignItems: 'center',justifyContent: 'space-between',padding: '0 15% 0 20%',}}>
+                            <Typography className={classes.pos} style={{ color: 'white' }}>
+                                <IconContext.Provider value={{ size: '1.2em', style: { verticalAlign: 'middle' } }}>
+                                <CgProfile />
+                                </IconContext.Provider>
+                                {companyData.pavadinimas}
+                            </Typography>
+                       
+                            <Typography className={classes.pos} style={{ color: 'white' }}>
+                                <IconContext.Provider value={{ size: '1.2em', style: { verticalAlign: 'middle' } }}>
+                                <CiMail />
+                                </IconContext.Provider>
+                                {companyData.email}
+                            </Typography>
+                        </div>
+                        <div style={{display: 'flex',alignItems: 'center',justifyContent: 'space-between',padding: '0 17% 0 20%', marginTop:'5%'}}>
+                            <Typography className={classes.pos} style={{ color: 'white' }}>
+                                <IconContext.Provider value={{ size: '1.2em' }}>
+                                <CiDesktop />
+                                </IconContext.Provider>
+                                {companyData.svetaine}
+                            </Typography>
+                            <Typography className={classes.pos} style={{ color: 'white' }}>
+                                <IconContext.Provider value={{ size: '1.2em' }}>
+                                <CiHome />
+                                </IconContext.Provider>
+                                {companyData.adresas}
+                            </Typography>
+                        </div>
+                        <div style={{display: 'flex',alignItems: 'center',justifyContent: 'space-between',padding: '0 15% 0 20%', marginTop:'5%'}}>
+                            <Typography className={classes.pos} style={{ color: 'white' }}>
+                                <IconContext.Provider value={{ size: '1.2em' }}>
+                                <CiPhone />
+                                </IconContext.Provider>
+                                {companyData.telefonas}
+                            </Typography>
                             <Button
-                                value="Edit information"
-                                name="profile-edit-button"
-                                onClick={() => toggleEditPopup()}
-                                style={{
-                                    marginTop: '10px',
-                                    float: 'right'
-                                }}
+                            value="Edit information"
+                            name="profile-edit-button"
+                            onClick={() => toggleEditPopup()}
+                            style={{
+                                marginTop: '10px',
+                                float: 'right'
+                            }}
                             />
                         </div>
-                    </center>
+                        </CardContent>            
+                    </div>
+                    </Card>
+                        
+                </center>
                     :
                     <>
                     </>
