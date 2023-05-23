@@ -2,7 +2,8 @@ import React, { useState, useEffect } from 'react'
 import axios from 'axios';
 import HeaderV2 from '../HeaderV2';
 import '../JobAds/style.css';
-import { Button } from '../UI/Button';
+import Snackbar from '@mui/material/Snackbar';
+import Alert from '@mui/material/Alert';
 
 function formatDate(dateString) {
     const date = new Date(dateString);
@@ -14,6 +15,7 @@ function formatDate(dateString) {
 
 export default function JobAdsListPageV2() {
     const [errorMessage, setErrorMessage] = useState('');
+    const [openSnackbar, setOpenSnackbar] = useState(false);
     const [data, setData] = useState([]);
     const [sortColumn, setSortColumn] = useState(null);
     const [sortOrder, setSortOrder] = useState(1);
@@ -28,10 +30,10 @@ export default function JobAdsListPageV2() {
             setData(JSON.parse(JSON.stringify(result.data)));
         }
         catch (error) {
-            console.log(error);
             setErrorMessage("Failed to fetch data");
+            setOpenSnackbar(true);
         }
-    }
+    };
 
     function sortData(column) {
         let sortedData = data.sort((a, b) => {
@@ -46,7 +48,15 @@ export default function JobAdsListPageV2() {
         setData(sortedData);
         setSortColumn(column);
         setSortOrder(sortOrder * -1);
-    }
+    };
+
+    const handleCloseSnackbar = (event, reason) => {
+        if (reason === 'clickaway') {
+            return;
+        }
+        setOpenSnackbar(false);
+        setErrorMessage('');
+    };
 
     return (
         <>
@@ -69,6 +79,22 @@ export default function JobAdsListPageV2() {
                     ))}
                 </tbody>
             </table>
+            <Snackbar
+                open={openSnackbar}
+                autoHideDuration={3000}
+                onClose={handleCloseSnackbar}
+                anchorOrigin={{ vertical: 'bottom', horizontal: 'center' }}
+            >
+                {errorMessage ? (
+                    <Alert onClose={handleCloseSnackbar} severity="error">
+                        {errorMessage}
+                    </Alert>
+                ) : (
+                    <Alert onClose={handleCloseSnackbar} severity="success">
+                        Approved successfully!
+                    </Alert>
+                )}
+            </Snackbar>
         </>
-    )
+    );
 }

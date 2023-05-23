@@ -20,7 +20,7 @@ export default function AdExercise() {
   const [language, setLanguage] = useState("python3");
   var parts = window.location.href.split("/");
   var currentTaskId = (parts[parts.length - 1]).toString();
-  var currentAdId = (parts[parts.length-3]).toString();
+  var currentAdId = (parts[parts.length - 3]).toString();
   const extensions = [python()];
 
   const languages = ['python3'];
@@ -53,7 +53,6 @@ export default function AdExercise() {
     axios
       .post('http://localhost:5163/api/code/checker', request, { headers: { 'Content-Type': 'application/json' } })
       .then(response => {
-        console.log(response.data);
         setPassed(response.data["passed"]);
         setFailed(response.data["failed"]);
         setRunTime(response.data["runTime"]);
@@ -142,7 +141,7 @@ export default function AdExercise() {
               value="Back"
               name="back-button"
               onClick={() => {
-                navigate("/home/ad/"+currentAdId)
+                navigate("/home/Company/ViewAds/AddTask/" + currentAdId)
               }}
             />
           </div>

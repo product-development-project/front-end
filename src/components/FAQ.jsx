@@ -1,8 +1,4 @@
-import React, { useState } from "react";
-import { useNavigate } from 'react-router-dom';
-import TopBar from './TopBar';
-import Footer from './Footer';
-import { Button } from './UI/Button';
+import React from "react";
 import Accordion from '@material-ui/core/Accordion';
 import AccordionSummary from '@material-ui/core/AccordionSummary';
 import AccordionDetails from '@material-ui/core/AccordionDetails';

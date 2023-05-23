@@ -13,7 +13,6 @@ import ProfileForm from './ProfileForm';
 import axios from 'axios';
 import { Bar } from 'react-chartjs-2';
 import Chart from 'chart.js/auto';
-import { useParams } from 'react-router';
 import Header from '../Header';
 
 const useStyles = makeStyles({
@@ -56,7 +55,7 @@ export default function Profile() {
         if (!localStorage.getItem('access-token')) {
             navigate('/');
         }
-        if (role.includes("User") || role.includes("Company")) {
+        if (role.includes("User") || role.includes("Company") || role.includes("Admin")) {
             fetchUserInfo(username);
         }
         if (role.includes("User")) {
@@ -86,9 +85,13 @@ export default function Profile() {
     async function createGraph() {
         let result = await axios.get(`http://localhost:5163/api/Ratings`, { headers: { 'Content-Type': 'application/json' } })
         const allRatings = result.data;
-        const otherRatings = allRatings.filter(rating => rating.userName !== username);
 
-        const currentUserRating = allRatings.find(rating => rating.userName === username);
+        const otherRatings = allRatings.filter(rating => rating.userName !== username);
+        const currentUserRating = allRatings.filter(rating => rating.userName === username);
+
+        const currentUsersAvgCorrectness = currentUserRating.reduce((total, rating) => total + rating.correctnesPoints, 0) / currentUserRating.length;
+        const currentUsersAvgTime = currentUserRating.reduce((total, rating) => total + rating.timePoints, 0) / currentUserRating.length;
+        const currentUsersAvgResources = currentUserRating.reduce((total, rating) => total + rating.recourcesPoints, 0) / currentUserRating.length;
 
         const otherUsersAvgCorrectness = otherRatings.reduce((total, rating) => total + rating.correctnesPoints, 0) / otherRatings.length;
         const otherUsersAvgTime = otherRatings.reduce((total, rating) => total + rating.timePoints, 0) / otherRatings.length;
@@ -109,7 +112,7 @@ export default function Profile() {
                     backgroundColor: 'rgba(255, 99, 132, 0.2)',
                     borderColor: 'rgba(255, 99, 132, 1)',
                     borderWidth: 1,
-                    data: [currentUserRating.correctnesPoints, currentUserRating.timePoints, currentUserRating.recourcesPoints]
+                    data: [currentUsersAvgCorrectness, currentUsersAvgTime, currentUsersAvgResources]
                 }
             ]
         };
@@ -220,71 +223,71 @@ export default function Profile() {
             {
                 role.includes("Company") ?
                     <center style={{ marginTop: '5%' }}>
-                    <Card
-                    className={classes.root}
-                    style={{
-                        height: '280px',
-                        background: 'linear-gradient(59deg, rgba(75,100,148,1) 0%, rgba(15,15,15,1) 100%)',
-                        padding: '0 10px',
-                        borderRadius: '40px' // Increase the borderRadius value to round more corners
-                    }}
-                    >
-                    <div>
-                        <CardContent>
-                        <Typography variant="h6" component="h2" style={{ marginBottom: '10px', color: 'white', textDecoration: 'underline' }}>
-                            Hello, {data.name}
-                        </Typography>
-                        <div style={{display: 'flex',alignItems: 'center',justifyContent: 'space-between',padding: '0 15% 0 20%',}}>
-                            <Typography className={classes.pos} style={{ color: 'white' }}>
-                                <IconContext.Provider value={{ size: '1.2em', style: { verticalAlign: 'middle' } }}>
-                                <CgProfile />
-                                </IconContext.Provider>
-                                {companyData.pavadinimas}
-                            </Typography>
-                       
-                            <Typography className={classes.pos} style={{ color: 'white' }}>
-                                <IconContext.Provider value={{ size: '1.2em', style: { verticalAlign: 'middle' } }}>
-                                <CiMail />
-                                </IconContext.Provider>
-                                {companyData.email}
-                            </Typography>
-                        </div>
-                        <div style={{display: 'flex',alignItems: 'center',justifyContent: 'space-between',padding: '0 17% 0 20%', marginTop:'5%'}}>
-                            <Typography className={classes.pos} style={{ color: 'white' }}>
-                                <IconContext.Provider value={{ size: '1.2em' }}>
-                                <CiDesktop />
-                                </IconContext.Provider>
-                                {companyData.svetaine}
-                            </Typography>
-                            <Typography className={classes.pos} style={{ color: 'white' }}>
-                                <IconContext.Provider value={{ size: '1.2em' }}>
-                                <CiHome />
-                                </IconContext.Provider>
-                                {companyData.adresas}
-                            </Typography>
-                        </div>
-                        <div style={{display: 'flex',alignItems: 'center',justifyContent: 'space-between',padding: '0 15% 0 20%', marginTop:'5%'}}>
-                            <Typography className={classes.pos} style={{ color: 'white' }}>
-                                <IconContext.Provider value={{ size: '1.2em' }}>
-                                <CiPhone />
-                                </IconContext.Provider>
-                                {companyData.telefonas}
-                            </Typography>
-                            <Button
-                            value="Edit information"
-                            name="profile-edit-button"
-                            onClick={() => toggleEditPopup()}
+                        <Card
+                            className={classes.root}
                             style={{
-                                marginTop: '10px',
-                                float: 'right'
+                                height: '280px',
+                                background: 'linear-gradient(59deg, rgba(75,100,148,1) 0%, rgba(15,15,15,1) 100%)',
+                                padding: '0 10px',
+                                borderRadius: '40px' // Increase the borderRadius value to round more corners
                             }}
-                            />
-                        </div>
-                        </CardContent>            
-                    </div>
-                    </Card>
-                        
-                </center>
+                        >
+                            <div>
+                                <CardContent>
+                                    <Typography variant="h6" component="h2" style={{ marginBottom: '10px', color: 'white', textDecoration: 'underline' }}>
+                                        Hello, {data.name}
+                                    </Typography>
+                                    <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', padding: '0 15% 0 20%', }}>
+                                        <Typography className={classes.pos} style={{ color: 'white' }}>
+                                            <IconContext.Provider value={{ size: '1.2em', style: { verticalAlign: 'middle' } }}>
+                                                <CgProfile />
+                                            </IconContext.Provider>
+                                            {companyData.pavadinimas}
+                                        </Typography>
+
+                                        <Typography className={classes.pos} style={{ color: 'white' }}>
+                                            <IconContext.Provider value={{ size: '1.2em', style: { verticalAlign: 'middle' } }}>
+                                                <CiMail />
+                                            </IconContext.Provider>
+                                            {companyData.email}
+                                        </Typography>
+                                    </div>
+                                    <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', padding: '0 17% 0 20%', marginTop: '5%' }}>
+                                        <Typography className={classes.pos} style={{ color: 'white' }}>
+                                            <IconContext.Provider value={{ size: '1.2em' }}>
+                                                <CiDesktop />
+                                            </IconContext.Provider>
+                                            {companyData.svetaine}
+                                        </Typography>
+                                        <Typography className={classes.pos} style={{ color: 'white' }}>
+                                            <IconContext.Provider value={{ size: '1.2em' }}>
+                                                <CiHome />
+                                            </IconContext.Provider>
+                                            {companyData.adresas}
+                                        </Typography>
+                                    </div>
+                                    <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', padding: '0 15% 0 20%', marginTop: '5%' }}>
+                                        <Typography className={classes.pos} style={{ color: 'white' }}>
+                                            <IconContext.Provider value={{ size: '1.2em' }}>
+                                                <CiPhone />
+                                            </IconContext.Provider>
+                                            {companyData.telefonas}
+                                        </Typography>
+                                        <Button
+                                            value="Edit information"
+                                            name="profile-edit-button"
+                                            onClick={() => toggleEditPopup()}
+                                            style={{
+                                                marginTop: '10px',
+                                                float: 'right'
+                                            }}
+                                        />
+                                    </div>
+                                </CardContent>
+                            </div>
+                        </Card>
+
+                    </center>
                     :
                     <>
                     </>

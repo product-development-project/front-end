@@ -52,7 +52,6 @@ export default function Exercise() {
     axios
       .post('http://localhost:5163/api/code/checker', request, { headers: { 'Content-Type': 'application/json' } })
       .then(response => {
-        console.log(response.data);
         setPassed(response.data["passed"]);
         setFailed(response.data["failed"]);
         setRunTime(response.data["runTime"]);

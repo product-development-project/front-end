@@ -1,7 +1,5 @@
-import TopBar from '../TopBar';
-import { Button } from '../UI/Button';
 import { useNavigate } from 'react-router-dom';
-import React, { useState, useEffect, useCallback } from 'react';
+import React, { useState, useEffect } from 'react';
 import './styleExercises.css';
 import axios from 'axios';
 import Table from './OrderedTable'; // Import the Table component
@@ -30,10 +28,7 @@ const exercises = {
   ]
 }
 
-
 export default function Exercises() {
-
-
   const navigate = useNavigate();
   const [difficultiesSelection, setDifficulty] = useState(difficulties.difficultiesInner[0])
   const [exerciseTypeSelection, setTopic] = useState(exercises.exercisesInner[0]);
@@ -50,12 +45,11 @@ export default function Exercises() {
           .then(userResponse => {
             userResponse.data.forEach(user => {
               tasks.forEach(task => {
-                if(task.id == user.task_id)
-                {
+                if (task.id === user.task_id) {
                   task.completed = 1;
                   task.solution = true;
-                }else if (task.id !== user.task_id && !task.solution){
-                  task.completed = 0;                
+                } else if (task.id !== user.task_id && !task.solution) {
+                  task.completed = 0;
                 }
               })
             });
@@ -63,13 +57,12 @@ export default function Exercises() {
           .catch(error => {
             console.log(error);
           });
-          setData(tasks);
+        setData(tasks);
       })
       .catch(error => {
         console.log(error);
       });
   }, []);
-
 
   useEffect(() => {
     fetchExercises();
@@ -105,12 +98,11 @@ export default function Exercises() {
           .then(userResponse => {
             userResponse.data.forEach(user => {
               tasks.forEach(task => {
-                if(task.id == user.task_id)
-                {
+                if (task.id === user.task_id) {
                   task.completed = 1;
                   task.solution = true;
-                }else if (task.id !== user.task_id && !task.solution){
-                  task.completed = 0;                
+                } else if (task.id !== user.task_id && !task.solution) {
+                  task.completed = 0;
                 }
               })
             });
@@ -118,7 +110,7 @@ export default function Exercises() {
           .catch(error => {
             console.log(error);
           });
-          setData(tasks);
+        setData(tasks);
       })
       .catch(error => {
         console.log(error);

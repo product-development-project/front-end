@@ -1,4 +1,3 @@
-import TopBar from '../TopBar';
 import Header from '../Header';
 import { Button } from '../UI/Button';
 import React, { useState, useEffect } from 'react'
@@ -23,21 +22,21 @@ export default function ViewAds() {
     const [data, setData] = useState([]);
     const [types, setTypes] = useState([]);
 
-
     let username = localStorage.getItem('username')
     const tokenWithQuotes = localStorage.getItem('access-token');
     const token = tokenWithQuotes.substring(1, tokenWithQuotes.length - 1);
     axios.defaults.headers.common['Authorization'] = `Bearer ${token}`;
+    let role = localStorage.getItem('roles');
+
     useEffect(() => {
         if (!localStorage.getItem('access-token')) {
             navigate('/');
         }
         fetchCompanyAds(username);
         fetchExercisesTypes();
-        console.log(data);
     }, [navigate, username]);
 
-    async function fetchCompanyAds(username) {
+    async function fetchCompanyAds() {
         let result = await axios.get(`http://localhost:5163/api/Ad/CompanyAds`, { headers: { 'Content-Type': 'application/json' } })
         setData(JSON.parse(JSON.stringify(result.data)));
     }
@@ -51,43 +50,42 @@ export default function ViewAds() {
         <>
             <Header></Header>
             <table>
-                <tr className="border-bottom delayed-animation" style={{ animationDelay: `${50}ms` }}>
-                    <td>Ad Id</td>
-                    <td>Ad name</td>
-                    <td>Start date</td>
-                    <td>End date</td>
-                    <td></td>
-                    <td></td>
-                </tr>
-                {data.map((dataa, index) => (
-                    <tr key={dataa.id} className="border-bottom delayed-animation" style={{ animationDelay: `${index * 50}ms` }}>
-                        <td>{dataa.id}</td>
-                        <td>{dataa.name}</td>
-                        <td>{formatDate(dataa.start)}</td>
-                        <td>{formatDate(dataa.end)}</td>
-                        <td>
-                            <Button
-                                value="View Logged Users"
-                                name="go-to-task"
-                                onClick={() => navigate(`/home/Company/ViewAds/${dataa.id}`)}
-                            />
-                        </td>
-                        <td>
-                            <Button
-                                value="View Tasks"
-                                name="go-to-task"
-                                onClick={() => navigate(`/home/Company/ViewAds/tasks/${dataa.id}`)}
-                            />
-                        </td>
-                        <td>
-                            <Button
-                                value="Add Task"
-                                name="go-to-task"
-                                onClick={() => navigate(`/home/Company/ViewAds/Addtask/${dataa.id}`)}
-                            />
-                        </td>
+                <thead>
+                    <tr className="border-bottom delayed-animation" style={{ animationDelay: `${50}ms` }}>
+                        <th>Ad name</th>
+                        <th>Start date</th>
+                        <th>End date</th>
+                        <th>Action</th>
                     </tr>
-                ))}
+                </thead>
+                <tbody>
+                    {data.map((dataa, index) => (
+                        <tr key={dataa.id} className="border-bottom delayed-animation" style={{ animationDelay: `${index * 50}ms` }}>
+                            <td>{dataa.name}</td>
+                            <td>{formatDate(dataa.start)}</td>
+                            <td>{formatDate(dataa.end)}</td>
+                            <td>
+                                <div style={{ display: 'flex', alignItems: 'center' }}>
+                                    <Button
+                                        value="Signed Up Users"
+                                        name="go-to-task"
+                                        onClick={() => navigate(`/home/Company/ViewAds/${dataa.id}`)}
+                                    />
+                                    <Button
+                                        value="View Tasks"
+                                        name="go-to-task"
+                                        onClick={() => navigate(`/home/Company/ViewAds/tasks/${dataa.id}`)}
+                                    />
+                                    <Button
+                                        value="Add Task"
+                                        name="go-to-task"
+                                        onClick={() => navigate(`/home/Company/ViewAds/Addtask/${dataa.id}`)}
+                                    />
+                                </div>
+                            </td>
+                        </tr>
+                    ))}
+                </tbody>
             </table>
         </>
     );

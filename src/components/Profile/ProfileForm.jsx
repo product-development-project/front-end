@@ -1,7 +1,6 @@
 import React, { useEffect, useState } from "react";
 import { Form, FormInput } from '../UI/Form';
 import TopBar from "../TopBar";
-import { useNavigate } from "react-router-dom";
 import axios from 'axios'
 
 export default function ProfileForm({ onClose }) {
@@ -9,7 +8,6 @@ export default function ProfileForm({ onClose }) {
     const [data, setData] = useState([]);
     const [user, setUser] = useState(null);
     const [errorMessage, setErrorMessage] = useState('');
-    const navigate = useNavigate();
 
     useEffect(() => {
         fetchUserInfo(username);
