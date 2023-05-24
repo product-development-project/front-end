@@ -1,42 +1,42 @@
 import React, { useEffect, useState } from "react";
+import { useNavigate } from "react-router-dom";
 import { Form, FormInput } from '../UI/Form';
 import TopBar from "../TopBar";
-import axios from 'axios'
+import axios from 'axios';
 
-export default function ProfileForm({ onClose }) {
+export default function ProfileForm() {
     let username = localStorage.getItem('username')
-    const [data, setData] = useState([]);
+    const navigate = useNavigate();
     const [user, setUser] = useState(null);
     const [errorMessage, setErrorMessage] = useState('');
 
     useEffect(() => {
         fetchUserInfo(username);
-    });
+    }, [navigate]);
 
     async function fetchUserInfo(username) {
         let result = await axios.get(`http://localhost:5163/api/User/${username}`, { headers: { 'Content-Type': 'application/json' } })
-        setData(JSON.parse(JSON.stringify(result.data)));
-    }
+        setUser(JSON.parse(JSON.stringify(result.data)));
+    };
 
     const handleChange = (e) => {
         setUser({
             ...user,
             [e.target.name]: e.target.value
         })
-    }
+    };
 
     const handleSave = (e) => {
         e.preventDefault();
         let request = {
-            name: user.name,
             email: user.email,
-            username: user.username,
+            name: user.name,
             phoneNumber: user.phoneNumber
         }
         axios
-            .put(`http://localhost:5163/api/User/${user.username}`, request, { headers: { 'Content-Type': 'application/json' } })
+            .put(`http://localhost:5163/api/User/${username}`, request, { headers: { 'Content-Type': 'application/json' } })
             .then((result) => {
-                onClose();
+                navigate(-1);
             })
             .catch((error) => {
                 if (error.response) {
@@ -50,7 +50,7 @@ export default function ProfileForm({ onClose }) {
                     setErrorMessage(error.message);
                 }
             })
-    }
+    };
 
     return (
         <>
@@ -64,45 +64,33 @@ export default function ProfileForm({ onClose }) {
             >
                 <FormInput
                     onChange={handleChange}
-                    type='text'
-                    label='Name'
-                    placeholder='Name'
-                    name='name'
-                    value={data?.name}
-                    errorMessage={data?.name?.length > 0 ? 'Name must begin with an upper case letter and only contain letters' : 'Field is required'}
+                    type="text"
+                    label="username"
+                    placeholder="Username"
+                    name="name"
+                    value={user?.name}
+                    errorMessage={user?.name?.length < 0 ? 'Field is required' : ''}
                     required={true}
-                    pattern='[A-ZŽĶĻŅČĢŠĪĀĒŪ]{1}[a-zžšķļņģčīāūē\\s]+'
                 />
                 <FormInput
                     onChange={handleChange}
-                    type='text'
-                    label='Surname'
-                    placeholder='Surname'
-                    name='surname'
-                    value={data?.surname}
-                    errorMessage={data?.surname?.length > 0 ? 'Surname must begin with an upper case letter and only contain letters' : 'Field is required'}
+                    type="text"
+                    label="Email"
+                    placeholder="Email"
+                    name="email"
+                    value={user?.email}
+                    errorMessage={user?.email?.length < 0 ? 'Field is required' : ''}
                     required={true}
-                    pattern='[A-ZŽĶĻŅČĢŠĪĀĒŪ]{1}[a-zžšķļņģčīāūē\\s]+'
+                    pattern="^[a-zA-Z0-9+_.-]+@[a-zA-Z0-9.-]+$"
                 />
                 <FormInput
                     onChange={handleChange}
-                    type='text'
-                    label='Email'
-                    placeholder='Email'
-                    name='email'
-                    value={data?.email}
-                    errorMessage={data?.email?.length > 0 ? 'Email is not valid' : 'Field is required'}
-                    required={true}
-                    pattern='^[a-zA-Z0-9+_.-]+@[a-zA-Z0-9.-]+$'
-                />
-                <FormInput
-                    onChange={handleChange}
-                    type='text'
-                    label='Phone number'
-                    placeholder='Phone number'
-                    name='phoneNumber'
-                    value={data?.phoneNumber}
-                    errorMessage='Field is required'
+                    type="text"
+                    label="Phone number"
+                    placeholder="Phone number"
+                    name="phoneNumber"
+                    value={user?.phoneNumber}
+                    errorMessage={user?.phoneNumber?.length < 0 ? 'Field is required' : ''}
                     required={true}
                 />
             </Form>

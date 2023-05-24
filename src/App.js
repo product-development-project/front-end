@@ -46,7 +46,7 @@ function App() {
           <Route path="home" element={<Homev2 />} />
 
           <Route path="home/profile" element={<Profile />} />
-          <Route path="home/profile/edit/:id" element={<ProfileForm />} />
+          <Route path="home/profile/edit/:username" element={<ProfileForm />} />
 
           <Route path="home/leaderboard" element={<Leaderboard />} />
 

@@ -4,11 +4,14 @@ import { useNavigate } from 'react-router-dom'
 import TopBar from './TopBar';
 import axios from 'axios'
 import { Button } from "react-bootstrap";
+import Snackbar from '@mui/material/Snackbar';
+import Alert from '@mui/material/Alert';
 
 export default function Register() {
     const navigate = useNavigate()
     const [user, setUser] = useState(null);
     const [errorMessage, setErrorMessage] = useState('');
+    const [openSnackbar, setOpenSnackbar] = useState(false);
 
     const handleChange = (e) => {
         setUser({
@@ -25,12 +28,11 @@ export default function Register() {
         e.preventDefault();
 
         const request = {
-            //name: user.name,
-            //surname: user.surname,
             email: user.email,
             username: user.username,
-            password: user.password,
-        }
+            phoneNumber: user.phoneNumber,
+            password: user.password
+        };
 
         axios
             .post(`http://localhost:5163/api/register`, request, { headers: { 'Content-Type': 'application/json' } })
@@ -38,50 +40,41 @@ export default function Register() {
                 navigate('/login');
             })
             .catch(error => {
-                if (error.response) {
+                console.log(error.response.status);
+                if (error.response.status == "400") {
                     setErrorMessage(error.response.data);
-                } else if (error.request) {
-                    console.warn('Request failed:', error.request);
-                    setErrorMessage('Request failed');
-                } else {
-                    console.warn('Error:', error.message);
-                    setErrorMessage(error.message);
+                    setOpenSnackbar(true);
                 }
             })
-    }
+    };
+
+    const handleCloseSnackbar = (event, reason) => {
+        if (reason === 'clickaway') {
+            return;
+        }
+        setOpenSnackbar(false);
+    };
 
     return (
         <>
             <TopBar title='workIT'
                 backButtonDisabled={true}
             />
+            <Snackbar
+                open={openSnackbar}
+                autoHideDuration={3000}
+                onClose={handleCloseSnackbar}
+                anchorOrigin={{ vertical: 'top', horizontal: 'center' }}
+            >
+                <Alert onClose={handleCloseSnackbar} severity="error">
+                    {errorMessage}!
+                </Alert>
+            </Snackbar>
             <Form
                 title='Register'
                 submitButtonTitle='Register'
                 onSubmit={handleSave}
             >
-                {/* <FormInput
-                    onChange={handleChange}
-                    type='text'
-                    label='Name'
-                    placeholder='Name'
-                    name='name'
-                    value={user?.name}
-                    errorMessage={user?.name.length > 0 ? 'Name must begint with an upper case letter and only contain letters' : ''}
-                    required={true}
-                    pattern='[A-ZŽĶĻŅČĢŠĪĀĒŪ]{1}[a-zžšķļņģčīāūē\\s]+'
-                /> */}
-                {/* <FormInput
-                    onChange={handleChange}
-                    type='text'
-                    label='Surname'
-                    placeholder='Surname'
-                    name='surname'
-                    value={user?.surname}
-                    errorMessage={user?.surname.length > 0 ? 'Surname must begint with an upper case letter and only contain letters' : ''}
-                    required={true}
-                    pattern='[A-ZŽĶĻŅČĢŠĪĀĒŪ]{1}[a-zžšķļņģčīāūē\\s]+'
-                /> */}
                 <FormInput
                     onChange={handleChange}
                     type='text'
@@ -89,7 +82,7 @@ export default function Register() {
                     placeholder='Email'
                     name='email'
                     value={user?.email}
-                    errorMessage={user?.email?.length > 0 ? 'Email is not valid' : ''}
+                    errorMessage={user?.email?.length < 0 ? 'Email is required' : ''}
                     required={true}
                     pattern='^[a-zA-Z0-9+_.-]+@[a-zA-Z0-9.-]+$'
                 />
@@ -100,9 +93,17 @@ export default function Register() {
                     placeholder='Username'
                     name='username'
                     value={user?.username}
-                    errorMessage={user?.username?.length > 0 ? 'Username must be between 5-20 characters and cannot contain _ and . caracters in front or end' : ''}
+                    errorMessage={user?.username?.length < 0 ? 'Username is required' : ''}
                     required={true}
-                    pattern='^(?=[a-zA-Z0-9._]{5,20}$)(?!.*[_.]{2})[^_.].*[^_.]$'
+                />
+                <FormInput
+                    onChange={handleChange}
+                    type='phoneNumber'
+                    label='Phone number'
+                    placeholder='Phone number'
+                    name='phoneNumber'
+                    errorMessage={user?.phoneNumber?.length < 0 ? 'Phone number is required' : ''}
+                    required={true}
                 />
                 <FormInput
                     onChange={handleChange}
@@ -110,7 +111,7 @@ export default function Register() {
                     label='Password'
                     placeholder='Password'
                     name='password'
-                    errorMessage={user?.password?.length > 0 ? 'Password must be 8-20 characters long and contain at least one letter, number and special character' : ''}
+                    errorMessage={user?.password?.length < 0 ? 'Password must be 8-20 characters long and contain at least one letter, number and special character' : ''}
                     required={true}
                     pattern='^(?=.*[A-Za-z])(?=.*\d)(?=.*[@$!%*#?&])[A-Za-z\d@$!%*#?&]{8,20}$'
                 />
@@ -120,7 +121,7 @@ export default function Register() {
                     label='Confirm Password'
                     placeholder='Confirm password'
                     name='confirmPassword'
-                    errorMessage={user?.confirmPassword?.length > 0 ? 'Passwords do not match' : ''}
+                    errorMessage={user?.confirmPassword?.length < 0 ? 'Passwords do not match' : ''}
                     required={true}
                     pattern={user?.password}
                 />

@@ -8,8 +8,6 @@ import Typography from '@material-ui/core/Typography';
 import { CiPhone, CiMail, CiDesktop, CiHome } from 'react-icons/ci';
 import { CgProfile } from 'react-icons/cg';
 import { IconContext } from 'react-icons';
-import { Popup } from '../UI/Popup';
-import ProfileForm from './ProfileForm';
 import axios from 'axios';
 import { Bar } from 'react-chartjs-2';
 import Chart from 'chart.js/auto';
@@ -37,11 +35,11 @@ const useStyles = makeStyles({
 
 export default function Profile() {
     const [errorMessage, setErrorMessage] = useState('');
-    const [editPopupIsOpen, setEditPopupIsOpen] = useState(false);
     const [taskCount, setTaskCount] = useState([]);
     const navigate = useNavigate();
     const classes = useStyles();
     const [data, setData] = useState([]);
+    const [placeData, setPlaceData] = useState([]);
     const [companyData, setCompanyData] = useState([]);
     const [graphData, setGraphData] = useState([]);
     let username = localStorage.getItem('username')
@@ -57,6 +55,7 @@ export default function Profile() {
         }
         if (role.includes("User") || role.includes("Company") || role.includes("Admin")) {
             fetchUserInfo(username);
+            fetchLeaderboard()
         }
         if (role.includes("User")) {
             fetchUserCompletedTasks(username);
@@ -80,6 +79,17 @@ export default function Profile() {
     async function fetchCompanyInfo(username) {
         let result = await axios.get(`http://localhost:5163/api/Company/${username}`, { headers: { 'Content-Type': 'application/json' } })
         setCompanyData(JSON.parse(JSON.stringify(result.data)));
+    }
+
+    async function fetchLeaderboard() {
+        try {
+            let result = await axios.get(`http://localhost:5163/api/Ratings`, { headers: { 'Content-Type': 'application/json' } });
+            setPlaceData(JSON.parse(JSON.stringify(result.data)));
+        }
+        catch (error) {
+            console.log(error);
+            setErrorMessage("Failed to fetch data");
+        }
     }
 
     async function createGraph() {
@@ -120,10 +130,6 @@ export default function Profile() {
         setGraphData(state);
     }
 
-    const toggleEditPopup = () => {
-        setEditPopupIsOpen(!editPopupIsOpen);
-    };
-
     return (
         <>
             <Header></Header>
@@ -152,10 +158,10 @@ export default function Profile() {
                                                 {data.email}
                                             </Typography>
                                             <Typography className={classes.pos} color="initial">
-                                                <IconContext.Provider value={{ size: '1.2em' }}>
+                                                <IconContext.Provider value={{ size: '1.2em', style: { verticalAlign: 'middle' } }}>
                                                     <CiPhone />
                                                 </IconContext.Provider>
-                                                {data.phonenumber}
+                                                {data.phoneNumber}
                                             </Typography>
                                         </CardContent>
                                     </Card>
@@ -167,7 +173,7 @@ export default function Profile() {
                                                 Milestones on workIT page
                                             </Typography>
                                             <Typography className={classes.pos} color="initial">
-                                                Place in leaderboard: 8
+                                                Place in leaderboard: {placeData.findIndex(obj => obj.userName === username) == -1 ? "Not in Leaderboard" : placeData.findIndex(obj => obj.userName === username) + 1}
                                             </Typography>
                                             <Typography className={classes.pos} color="initial">
                                                 Exercices completed: {taskCount.count}
@@ -207,7 +213,7 @@ export default function Profile() {
                             <Button
                                 value="Edit information"
                                 name="profile-edit-button"
-                                onClick={() => toggleEditPopup()}
+                                onClick={() => navigate(`/home/profile/edit/${username}`)}
                                 style={{
                                     marginTop: '10px',
                                     float: 'right'
@@ -273,20 +279,21 @@ export default function Profile() {
                                             </IconContext.Provider>
                                             {companyData.telefonas}
                                         </Typography>
-                                        <Button
-                                            value="Edit information"
-                                            name="profile-edit-button"
-                                            onClick={() => toggleEditPopup()}
-                                            style={{
-                                                marginTop: '10px',
-                                                float: 'right'
-                                            }}
-                                        />
+                                        <div style={{ marginRight: '10px', width: '800px', position: 'relative', zIndex: '2' }}>
+                                            <Button
+                                                value="Edit information"
+                                                name="profile-edit-button"
+                                                onClick={() => navigate(`/home/profile/edit/${username}`)}
+                                                style={{
+                                                    marginTop: '10px',
+                                                    float: 'right'
+                                                }}
+                                            />
+                                        </div>
                                     </div>
                                 </CardContent>
                             </div>
                         </Card>
-
                     </center>
                     :
                     <>
@@ -325,7 +332,7 @@ export default function Profile() {
                             <Button
                                 value="Edit information"
                                 name="profile-edit-button"
-                                onClick={() => toggleEditPopup()}
+                                onClick={() => navigate(`/home/profile/edit/${username}`)}
                                 style={{
                                     marginTop: '10px',
                                     float: 'right'
@@ -336,22 +343,6 @@ export default function Profile() {
                     :
                     <>
                     </>
-            }
-            {editPopupIsOpen &&
-                <Popup
-                    content={
-                        <ProfileForm
-                            toggleEditPopup={toggleEditPopup}
-                            onClose={() => setEditPopupIsOpen(false)}
-                        />
-                    }
-                    buttons={[
-                        {
-                            name: "Cancel",
-                            onClick: toggleEditPopup
-                        },
-                    ]}
-                />
             }
         </>
     );
