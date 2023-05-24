@@ -38,11 +38,13 @@ export default function JobAdsPage() {
   const [taskdata, setTaskdata] = useState([]);
   const [pointsdata, setPointsdata] = useState([]);
   const [currentAdId, setCurrentAdId] = useState(null);
+  const [loggedUser, setLoggedUser] = useState([]);
   const username = localStorage.getItem('username');
   const [openSnackbar, setOpenSnackbar] = useState(false);
   const tokenWithQuotes = localStorage.getItem('access-token');
   const token = tokenWithQuotes.substring(1, tokenWithQuotes.length - 1);
   axios.defaults.headers.common['Authorization'] = `Bearer ${token}`;
+  let userId = localStorage.getItem('id');
   let role = localStorage.getItem('roles');
   const currentDate = new Date();
 
@@ -59,6 +61,9 @@ export default function JobAdsPage() {
   useEffect(() => {
     setCurrentAdId(getCurrentAdIdFromURL());
     if (currentAdId) {
+      if (userId) {
+        fetchLogged();
+      }
       fetchAd(currentAdId);
       fetchTaskForAd(currentAdId);
       fetchPointsForAd(currentAdId, username);
@@ -77,8 +82,8 @@ export default function JobAdsPage() {
       });
       setAddata(JSON.parse(JSON.stringify(result.data)));
     } catch (error) {
-      setErrorMessage('Failed to fetch data');
-      setOpenSnackbar(true);
+      // setErrorMessage('Failed to fetch data');
+      // setOpenSnackbar(true);
     }
   }
 
@@ -89,8 +94,8 @@ export default function JobAdsPage() {
       });
       setTaskdata(JSON.parse(JSON.stringify(result.data)));
     } catch (error) {
-      setErrorMessage('Failed to fetch data');
-      setOpenSnackbar(true);
+      // setErrorMessage('Failed to fetch data');
+      // setOpenSnackbar(true);
     }
   }
 
@@ -101,8 +106,20 @@ export default function JobAdsPage() {
       });
       setPointsdata(JSON.parse(JSON.stringify(result.data)));
     } catch (error) {
-      setErrorMessage('Failed to fetch data');
-      setOpenSnackbar(true);
+      // setErrorMessage('Failed to fetch data');
+      // setOpenSnackbar(true);
+    }
+  }
+
+  async function fetchLogged() {
+    try {
+      const result = await axios.get(`http://localhost:5163/api/Logged/ad/${currentAdId}/user/${userId}`, {
+        headers: { 'Content-Type': 'application/json' }
+      });
+      setLoggedUser(JSON.parse(JSON.stringify(result.data)));
+    } catch (error) {
+      // setErrorMessage('Failed to fetch data');
+      // setOpenSnackbar(true);
     }
   }
 
@@ -184,10 +201,10 @@ export default function JobAdsPage() {
                   :
                   <>
                   </>
-              }
+              } 
             </Box>
           </Grid>
-          {role.includes("Company") || (role.includes("User") && currentDate >= new Date(formatDate(addata.start))) ?
+          {role.includes("Company") || (role.includes("User") && currentDate >= new Date(formatDate(addata.start)) && loggedUser.ad_id !== undefined && currentAdId === loggedUser.ad_id.toString()) ?
             <Grid item xs={12} sm={4}>
               {taskdata.map((item, index) => (
                 <Paper key={index} className={classes.paper}>

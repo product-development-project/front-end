@@ -41,8 +41,8 @@ export default function JobAdsListPage() {
             setData(JSON.parse(JSON.stringify(result.data)));
         }
         catch (error) {
-            setErrorMessage("Failed to fetch data");
-            setOpenSnackbar(true);
+            // setErrorMessage("Failed to fetch data");
+            // setOpenSnackbar(true);
         }
     };
 

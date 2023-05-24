@@ -43,6 +43,7 @@ export default function Exercises() {
         tasks = taskResponse.data; // Assign the data to the 'tasks' variable
         axios.get(`http://localhost:5163/api/Logged/user/${username}`)
           .then(userResponse => {
+            console.log(userResponse);
             userResponse.data.forEach(user => {
               tasks.forEach(task => {
                 if (task.id === user.task_id) {
