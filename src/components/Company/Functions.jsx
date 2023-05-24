@@ -31,20 +31,20 @@ export default function CompanyFunctions() {
           }}
         />
         <Button
-          value="For company"
+          value="Create Task"
           className="delayed-animation"
           name="company-button"
-          onClick={() => navigate('/home/company')}
+          onClick={() => navigate('/home/Company/CreateTask')}
           style={{
             marginTop: '15px',
             animationDelay: `${8 * 50}ms`
           }}
         />
         <Button
-          value="For company"
+          value="View Created Tasks"
           className="delayed-animation"
           name="company-button"
-          onClick={() => navigate('/home/company')}
+          onClick={() => navigate('/home/Company/ViewTasks')}
           style={{
             marginTop: '15px',
             animationDelay: `${10 * 50}ms`

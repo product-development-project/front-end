@@ -27,6 +27,11 @@ import CreateTask from './components/Admin/CreateTaskFunction';
 import HelpSectionList from './components/Admin/HelpSectionListFunction';
 import JobAdsPage from './components/JobAds/JobAdPage';
 import AdExercise from './components/Exercise/AdExercise';
+import CreateTaskForCompany from './components/Company/CreateTaskFunctionForCompany';
+import ViewCreatedTasksFunctionForCompany from './components/Company/ViewCreatedTasksCompany';
+import CreateTestCaseForTaskForCompany from './components/Company/AddTestCaseForCompany';
+import ViewTestCasesForTaskForCompanyFunction from './components/Company/ViewTestCasesForTaskForCompany';
+import EditTestCaseForCompanyFunction from './components/Company/EditTestCaseForCompany';
 
 function App() {
   return (
@@ -61,6 +66,11 @@ function App() {
           <Route path="home/Company/CreateAds" element={<CreateAdds />} />
           <Route path="home/Company/ViewAds/tasks/:id" element={<ViewTaskForCompetitionFunction />} />
           <Route path="/home/Company/ViewAds/Addtask/:id" element={<AddTaskForCompetitionFunction></AddTaskForCompetitionFunction>}></Route>
+          <Route path="/home/Company/CreateTask" element={<CreateTaskForCompany></CreateTaskForCompany>}></Route>
+          <Route path="/home/Company/ViewTasks" element={<ViewCreatedTasksFunctionForCompany></ViewCreatedTasksFunctionForCompany>}></Route>
+          <Route path="/home/Company/ViewTasks/Task/:id/TestCase" element={<CreateTestCaseForTaskForCompany></CreateTestCaseForTaskForCompany>}></Route>
+          <Route path="/home/Company/ViewTasks/Task/:id/TestCase/View" element={<ViewTestCasesForTaskForCompanyFunction></ViewTestCasesForTaskForCompanyFunction>}></Route>
+          <Route path="/home/Company/ViewTasks/Task/:id/TestCase/View/:TestCaseId" element={<EditTestCaseForCompanyFunction></EditTestCaseForCompanyFunction>}></Route>
 
           <Route path="/home/Admin" element={<AdminFunctionsFunction></AdminFunctionsFunction>}></Route>
           <Route path="/home/Admin/ApproveCompanies" element={<ApproveCompanies></ApproveCompanies>} ></Route>
@@ -70,6 +80,7 @@ function App() {
 
           <Route path="/home/ad/:id" element={<JobAdsPage></JobAdsPage>}></Route>
           <Route path="/home/ad/:adId/task/:taskId" element={<AdExercise></AdExercise>}></Route>
+
         </Route>
       </Routes>
     </Router>
