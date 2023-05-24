@@ -64,13 +64,11 @@ export default function CreateTaskForCompany() {
         date: formData.date,
         type_id: formData.type_id
       };
-      console.log(formData.problem);
       let json = JSON.stringify(data);
       const response = await axios.post('http://localhost:5163/api/Task/Company', json, {
         headers: { 'Content-Type': 'application/json' },
       })
-      .then(navigate("/home/company"));
-      console.log(response.data);
+      .then(navigate(-1));
       setFormData({
         name: '',
         problem: '',

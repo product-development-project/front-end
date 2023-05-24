@@ -1,31 +1,16 @@
-import TopBar from '../TopBar';
 import Header from '../Header';
 import { Button } from '../UI/Button';
 import React, { useState, useEffect } from 'react';
-import { Navigate, useNavigate } from 'react-router-dom';
+import { useNavigate } from 'react-router-dom';
 import './style.css';
 import axios from 'axios';
-
-function formatDate(dateString) {
-  const date = new Date(dateString);
-  const year = date.getFullYear();
-  const month = ('0' + (date.getMonth() + 1)).slice(-2);
-  const day = ('0' + date.getDate()).slice(-2);
-  return `${year}-${month}-${day}`;
-}
 
 export default function ViewTestCasesForTaskForCompanyFunction() {
   const navigate = useNavigate();
   const [errorMessage, setErrorMessage] = useState('');
-  const [editPopupIsOpen, setEditPopupIsOpen] = useState(false);
-  const [user, setUser] = useState(null);
-  const [deletePopupOpen, setDeletePopupOpen] = useState(false);
-  const [deleteItemId, setDeleteItemId] = useState(null);
   const [data, setData] = useState([]);
-  const [types, setTypes] = useState([]);
   var parts = window.location.href.split("/");
   var currentTaskId = (parts[parts.length - 3]).toString();
-  console.log(currentTaskId);
 
   let username = localStorage.getItem('username');
   const tokenWithQuotes = localStorage.getItem('access-token');
@@ -37,7 +22,6 @@ export default function ViewTestCasesForTaskForCompanyFunction() {
       navigate('/');
     }
     fetchCompanyAds(currentTaskId);
-    console.log(data);
   }, [navigate, username]);
 
   async function fetchCompanyAds(currentTaskId) {
@@ -53,14 +37,12 @@ export default function ViewTestCasesForTaskForCompanyFunction() {
   async function Delete(currentTaskId, deleteItemId) {
     try {
       let result = await axios.delete(`http://localhost:5163/api/Task/${currentTaskId}/Result/${deleteItemId}/Company`, { headers: { 'Content-Type': 'application/json' } });
-      console.log('asd');
       window.location.reload();
     } catch (error) {
       console.error(error);
       setErrorMessage('Failed to fetch data.');
     }
   }
-
 
   return (
     <>

@@ -139,7 +139,7 @@ export default function Exercise() {
               value="Back"
               name="back-button"
               onClick={() => {
-                navigate("/home/exercises")
+                navigate(-1);
               }}
             />
           </div>

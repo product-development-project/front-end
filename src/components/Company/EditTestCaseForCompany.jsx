@@ -9,10 +9,8 @@ export default function EditTestCaseForCompanyFunction() {
   const navigate = useNavigate();
   const [types, setTypes] = useState([]);
   var parts = window.location.href.split("/");
-  var currentTaskId = (parts[parts.length - 4   ]).toString();
-  var currentTestCaseId = (parts[parts.length - 1   ]).toString();
-  console.log(currentTaskId);
-  console.log(currentTestCaseId);
+  var currentTaskId = (parts[parts.length - 4]).toString();
+  var currentTestCaseId = (parts[parts.length - 1]).toString();
 
   const handleFileChange = (event) => {
     const file = event.target.files[0];
@@ -30,9 +28,9 @@ export default function EditTestCaseForCompanyFunction() {
   axios.defaults.headers.common['Authorization'] = `Bearer ${token}`;
 
   const [formData, setFormData] = useState({
-        data: '',
-        result: '',
-        example: false
+    data: '',
+    result: '',
+    example: false
   });
 
   useEffect(() => {
@@ -43,7 +41,7 @@ export default function EditTestCaseForCompanyFunction() {
   }, [navigate]);
 
   async function fetchExercisesTypes() {
-    let result = await axios.get(`http://localhost:5163/api/TaskType`, { headers: { 'Content-Type': 'application/json'}});
+    let result = await axios.get(`http://localhost:5163/api/TaskType`, { headers: { 'Content-Type': 'application/json' } });
     setTypes(JSON.parse(JSON.stringify(result.data)));
   }
 
@@ -65,8 +63,8 @@ export default function EditTestCaseForCompanyFunction() {
       };
       console.log(formData.problem);
       let json = JSON.stringify(data);
-      const response = await axios.put(`http://localhost:5163/api/Task/${currentTaskId}/Result/${currentTestCaseId}`, json,{ headers: { 'Content-Type': 'application/json'}})
-      .then(navigate(`/home/Company/ViewTasks/Task/${currentTaskId}/TestCase/View`));
+      const response = await axios.put(`http://localhost:5163/api/Task/${currentTaskId}/Result/${currentTestCaseId}`, json, { headers: { 'Content-Type': 'application/json' } })
+        .then(navigate(`/home/Company/ViewTasks/Task/${currentTaskId}/TestCase/View`));
       console.log(response.data);
       setFormData({
         data: '',
@@ -77,7 +75,7 @@ export default function EditTestCaseForCompanyFunction() {
       console.error(error);
     }
   };
-    return (
+  return (
     <>
       <Header />
       <table>
@@ -92,36 +90,35 @@ export default function EditTestCaseForCompanyFunction() {
         <tr className="row-with-border">
           <td>
             <label>
-                Result:
-                <input type="text" name="result" value={formData.result} onChange={handleChange} required />
+              Result:
+              <input type="text" name="result" value={formData.result} onChange={handleChange} required />
             </label>
           </td>
         </tr>
         <tr>
           <td>
             <label>
-                Is this test case an example?<br></br>
-                <input type="checkbox" name="example" checked={formData.example} onChange={handleChange} />
+              Is this test case an example?<br></br>
+              <input type="checkbox" name="example" checked={formData.example} onChange={handleChange} />
             </label>
           </td>
         </tr>
-        
         <tr>
           <td>
             <Button
-                value="Approve edit"
-                name="Add task"
-                onClick={handleSubmit}
-              />
+              value="Approve edit"
+              name="Add task"
+              onClick={handleSubmit}
+            />
           </td>
         </tr>
         <tr>
           <td>
             <Button
-                value="Cancel"
-                name="Add task"
-                onClick={() => navigate('/home/company/ViewTasks')}
-              />
+              value="Cancel"
+              name="Add task"
+              onClick={() => navigate('/home/company/ViewTasks')}
+            />
           </td>
         </tr>
       </table>
