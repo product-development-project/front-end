@@ -11,6 +11,7 @@
 .tr {
     text-align: center;
 }
+
 td {
     border: 1pt solid;
     border-image-slice: 1;
@@ -19,6 +20,7 @@ td {
     text-align: center;
     padding: 10px;
 }
+
 tr {
     border-bottom: 1pt solid;
     border-image-slice: 1;
@@ -26,24 +28,27 @@ tr {
     border-radius: 5px;
     text-align: center;
     padding: 10px;
-} 
+}
 
 tr.border-bottom-JobList td {
     border: 1pt solid black;
-    color:white;
+    color: white;
     background-color: black;
     border-radius: 5px;
     text-align: center;
     padding: 10px;
 }
+
 tr.border-bottom-JobList td:hover {
     cursor: pointer;
     color: black;
     background-color: white;
 }
+
 tr.border-bottom-JobList td.viewButton:hover {
-    cursor:default;
+    cursor: default;
 }
+
 table {
     margin: 0 auto;
 }

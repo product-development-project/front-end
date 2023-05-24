@@ -1,14 +1,11 @@
 import React, { useState } from 'react';
-import TopBar from '../TopBar';
 import { Button } from '../UI/Button';
-import { useNavigate } from 'react-router-dom';
 import './styleExercises.css';
-import axios from 'axios';
-
 
 export default function Table({ data, types, navigate }) {
   const [sortKey, setSortKey] = useState('id'); // default sorting key is 'id'
   const [sortOrder, setSortOrder] = useState('asc'); // default sorting order is ascending
+  let role = localStorage.getItem('roles');
 
   // function to sort the data
   const sortData = (key) => {
@@ -29,7 +26,7 @@ export default function Table({ data, types, navigate }) {
       { key: 'difficulty', label: 'Difficulty' },
       { key: 'type', label: 'Task type' },
       { key: '', label: '' },
-      { key: '', label:''}
+      { key: '', label: '' }
     ];
 
     return headers.map(({ key, label }) => (
@@ -67,12 +64,26 @@ export default function Table({ data, types, navigate }) {
         <td>{task.name}</td>
         <td className={`difficulty ${task.difficulty.toLowerCase()}`}>{task.difficulty}</td>
         <td>{types.find(t => t.id === task.type_id)?.name}</td>
-        <td><Button
-          value="Try out"
-          name="go-to-task"
-          onClick={() => navigate(`/home/task/${task.id}`)}
-        /></td>
-        <td>{task.completed == "1" ? <span style={{ color: 'green' }}>&#10004;</span> : <span style={{ color: 'red' }}>&#10008;</span>}</td>
+        {
+          role.includes("User") ?
+            <td>
+              <Button
+                value="Try out"
+                name="go-to-task"
+                onClick={() => navigate(`/home/task/${task.id}`)}
+              />
+            </td>
+            :
+            <>
+            </>
+        }
+        {
+          role.includes("User") ?
+            <td>{task.completed == "1" ? <span style={{ color: 'green' }}>&#10004;</span> : <span style={{ color: 'red' }}>&#10008;</span>}</td>
+            :
+            <>
+            </>
+        }
       </tr>
     ));
   };

@@ -2,17 +2,12 @@ import React, { useState, useEffect } from 'react'
 import { useNavigate } from 'react-router-dom';
 import Header from '../Header';
 import axios from 'axios';
-import '../../../src/components/Leaderboard/LeaderboardStyle.css';
+import './LeaderboardStyle.css';
 
 export default function Leaderboard() {
     const navigate = useNavigate();
-
     const [errorMessage, setErrorMessage] = useState('');
-    const [editPopupIsOpen, setEditPopupIsOpen] = useState(false);
-    const [user, setUser] = useState(null);
-    const [deletePopupIsOpen, setDeletePopupIsOpen] = useState(false);
     const [data, setData] = useState([]);
-    const [types, setTypes] = useState([]);
     const [sortColumn, setSortColumn] = useState(null);
     const [sortOrder, setSortOrder] = useState(1);
 

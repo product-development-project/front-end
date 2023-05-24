@@ -4,6 +4,8 @@ import React, { useState, useEffect } from 'react'
 import { useNavigate } from 'react-router-dom';
 import './style.css';
 import axios from 'axios';
+import Snackbar from '@mui/material/Snackbar';
+import Alert from '@mui/material/Alert';
 
 function formatDate(dateString) {
   const date = new Date(dateString);
@@ -15,8 +17,10 @@ function formatDate(dateString) {
 
 export default function ApproveTasks() {
   const navigate = useNavigate();
+  const [openSnackbar, setOpenSnackbar] = useState(false);
   const [data, setData] = useState([]);
   const [types, setTypes] = useState([]);
+  const [errorMessage, setErrorMessage] = useState('');
 
   useEffect(() => {
     if (!localStorage.getItem('access-token')) {
@@ -29,23 +33,39 @@ export default function ApproveTasks() {
   const tokenWithQuotes = localStorage.getItem('access-token');
   const token = tokenWithQuotes.substring(1, tokenWithQuotes.length - 1);
   axios.defaults.headers.common['Authorization'] = `Bearer ${token}`;
+
   async function fetchTasks() {
     let result = await axios.get(`http://localhost:5163/api/Admin/Task`, { headers: { 'Content-Type': 'application/json' } });
     setData(JSON.parse(JSON.stringify(result.data)));
-    console.log(result.data);
-  }
+  };
+
   async function fetchExercisesTypes() {
     let result = await axios.get(`http://localhost:5163/api/TaskType`, { headers: { 'Content-Type': 'application/json' } })
     setTypes(JSON.parse(JSON.stringify(result.data)));
-  }
-  async function Approve(Id) {
+  };
 
+  async function Approve(Id) {
     const confirmed = window.confirm("Are you sure you want to approve this task?");
     if (confirmed) {
-      let result2 = await axios.put(`http://localhost:5163/api/Admin/Task/` + Id, { headers: { 'Content-Type': 'application/json' } });
-      fetchTasks();
+      let response = await axios.put(`http://localhost:5163/api/Admin/Task/` + Id, { headers: { 'Content-Type': 'application/json' } });
+      if (response.status === 201) {
+        setOpenSnackbar(true);
+        fetchTasks();
+      } else {
+        setErrorMessage(response.statusText);
+        setOpenSnackbar(true);
+      }
     }
-  }
+  };
+
+  const handleCloseSnackbar = (event, reason) => {
+    if (reason === 'clickaway') {
+      return;
+    }
+    setOpenSnackbar(false);
+    setErrorMessage('');
+  };
+  
   return (
     <>
       <Header></Header>
@@ -88,7 +108,22 @@ export default function ApproveTasks() {
           ))}
         </tbody>
       </table>
-
+      <Snackbar
+        open={openSnackbar}
+        autoHideDuration={3000}
+        onClose={handleCloseSnackbar}
+        anchorOrigin={{ vertical: 'bottom', horizontal: 'center' }}
+      >
+        {errorMessage ? (
+          <Alert onClose={handleCloseSnackbar} severity="error">
+            {errorMessage}
+          </Alert>
+        ) : (
+          <Alert onClose={handleCloseSnackbar} severity="success">
+            Approved successfully!
+          </Alert>
+        )}
+      </Snackbar>
     </>
   );
 };

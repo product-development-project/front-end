@@ -10,7 +10,6 @@ import FAQ from './components/FAQ';
 import Contacts from './components/Contacts';
 import JobAdsListPageV2 from './components/JobAds/JobAdsListPageV2';
 import JobAdsListPage from './components/JobAds/JobAdsListPage';
-import { FileUploader } from './components/FileUploader';
 import Leaderboard from './components/Leaderboard/Leaderboard';
 import Exercises from './components/Exercises/Exercises';
 import Task from './components/Exercise/Exercise';
@@ -56,7 +55,6 @@ function App() {
 
           <Route path="job/ads" element={<JobAdsListPageV2 />} />
           <Route path="home/job/ads" element={<JobAdsListPage />} />
-          <Route path="home/job/ads/upload" element={<FileUploader />} />
 
           <Route path="home/faq" element={<FAQ />} />
           <Route path="home/contacts" element={<Contacts />} />
