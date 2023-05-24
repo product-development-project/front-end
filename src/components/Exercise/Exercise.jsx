@@ -12,10 +12,7 @@ export default function Exercise() {
   const [data, setData] = useState([]);
   const [code, setCode] = useState();
   const [responseMessage, setResponse] = useState('');
-  const [passedMessage, setPassed] = useState('');
-  const [runTime, setRunTime] = useState(0.0);
-  const [memoryUsage, setMemory] = useState(0.0);
-  const [failedMessage, setFailed] = useState('');
+  const [solutionData, setSolutionData] = useState();
   const [buttonPressed, setButtonPressed] = useState(false);
   const [language, setLanguage] = useState("python3");
   var parts = window.location.href.split("/");
@@ -52,11 +49,7 @@ export default function Exercise() {
     axios
       .post('http://localhost:5163/api/code/checker', request, { headers: { 'Content-Type': 'application/json' } })
       .then(response => {
-        console.log(response.data);
-        setPassed(response.data["passed"]);
-        setFailed(response.data["failed"]);
-        setRunTime(response.data["runTime"]);
-        setMemory(response.data["memoryUsage"]);
+        setSolutionData(JSON.parse(JSON.stringify(response.data)));
       })
       .catch(error => {
         if (error.request) {
@@ -101,10 +94,10 @@ export default function Exercise() {
           </div>
           <div className="submitButtonDiv">
             <p style={{ paddingLeft: '0.2em' }}>{responseMessage}</p>
-            {buttonPressed && passedMessage.length > 0 && (
+            {buttonPressed && solutionData?.passed?.length > 0 && (
               <table style={{ width: '100%' }}>
                 <tbody style={{ color: 'green' }}>
-                  {passedMessage.map((message, index) => (
+                  {solutionData.passed.map((message, index) => (
                     <tr key={index}>
                       <td>{message}</td>
                     </tr>
@@ -112,10 +105,10 @@ export default function Exercise() {
                 </tbody>
               </table>
             )}
-            {buttonPressed && failedMessage.length > 0 && (
+            {buttonPressed && solutionData?.failed?.length > 0 && (
               <table style={{ width: '100%' }}>
                 <tbody style={{ color: 'red' }}>
-                  {failedMessage.map((message, index) => (
+                  {solutionData.failed.map((message, index) => (
                     <tr key={index}>
                       <td>{message}</td>
                     </tr>
@@ -123,10 +116,15 @@ export default function Exercise() {
                 </tbody>
               </table>
             )}
+            { solutionData != undefined ?
             <div className="stats">
-              <p>Run Time: {runTime}s</p>
-              <p>Memory Usage: {memoryUsage.toFixed(4)}KB</p>
+              <p>Run Time: {solutionData.runTime}s</p>
+              <p>Memory Usage: {solutionData.memoryUsage?.toFixed(4)}KB</p>
+              <p>Correctness Points: {solutionData.taskPoints}, RunTime Points: {solutionData.runTimePoints}, RAM Usage Points: {solutionData.memoryUsagePoints}</p>
             </div>
+            :
+            <></>
+            }
             <Button
               style={{ width: '30%', float: 'right' }}
               value="Submit"

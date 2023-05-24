@@ -12,16 +12,14 @@ export default function AdExercise() {
   const [data, setData] = useState([]);
   const [code, setCode] = useState();
   const [responseMessage, setResponse] = useState('');
-  const [passedMessage, setPassed] = useState('');
-  const [runTime, setRunTime] = useState(0.0);
-  const [memoryUsage, setMemory] = useState(0.0);
-  const [failedMessage, setFailed] = useState('');
+  const [solutionData, setSolutionData] = useState();
   const [buttonPressed, setButtonPressed] = useState(false);
   const [language, setLanguage] = useState("python3");
   var parts = window.location.href.split("/");
   var currentTaskId = (parts[parts.length - 1]).toString();
-  var currentAdId = (parts[parts.length-3]).toString();
+  var currentAdId = (parts[parts.length - 3]).toString();
   const extensions = [python()];
+  let role = localStorage.getItem("roles");
 
   const languages = ['python3'];
 
@@ -43,21 +41,18 @@ export default function AdExercise() {
     var exerciseName = data['name'];
     var request = {
       'language': language,
-      'type': 'exercise',
+      'type': 'competition',
       'name': exerciseName,
       'code': code,
       'taskId': currentTaskId,
+      'adId': currentAdId,
       'userId': localStorage.getItem('id')
     }
 
     axios
       .post('http://localhost:5163/api/code/checker', request, { headers: { 'Content-Type': 'application/json' } })
       .then(response => {
-        console.log(response.data);
-        setPassed(response.data["passed"]);
-        setFailed(response.data["failed"]);
-        setRunTime(response.data["runTime"]);
-        setMemory(response.data["memoryUsage"]);
+        setSolutionData(JSON.parse(JSON.stringify(response.data)));
       })
       .catch(error => {
         if (error.request) {
@@ -102,10 +97,10 @@ export default function AdExercise() {
           </div>
           <div className="submitButtonDiv">
             <p style={{ paddingLeft: '0.2em' }}>{responseMessage}</p>
-            {buttonPressed && passedMessage.length > 0 && (
+            {buttonPressed && solutionData?.passed?.length > 0 && (
               <table style={{ width: '100%' }}>
                 <tbody style={{ color: 'green' }}>
-                  {passedMessage.map((message, index) => (
+                  {solutionData.passed.map((message, index) => (
                     <tr key={index}>
                       <td>{message}</td>
                     </tr>
@@ -113,10 +108,10 @@ export default function AdExercise() {
                 </tbody>
               </table>
             )}
-            {buttonPressed && failedMessage.length > 0 && (
+            {buttonPressed && solutionData?.failed?.length > 0 && (
               <table style={{ width: '100%' }}>
                 <tbody style={{ color: 'red' }}>
-                  {failedMessage.map((message, index) => (
+                  {solutionData.failed.map((message, index) => (
                     <tr key={index}>
                       <td>{message}</td>
                     </tr>
@@ -124,10 +119,15 @@ export default function AdExercise() {
                 </tbody>
               </table>
             )}
+            { solutionData != undefined ?
             <div className="stats">
-              <p>Run Time: {runTime}s</p>
-              <p>Memory Usage: {memoryUsage.toFixed(4)}KB</p>
+              <p>Run Time: {solutionData.runTime}s</p>
+              <p>Memory Usage: {solutionData.memoryUsage?.toFixed(4)}KB</p>
+              <p>Correctness Points: {solutionData.taskPoints}, RunTime Points: {solutionData.runTimePoints}, RAM Usage Points: {solutionData.memoryUsagePoints}</p>
             </div>
+            :
+            <></>
+            }
             <Button
               style={{ width: '30%', float: 'right' }}
               value="Submit"
@@ -137,14 +137,25 @@ export default function AdExercise() {
                 setButtonPressed(true);
               }}
             />
-            <Button
-              style={{ width: '30%' }}
-              value="Back"
-              name="back-button"
-              onClick={() => {
-                navigate("/home/ad/"+currentAdId)
-              }}
-            />
+            {role.includes("Company") || role.includes("Admin") ?
+              <Button
+                style={{ width: '30%' }}
+                value="Back"
+                name="back-button"
+                onClick={() => {
+                  navigate("/home/Company/ViewAds/AddTask/" + currentAdId)
+                }}
+              />
+              :
+              <Button
+                style={{ width: '30%' }}
+                value="Back"
+                name="back-button"
+                onClick={() => {
+                  navigate("/home/ad/" + currentAdId)
+                }}
+              />
+            }
           </div>
         </div>
       </div>

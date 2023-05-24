@@ -42,9 +42,9 @@ export default function CreateTask() {
   }, [navigate]);
 
   async function fetchExercisesTypes() {
-    let result = await axios.get(`http://localhost:5163/api/TaskType`, { headers: { 'Content-Type': 'application/json'}});
+    let result = await axios.get(`http://localhost:5163/api/TaskType`, { headers: { 'Content-Type': 'application/json' } });
     setTypes(JSON.parse(JSON.stringify(result.data)));
-  }
+  };
 
   const handleChange = (event) => {
     const name = event.target.name;
@@ -61,30 +61,27 @@ export default function CreateTask() {
         difficulty: formData.difficulty,
         confirmed: formData.confirmed,
         educational: formData.educational,
-        date: formData.date,
         type_id: formData.type_id
       };
-      console.log(formData.problem);
       let json = JSON.stringify(data);
       const response = await axios.post('http://localhost:5163/api/Task', json, {
         headers: { 'Content-Type': 'application/json' },
       })
-      .then(navigate("/home/Admin"));
-      console.log(response.data);
+        .then(navigate("/home/Admin"));
       setFormData({
         name: '',
         problem: '',
         difficulty: '',
         confirmed: false,
         educational: false,
-        date: '',
         type_id: ''
       });
     } catch (error) {
       console.error(error);
     }
   };
-    return (
+  
+  return (
     <>
       <Header />
       <table>
@@ -99,8 +96,8 @@ export default function CreateTask() {
         <tr className="row-with-border">
           <td>
             <label>
-                Problem:
-                <input type="file" name="problem" onChange={handleFileChange} accept="" required />
+              Problem:
+              <input type="file" name="problem" onChange={handleFileChange} accept="" required />
             </label>
           </td>
         </tr>
@@ -150,19 +147,11 @@ export default function CreateTask() {
         </tr>
         <tr>
           <td>
-            <label>
-              Date:
-              <input type="date" name="date" value={formData.date} onChange={handleChange} required />
-            </label>
-          </td>
-        </tr>
-        <tr>
-          <td>
             <Button
-                value="Approve"
-                name="Add task"
-                onClick={handleSubmit}
-              />
+              value="Approve"
+              name="Add task"
+              onClick={handleSubmit}
+            />
           </td>
         </tr>
       </table>

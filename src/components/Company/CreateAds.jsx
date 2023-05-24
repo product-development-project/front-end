@@ -1,8 +1,7 @@
-import React, { useState, useEffect, useMemo } from 'react'
+import React, { useState } from 'react'
 import Header from '../Header';
 import { Container, Form, Button } from 'react-bootstrap'
 import axios from 'axios'
-import { useParams } from 'react-router';
 import { useNavigate } from 'react-router-dom'
 import { Link } from 'react-router-dom';
 import DatePicker from 'react-datepicker';
@@ -32,9 +31,8 @@ export default function CreateAdds() {
             })
             .catch(error => {
                 //setErrorMessage(error.response.data);
-                console.log(error)
             });
-    }
+    };
 
     return (
         <div className="App">
@@ -62,5 +60,5 @@ export default function CreateAdds() {
                 </div>
             </Container>
         </div>
-    )
+    );
 };

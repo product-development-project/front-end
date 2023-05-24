@@ -8,6 +8,8 @@ import Box from '@material-ui/core/Box';
 import Paper from '@material-ui/core/Paper';
 import Grid from '@material-ui/core/Grid';
 import { makeStyles } from '@material-ui/core/styles';
+import Snackbar from '@mui/material/Snackbar';
+import Alert from '@mui/material/Alert';
 
 function formatDate(dateString) {
   const date = new Date(dateString);
@@ -24,31 +26,27 @@ const useStyles = makeStyles((theme) => ({
   paper: {
     padding: theme.spacing(2),
     textAlign: 'center',
-    color: theme.palette.text.secondary,
+    color: 'black',
     margin: '10px',
   },
 }));
 
 export default function JobAdsPage() {
   const navigate = useNavigate();
-
   const [errorMessage, setErrorMessage] = useState('');
-  const [editPopupIsOpen, setEditPopupIsOpen] = useState(false);
-  const [user, setUser] = useState(null);
-  const [deletePopupIsOpen, setDeletePopupIsOpen] = useState(false);
-  const [data, setData] = useState([]);
   const [addata, setAddata] = useState([]);
   const [taskdata, setTaskdata] = useState([]);
   const [pointsdata, setPointsdata] = useState([]);
-  const [types, setTypes] = useState([]);
-  const [sortColumn, setSortColumn] = useState(null);
-  const [sortOrder, setSortOrder] = useState(1);
   const [currentAdId, setCurrentAdId] = useState(null);
+  const [loggedUser, setLoggedUser] = useState([]);
   const username = localStorage.getItem('username');
-
+  const [openSnackbar, setOpenSnackbar] = useState(false);
   const tokenWithQuotes = localStorage.getItem('access-token');
   const token = tokenWithQuotes.substring(1, tokenWithQuotes.length - 1);
   axios.defaults.headers.common['Authorization'] = `Bearer ${token}`;
+  let userId = localStorage.getItem('id');
+  let role = localStorage.getItem('roles');
+  const currentDate = new Date();
 
   useEffect(() => {
     if (!localStorage.getItem('access-token')) {
@@ -58,66 +56,103 @@ export default function JobAdsPage() {
     fetchAd(currentAdId);
     fetchTaskForAd(currentAdId);
     fetchPointsForAd(currentAdId, username);
-  }, [navigate, currentAdId,username]);
+  }, [navigate, currentAdId, username]);
 
   useEffect(() => {
     setCurrentAdId(getCurrentAdIdFromURL());
     if (currentAdId) {
+      if (userId) {
+        fetchLogged();
+      }
       fetchAd(currentAdId);
       fetchTaskForAd(currentAdId);
       fetchPointsForAd(currentAdId, username);
     }
-  }, [navigate, currentAdId,username]);
+  }, [navigate, currentAdId, username]);
 
   function getCurrentAdIdFromURL() {
     const parts = window.location.href.split('/');
     return parts[parts.length - 1];
   }
 
-
   async function fetchAd(adId) {
     try {
-        console.log(adId);
-      const result = await axios.get(`http://localhost:5163/api/Ad/`+adId, {
+      const result = await axios.get(`http://localhost:5163/api/Ad/` + adId, {
         headers: { 'Content-Type': 'application/json' }
       });
       setAddata(JSON.parse(JSON.stringify(result.data)));
-      console.log(addata);
     } catch (error) {
-      console.log(error);
-      setErrorMessage('Failed to fetch data');
+      // setErrorMessage('Failed to fetch data');
+      // setOpenSnackbar(true);
     }
   }
 
-  async function fetchTaskForAd(adId){
-        try {
+  async function fetchTaskForAd(adId) {
+    try {
       const result = await axios.get(`http://localhost:5163/api/Task/Competition/${adId}`, {
         headers: { 'Content-Type': 'application/json' }
       });
       setTaskdata(JSON.parse(JSON.stringify(result.data)));
-      console.log(taskdata);
     } catch (error) {
-      console.log(error);
-      setErrorMessage('Failed to fetch data');
+      // setErrorMessage('Failed to fetch data');
+      // setOpenSnackbar(true);
     }
   }
 
-  async function fetchPointsForAd(adId, username){
-            try {
-      const result = await axios.get(`http://localhost:5163/api/PointsAd/`+adId+`/`+username, {
+  async function fetchPointsForAd(adId, username) {
+    try {
+      const result = await axios.get(`http://localhost:5163/api/PointsAd/` + adId + `/` + username, {
         headers: { 'Content-Type': 'application/json' }
       });
       setPointsdata(JSON.parse(JSON.stringify(result.data)));
-      console.log(pointsdata);
     } catch (error) {
-      console.log(error);
-      setErrorMessage('Failed to fetch data');
+      // setErrorMessage('Failed to fetch data');
+      // setOpenSnackbar(true);
     }
   }
 
-  
-  const classes = useStyles();
+  async function fetchLogged() {
+    try {
+      const result = await axios.get(`http://localhost:5163/api/Logged/ad/${currentAdId}/user/${userId}`, {
+        headers: { 'Content-Type': 'application/json' }
+      });
+      setLoggedUser(JSON.parse(JSON.stringify(result.data)));
+    } catch (error) {
+      // setErrorMessage('Failed to fetch data');
+      // setOpenSnackbar(true);
+    }
+  }
 
+  const handleSubmit = async () => {
+    try {
+      const data = {
+        ad_id: currentAdId,
+      };
+      let json = JSON.stringify(data);
+      const response = await axios.post('http://localhost:5163/api/Logged', json, {
+        headers: { 'Content-Type': 'application/json' },
+      });
+      if (response.status === 201 || response.status === 201) {
+        setOpenSnackbar(true);
+      } else {
+        setErrorMessage(response.statusText);
+        setOpenSnackbar(true);
+      }
+    } catch (error) {
+      setErrorMessage(error);
+      setOpenSnackbar(true);
+    }
+  };
+
+  const handleCloseSnackbar = (event, reason) => {
+    if (reason === 'clickaway') {
+      return;
+    }
+    setOpenSnackbar(false);
+    setErrorMessage('');
+  };
+
+  const classes = useStyles();
   return (
     <>
       <Header />
@@ -135,33 +170,70 @@ export default function JobAdsPage() {
                 </Grid>
               </Grid>
               <Grid item xs={12} sm={12}>
-                <Paper className={classes.paper}>{addata.description}</Paper>
+                <Paper className={classes.paper}>Description: {addata.description}</Paper>
               </Grid>
-              <Grid container spacing={4}>
-                <Grid item xs={6} sm={3}>
-                  <Paper className={classes.paper} style={{ height: '75%' }}>Correctnes points: {pointsdata.correctnesPoints}</Paper>
-                </Grid>
-                <Grid item xs={6} sm={3}>
-                  <Paper className={classes.paper} style={{ height: '75%' }}>Time points: {pointsdata.timePoints}</Paper>
-                </Grid>
-                <Grid item xs={6} sm={3}>
-                  <Paper className={classes.paper} style={{ height: '75%' }}>Recourses points: {pointsdata.recourcesPoints}</Paper>
-                </Grid>
-                <Grid item xs={6} sm={3}>
-                  <Paper className={classes.paper} style={{ height: '75%' }}>Total points: {pointsdata.totalPoints}</Paper>
-                </Grid>
-              </Grid>
+              {
+                role.includes("User") ?
+                  <Grid container spacing={4} justifyContent="flex-end">
+                    <Grid item xs={6} sm={3}>
+                      <Paper className={classes.paper} style={{ height: '45%' }}>Correctnes points: {pointsdata.correctnesPoints}</Paper>
+                    </Grid>
+                    <Grid item xs={6} sm={3}>
+                      <Paper className={classes.paper} style={{ height: '45%' }}>Time points: {pointsdata.timePoints}</Paper>
+                    </Grid>
+                    <Grid item xs={6} sm={3}>
+                      <Paper className={classes.paper} style={{ height: '45%' }}>Recourses points: {pointsdata.recourcesPoints}</Paper>
+                    </Grid>
+                    <Grid item xs={6} sm={3}>
+                      <Paper className={classes.paper} style={{ height: '45%' }}>Total points: {pointsdata.totalPoints}</Paper>
+                    </Grid>
+                    <Grid item xs={6} sm={3}>
+                      <Button
+                        value="Register for Competition"
+                        name="register-for-competition-button"
+                        onClick={() => handleSubmit()}
+                        style={{
+                          float: 'right'
+                        }}
+                      />
+                    </Grid>
+                  </Grid>
+                  :
+                  <>
+                  </>
+              } 
             </Box>
           </Grid>
-          <Grid item xs={12} sm={4}>
-            {taskdata.map((item, index) => (
+          {role.includes("Company") || (role.includes("User") && currentDate >= new Date(formatDate(addata.start)) && loggedUser.ad_id !== undefined && currentAdId === loggedUser.ad_id.toString()) ?
+            <Grid item xs={12} sm={4}>
+              {taskdata.map((item, index) => (
                 <Paper key={index} className={classes.paper}>
-                    <Button value={item.name} name="go-to-ad" onClick={() => navigate(`/home/ad/${currentAdId}/task/${item.id}`)} style={{ width: '80%' }} />
+                  <Button value={item.name} name="go-to-ad" onClick={() => navigate(`/home/ad/${currentAdId}/task/${item.id}`)} style={{ width: '80%' }} />
                 </Paper>
-            ))}
-          </Grid>
+              ))}
+            </Grid>
+            :
+            <>
+            </>
+          }
         </Grid>
       </Box>
+      <Snackbar
+        open={openSnackbar}
+        autoHideDuration={3000}
+        onClose={handleCloseSnackbar}
+        anchorOrigin={{ vertical: 'bottom', horizontal: 'center' }}
+      >
+        {errorMessage ? (
+          <Alert onClose={handleCloseSnackbar} severity="error">
+            {errorMessage}
+          </Alert>
+        ) : (
+          <Alert onClose={handleCloseSnackbar} severity="success">
+            Registered successfully!
+          </Alert>
+        )}
+      </Snackbar>
     </>
   );
 }

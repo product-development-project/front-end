@@ -1,6 +1,5 @@
 import React from 'react'
 import { useNavigate } from 'react-router-dom';
-import { Button } from './UI/Button';
 import Logo from './Media/Photos/LogoTop.png'
 import styled from 'styled-components';
 
