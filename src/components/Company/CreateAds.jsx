@@ -1,62 +1,101 @@
-import React, { useState } from 'react'
+import React, { useState, useEffect } from 'react';
 import Header from '../Header';
-import { Container, Form, Button } from 'react-bootstrap'
-import axios from 'axios'
-import { useNavigate } from 'react-router-dom'
-import { Link } from 'react-router-dom';
+import { Button } from '../UI/Button';
+import axios from 'axios';
+import { useNavigate, Link } from 'react-router-dom';
 import DatePicker from 'react-datepicker';
 import 'react-datepicker/dist/react-datepicker.css';
 import moment from 'moment';
+import './style.css';
 
 export default function CreateAdds() {
+  const navigate = useNavigate();
+  const [Name, setName] = useState('');
+  const [Description, setDescription] = useState('');
+  const [StartDate, setStartDate] = useState('');
+  const [EndDate, setEndDate] = useState('');
 
-    const tokenWithQuotes = localStorage.getItem('access-token');
-    const token = tokenWithQuotes.substring(1, tokenWithQuotes.length - 1);
-    axios.defaults.headers.common['Authorization'] = `Bearer ${token}`;
-    const navigate = useNavigate();
-    const [Name, setName] = useState("");
-    const [Description, setDescription] = useState("");
-    const [StartDate, setStartDate] = useState("");
-    const [EndDate, setEndDate] = useState("");
+  const tokenWithQuotes = localStorage.getItem('access-token');
+  const token = tokenWithQuotes.substring(1, tokenWithQuotes.length - 1);
+  axios.defaults.headers.common['Authorization'] = `Bearer ${token}`;
 
-    async function addAdds(e) {
-        e.preventDefault();
-        const start = moment(StartDate).format("YYYY-MM-DDTHH:mm:ss");
-        const end = moment(EndDate).format("YYYY-MM-DDTHH:mm:ss");
-        let details = { Name, Description, start, end };
-        let json = JSON.stringify(details);
-        await axios.post('http://localhost:5163/api/Ad', json, { headers: { 'Content-Type': 'application/json' } })
-            .then(response => {
-                navigate('/home/Company/ViewAds')
-            })
-            .catch(error => {
-                //setErrorMessage(error.response.data);
-            });
-    };
+  async function addAdds(e) {
+    e.preventDefault();
+    const start = moment(StartDate).format('YYYY-MM-DDTHH:mm:ss');
+    const end = moment(EndDate).format('YYYY-MM-DDTHH:mm:ss');
+    let details = { Name, Description, start, end };
+    let json = JSON.stringify(details);
+    try {
+      const response = await axios.post('http://localhost:5163/api/Ad', json, {
+        headers: { 'Content-Type': 'application/json' },
+      });
+      navigate('/home/Company/ViewAds');
+    } catch (error) {
+      //setErrorMessage(error.response.data);
+    }
+  }
 
-    return (
-        <>
-            <Header />
-            <Container>
-                <br />
-                <div className="col-sm-6 offset-sm-3">
-                    <br />
-                    <Form onSubmit={addAdds}>
-                        <fieldset>
-                            <input type="text" value={Name} onChange={(e) => setName(e.target.value)} className="form-control" placeholder="Name" required />
-                            <br />
-                            <input type="text" value={Description} onChange={(e) => setDescription(e.target.value)} className="form-control" placeholder="Description" required />
-                            <br />
-                            <DatePicker selected={StartDate} onChange={date => setStartDate(date)} className="form-control" placeholderText="Start date" required />
-                            <br />
-                            <DatePicker selected={EndDate} onChange={date => setEndDate(date)} className="form-control" placeholderText="End date" required />
-                            <br />
-                            <button id="submit" value="submit" className="btn btn-success">Create</button>
-                            <Link to={'/home/Company'} ><Button variant='danger' className='my-1 m-1'>Cancel</Button></Link>
-                        </fieldset>
-                    </Form>
-                </div>
-            </Container>
-        </>
-    );
-};
+  useEffect(() => {
+    if (!localStorage.getItem('access-token')) {
+      navigate('/');
+    }
+  }, [navigate]);
+
+  return (
+    <>
+      <Header />
+      <table>
+        <tr className="row-with-border">
+          <td>
+            <input
+              type="text"
+              value={Name}
+              onChange={(e) => setName(e.target.value)}
+              placeholder="Name"
+              required
+            />
+          </td>
+        </tr>
+        <tr className="row-with-border">
+          <td>
+            <input
+              type="text"
+              value={Description}
+              onChange={(e) => setDescription(e.target.value)}
+              placeholder="Description"
+              required
+            />
+          </td>
+        </tr>
+        <tr>
+          <td>
+            <DatePicker
+              selected={StartDate}
+              onChange={(date) => setStartDate(date)}
+              placeholderText="Start date"
+              required
+            />
+          </td>
+        </tr>
+        <tr>
+          <td>
+            <DatePicker
+              selected={EndDate}
+              onChange={(date) => setEndDate(date)}
+              placeholderText="End date"
+              required
+            />
+          </td>
+        </tr>
+      </table>
+      <div style={{ display: 'flex', justifyContent: 'center', marginTop: '10px' }}>
+        <div style={{ display: 'flex', gap: '10px' }}>
+          <Button value="Create" name="create-button" onClick={addAdds} style={{ width: '150px' }} />
+          <Link to="/home/Company">
+            <Button value="Cancel" name="cancel-button" style={{ width: '150px' }} />
+          </Link>
+        </div>
+      </div>
+    </>
+  );
+}
