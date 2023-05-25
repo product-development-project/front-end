@@ -56,7 +56,7 @@ export default function Register() {
     };
 
     return (
-        <div style={{ background: 'linear-gradient(59deg, rgba(23,55,117,1) 0%, rgba(75,100,148,1) 100%)' }}>
+        <div style={{ background: 'linear-gradient(59deg, rgba(23,55,117,1) 0%, rgba(75,100,148,1) 100%)', height: '110vh' }}>
 
             <TopBar title='workIT'
                 backButtonDisabled={true}
@@ -74,6 +74,8 @@ export default function Register() {
             <Form
                 title='Register'
                 submitButtonTitle='Register'
+                backButtonTitle={'Back'}
+                onBack={() => navigate(-1)}
                 onSubmit={handleSave}
             >
                 <FormInput
@@ -127,14 +129,6 @@ export default function Register() {
                     pattern={user?.password}
                 />
             </Form>
-            <center style={{ paddingLeft: '60px', paddingRight: '60px', marginTop: '-25px'}}>
-                <Button
-                    id="submitButton"
-                    value="Login"
-                    name="login-button"
-                    onClick={() => navigate('/login')}
-                >Login</Button>
-            </center>
         </div>
     );
 };

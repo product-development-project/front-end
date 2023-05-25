@@ -11,8 +11,6 @@ export default function ProfileForm() {
     const [user, setUser] = useState(null);
     const [errorMessage, setErrorMessage] = useState('');
 
-    console.log(user);
-
     useEffect(() => {
         fetchUserInfo(username);
     }, [navigate]);
@@ -64,6 +62,8 @@ export default function ProfileForm() {
             <Form
                 title={'Edit profile'}
                 submitButtonTitle={'Save'}
+                backButtonTitle={'Back'}
+                onBack={() => navigate(-1)}
                 onSubmit={handleSave}
             >
                 <FormInput
@@ -98,14 +98,6 @@ export default function ProfileForm() {
                     required={true}
                 />
             </Form>
-            <center style={{ paddingLeft: '60px', paddingRight: '60px', marginTop: '-200px'}}>
-                <Button
-                    id="submitButton"
-                    value="Back"
-                    name="back-button"
-                    onClick={() => navigate(-1)}
-                >Back</Button>
-            </center>
         </div>
     );
 }

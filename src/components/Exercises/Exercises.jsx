@@ -124,7 +124,7 @@ export default function Exercises() {
   }
 
   return (
-    <div style={{ background: 'linear-gradient(59deg, rgba(23,55,117,1) 0%, rgba(75,100,148,1) 100%)', height: '100%' }}>
+    <div style={{  height: '100%', background: 'linear-gradient(59deg, rgba(23,55,117,1) 0%, rgba(75,100,148,1) 100%)' }}>
       <Header></Header>
       <div className="App">
         <div className="columns-container">

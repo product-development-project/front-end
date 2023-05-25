@@ -51,6 +51,31 @@
   cursor: pointer;
 }
 
+/* Didelis kvadratinis mygtukas, kaip submit formose */
+#backButton {
+  width: 60%;
+  height: 50px;
+  padding: 10px;
+  border: 0.1em solid black;
+  border-radius: 5px;
+  box-sizing: border-box;
+  color: white;
+  text-align: center;
+  transition: all 0.2s;
+  background-color: black;
+  margin-top: 15px;
+  margin-bottom: 30px;
+  font-size: 20px;
+  border-radius: 10px;
+  justify-content: center;
+}
+
+#backButton:hover {
+  color: black;
+  background-color: white;
+  cursor: pointer;
+}
+
 
 /*Home page mygtukas didelis*/
 #buttonHome {

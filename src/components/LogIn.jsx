@@ -55,13 +55,15 @@ export default function LogIn() {
   };
 
   return (
-    <div style={{ background: 'linear-gradient(59deg, rgba(23,55,117,1) 0%, rgba(75,100,148,1) 100%)'}}>
+    <div style={{ background: 'linear-gradient(59deg, rgba(23,55,117,1) 0%, rgba(75,100,148,1) 100%)', height: '100vh'}}>
       <TopBar title='workIT'
         backButtonDisabled={true}
       />
       <Form
         title='Login'
         submitButtonTitle='Login'
+        backButtonTitle={'Back'}
+        onBack={() => navigate(-1)}
         errorMessage={errorMessage}
         onSubmit={handleSave}
       >
@@ -90,14 +92,6 @@ export default function LogIn() {
           required={true}
         />
       </Form>
-      <center style={{ paddingLeft: '60px', paddingRight: '60px', marginTop: '-320px'}}>
-        <Button
-          id="submitButton"
-          value="Register"
-          name="register-button"
-          onClick={() => navigate('/register')}
-        >Register</Button>
-      </center>
     </div>
   );
 };
