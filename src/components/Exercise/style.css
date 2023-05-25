@@ -2,7 +2,7 @@ span {
   display: inline !important;
 }
 .cm-editor{
-  background-color: black;
+  background-color: rgba(0,0,0)
 }
 .cm-line{
   color: white;
@@ -19,6 +19,14 @@ span {
 }
 .cm-selectionMatch {
   display: inline !important;
+}
+
+.ͼg {
+  color: #7070e7;
+}
+
+.ͼb {
+  color: rgb(216, 6, 244);
 }
 
 .cm-matchingBracket {

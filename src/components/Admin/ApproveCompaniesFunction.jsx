@@ -74,7 +74,7 @@ export default function ApproveCompanies() {
               <td>{user.email}</td>
               <td>
                 <Button
-                  value="Approve"
+                  value="Promote"
                   name="approve-company"
                   onClick={() => toggleApprovePopup(user.name)}
                 />
@@ -107,7 +107,7 @@ export default function ApproveCompanies() {
           </Alert>
         ) : (
           <Alert onClose={handleCloseSnackbar} severity="success">
-            Approved successfully!
+            Promoted successfully!
           </Alert>
         )}
       </Snackbar>

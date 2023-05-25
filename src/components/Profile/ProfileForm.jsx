@@ -10,6 +10,8 @@ export default function ProfileForm() {
     const [user, setUser] = useState(null);
     const [errorMessage, setErrorMessage] = useState('');
 
+    console.log(user);
+
     useEffect(() => {
         fetchUserInfo(username);
     }, [navigate]);

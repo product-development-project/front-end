@@ -25,8 +25,8 @@ export default function Table({ data, types, navigate }) {
       { key: 'name', label: 'Task name' },
       { key: 'difficulty', label: 'Difficulty' },
       { key: 'type', label: 'Task type' },
-      { key: '', label: '' },
-      { key: '', label: '' }
+      { key: 'action', label: 'Action' },
+      { key: 'attempted', label: 'Attempted?' }
     ];
 
     return headers.map(({ key, label }) => (

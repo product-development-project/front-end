@@ -124,14 +124,13 @@ export default function Exercises() {
   }
 
   return (
-    <>
+    <div style={{ background: 'linear-gradient(59deg, rgba(23,55,117,1) 0%, rgba(75,100,148,1) 100%)', height: '100%' }}>
       <Header></Header>
-
       <div className="App">
         <div className="columns-container">
           <div className="column">
             <h2>Difficulty</h2>
-            <select value={difficultiesSelection} onChange={(e) => setDifficulty(e.target.value)}>
+            <select style={{background: 'rgb(211, 209, 209)'}} value={difficultiesSelection} onChange={(e) => setDifficulty(e.target.value)}>
               {difficulties.difficultiesInner.map((difficulty) => (
                 <option key={difficulty} value={difficulty}>{difficulty}</option>
               ))}
@@ -139,7 +138,7 @@ export default function Exercises() {
           </div>
           <div className="column">
             <h2>Exercise Type</h2>
-            <select value={exerciseTypeSelection} onChange={(e) => setTopic(e.target.value)}>
+            <select style={{background: 'rgb(211, 209, 209)'}} value={exerciseTypeSelection} onChange={(e) => setTopic(e.target.value)}>
               {exercises.exercisesInner.map((type) => (
                 <option key={type} value={type}>{type}</option>
               ))}
@@ -151,6 +150,6 @@ export default function Exercises() {
         </div>
 
       </div>
-    </>
+    </div>
   );
 };

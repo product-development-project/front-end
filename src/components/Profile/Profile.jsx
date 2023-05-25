@@ -119,8 +119,8 @@ export default function Profile() {
                 },
                 {
                     label: 'Current User',
-                    backgroundColor: 'rgba(255, 99, 132, 0.2)',
-                    borderColor: 'rgba(255, 99, 132, 1)',
+                    backgroundColor: 'rgba(255, 99, 132,1)',
+                    borderColor: 'rgba(0,0,0,1)',
                     borderWidth: 1,
                     data: [currentUsersAvgCorrectness, currentUsersAvgTime, currentUsersAvgResources]
                 }
@@ -131,19 +131,24 @@ export default function Profile() {
     }
 
     return (
-        <>
+        <div style={{ background: 'linear-gradient(59deg, rgba(23,55,117,1) 0%, rgba(75,100,148,1) 100%)', height: '100vh' }}>
             <Header></Header>
 
             {
                 role.includes("User") ?
                     <center style={{ marginTop: '5%' }}>
-                        <Card className={classes.root}>
+                        <Card className={classes.root}
+                            style={{
+                                background: 'linear-gradient(59deg, rgba(75,100,148,1) 0%, rgba(15,15,15,1) 100%)',
+                                borderRadius: '20px', // Increase the borderRadius value to round more corners
+                                color: 'white'
+                            }}>
                             <CardContent>
                                 <Typography variant="h6" component="h2" style={{ marginBottom: '10px' }}>
                                     Hello, {data.name}
                                 </Typography>
                                 <div style={{ float: 'left' }}>
-                                    <Card style={{ width: '300px', height: '150px' }}>
+                                    <Card style={{ width: '300px', height: '150px', background: 'linear-gradient(59deg, #3c5583 40%, rgba(15,15,15,1) 120%)', color: 'white', border: '1px solid white' }}>
                                         <CardContent>
                                             <Typography className={classes.pos} color="initial">
                                                 <IconContext.Provider value={{ size: '1.2em', style: { verticalAlign: 'middle' } }}>
@@ -167,7 +172,7 @@ export default function Profile() {
                                     </Card>
                                 </div>
                                 <div style={{ position: 'absolute', paddingTop: '200px' }}>
-                                    <Card style={{ width: '300px', height: '150px' }}>
+                                    <Card style={{ width: '300px', height: '150px', background: 'linear-gradient(59deg, #3c5583 40%, rgba(15,15,15,1) 120%)', color: 'white', border: '1px solid white' }}>
                                         <CardContent>
                                             <Typography className={classes.pos} color="initial">
                                                 Milestones on workIT page
@@ -182,7 +187,7 @@ export default function Profile() {
                                     </Card>
                                 </div>
                                 <div>
-                                    <Card style={{ width: '550px', height: '350px' }}>
+                                    <Card style={{ width: '550px', height: '350px', background: 'linear-gradient(59deg, #3c5583 60%, rgba(15,15,15,1) 90%)', color: 'white', border: '1px solid white', color: 'white' }}>
                                         <CardContent>
                                             <Typography className={classes.pos} color="initial">
                                                 Code analysis between other users
@@ -194,12 +199,38 @@ export default function Profile() {
                                                         options={{
                                                             title: {
                                                                 display: true,
-                                                                fontSize: 20
+                                                                fontSize: 20,
                                                             },
                                                             legend: {
                                                                 display: true,
-                                                                position: 'right'
-                                                            }
+                                                                position: 'right',
+                                                            },
+                                                            scales: {
+                                                                y: {
+                                                                    beginAtZero: true,
+                                                                    ticks: {
+                                                                        color: 'white' // Set y-axis tick color to white
+                                                                    },
+                                                                    grid: {
+                                                                        color: 'white'
+                                                                    }
+                                                                },
+                                                                x: {
+                                                                    ticks: {
+                                                                        color: 'white' // Set x-axis tick color to white
+                                                                    },
+                                                                    grid: {
+                                                                        color: 'white'
+                                                                    }
+                                                                }
+                                                            },
+                                                            plugins: {
+                                                                legend: {
+                                                                    labels: {
+                                                                        color: 'white' // Set legend label color to white
+                                                                    }
+                                                                }
+                                                            },
                                                         }}
                                                     />
                                                 </div>
@@ -277,7 +308,7 @@ export default function Profile() {
                                             <IconContext.Provider value={{ size: '1.2em' }}>
                                                 <CiPhone />
                                             </IconContext.Provider>
-                                            {companyData.telefonas}
+                                            {companyData.phoneNumber}
                                         </Typography>
                                         <div style={{ marginRight: '10px', width: '800px', position: 'relative', zIndex: '2' }}>
                                             <Button
@@ -344,6 +375,6 @@ export default function Profile() {
                     <>
                     </>
             }
-        </>
+        </div>
     );
 };

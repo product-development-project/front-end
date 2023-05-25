@@ -154,38 +154,38 @@ export default function JobAdsPage() {
 
   const classes = useStyles();
   return (
-    <>
+    <div style={{ background: 'linear-gradient(59deg, rgba(23,55,117,1) 0%, rgba(75,100,148,1) 100%)', height: '100vh' }}>
       <Header />
       <Box sx={{ flexGrow: 1 }}>
         <Grid container spacing={2}>
           <Grid item xs={12} sm={8}>
-            <Paper className={classes.paper}>Ad name: {addata.name}</Paper>
+            <Paper className={classes.paper} style={{background: 'rgb(211, 209, 209)'}}>Ad name: {addata.name}</Paper>
             <Box>
               <Grid container spacing={2}>
                 <Grid item xs={12} sm={6}>
-                  <Paper className={classes.paper}>Start date: {formatDate(addata.start)}</Paper>
+                  <Paper className={classes.paper} style={{background: 'rgb(211, 209, 209)'}}>Start date: {formatDate(addata.start)}</Paper>
                 </Grid>
                 <Grid item xs={12} sm={6}>
-                  <Paper className={classes.paper}>End date: {formatDate(addata.end)}</Paper>
+                  <Paper className={classes.paper} style={{background: 'rgb(211, 209, 209)'}}>End date: {formatDate(addata.end)}</Paper>
                 </Grid>
               </Grid>
               <Grid item xs={12} sm={12}>
-                <Paper className={classes.paper}>Description: {addata.description}</Paper>
+                <Paper className={classes.paper} style={{background: 'rgb(211, 209, 209)'}}>Description: {addata.description}</Paper>
               </Grid>
               {
                 role.includes("User") ?
                   <Grid container spacing={4} justifyContent="flex-end">
                     <Grid item xs={6} sm={3}>
-                      <Paper className={classes.paper} style={{ height: '45%' }}>Correctnes points: {pointsdata.correctnesPoints}</Paper>
+                      <Paper className={classes.paper} style={{ height: '45%', background: 'rgb(211, 209, 209)' }}>Correctnes points: {pointsdata.correctnesPoints}</Paper>
                     </Grid>
                     <Grid item xs={6} sm={3}>
-                      <Paper className={classes.paper} style={{ height: '45%' }}>Time points: {pointsdata.timePoints}</Paper>
+                      <Paper className={classes.paper} style={{ height: '45%', background: 'rgb(211, 209, 209)' }}>Time points: {pointsdata.timePoints}</Paper>
                     </Grid>
                     <Grid item xs={6} sm={3}>
-                      <Paper className={classes.paper} style={{ height: '45%' }}>Recourses points: {pointsdata.recourcesPoints}</Paper>
+                      <Paper className={classes.paper} style={{ height: '45%', background: 'rgb(211, 209, 209)' }}>Recourses points: {pointsdata.recourcesPoints}</Paper>
                     </Grid>
                     <Grid item xs={6} sm={3}>
-                      <Paper className={classes.paper} style={{ height: '45%' }}>Total points: {pointsdata.totalPoints}</Paper>
+                      <Paper className={classes.paper} style={{ height: '45%', background: 'rgb(211, 209, 209)' }}>Total points: {pointsdata.totalPoints}</Paper>
                     </Grid>
                     <Grid item xs={6} sm={3}>
                       <Button
@@ -260,6 +260,6 @@ export default function JobAdsPage() {
           </Alert>
         )}
       </Snackbar>
-    </>
+    </div>
   );
 }

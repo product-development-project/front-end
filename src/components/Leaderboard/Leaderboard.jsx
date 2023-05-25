@@ -50,7 +50,7 @@ export default function Leaderboard() {
     }
 
     return (
-        <>
+        <div style={{background: 'linear-gradient(59deg, rgba(23,55,117,1) 0%, rgba(75,100,148,1) 100%)', height: '100vh'}}>
             <Header></Header>
             <table>
                 <tr className="border-bottom-Leaderboard delayed-animation-Leaderboard" style={{ animationDelay: `${50}ms` }}>
@@ -72,6 +72,6 @@ export default function Leaderboard() {
                     ))}
                 </tbody>
             </table>
-        </>
+        </div>
     )
 }

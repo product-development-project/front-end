@@ -143,7 +143,7 @@ export default function AdExercise() {
                 value="Back"
                 name="back-button"
                 onClick={() => {
-                  navigate("/home/Company/ViewAds/AddTask/" + currentAdId)
+                  navigate(-1)
                 }}
               />
               :
@@ -152,7 +152,7 @@ export default function AdExercise() {
                 value="Back"
                 name="back-button"
                 onClick={() => {
-                  navigate("/home/ad/" + currentAdId)
+                  navigate(-1)
                 }}
               />
             }

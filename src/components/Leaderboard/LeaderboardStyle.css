@@ -13,12 +13,14 @@
 }
 
 td {
-    border: 1pt solid;
+    border: 2pt solid;
     border-image-slice: 1;
-    border-image-source: linear-gradient(to bottom, black, blue);
+    border-image-source: linear-gradient(to bottom, black);
     border-radius: 5px;
     text-align: center;
     padding: 10px;
+    background-color: rgb(211, 209, 209);
+    color: black;
 }
 
 tr {

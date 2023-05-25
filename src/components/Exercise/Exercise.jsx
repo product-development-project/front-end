@@ -75,6 +75,7 @@ export default function Exercise() {
             <select
               className="dropdown"
               value={language}
+              style={{ background: 'rgb(211, 209, 209)' }}
               onChange={event => setLanguage(event.target.value)}
             >
               <option value="python3">Python 3</option>
@@ -99,7 +100,9 @@ export default function Exercise() {
                 <tbody style={{ color: 'green' }}>
                   {solutionData.passed.map((message, index) => (
                     <tr key={index}>
-                      <td>{message}</td>
+                      <td style={{ background: 'rgb(211, 209, 209)', color: 'rgb(0, 255, 50, 0.8)', fontWeight: 'bold' }}>
+                        {message}
+                      </td>
                     </tr>
                   ))}
                 </tbody>
@@ -110,20 +113,20 @@ export default function Exercise() {
                 <tbody style={{ color: 'red' }}>
                   {solutionData.failed.map((message, index) => (
                     <tr key={index}>
-                      <td>{message}</td>
+                      <td style={{ background: 'rgb(211, 209, 209)', color: 'rgb(255, 0, 0, 1)', fontWeight: 'bold' }}>{message}</td>
                     </tr>
                   ))}
                 </tbody>
               </table>
             )}
-            { solutionData != undefined ?
-            <div className="stats">
-              <p>Run Time: {solutionData.runTime}s</p>
-              <p>Memory Usage: {solutionData.memoryUsage?.toFixed(4)}KB</p>
-              <p>Correctness Points: {solutionData.taskPoints}, RunTime Points: {solutionData.runTimePoints}, RAM Usage Points: {solutionData.memoryUsagePoints}</p>
-            </div>
-            :
-            <></>
+            {solutionData != undefined ?
+              <div className="stats" style={{ color: 'white' }}>
+                <p>Run Time: {solutionData.runTime}s</p>
+                <p>Memory Usage: {solutionData.memoryUsage?.toFixed(4)}KB</p>
+                <p>Correctness Points: {solutionData.taskPoints}, RunTime Points: {solutionData.runTimePoints}, RAM Usage Points: {solutionData.memoryUsagePoints}</p>
+              </div>
+              :
+              <></>
             }
             <Button
               style={{ width: '30%', float: 'right' }}
