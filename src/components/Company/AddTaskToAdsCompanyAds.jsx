@@ -17,7 +17,7 @@ if (token) {
 }
 
 axios.defaults.headers.common["Authorization"] = `Bearer ${token}`;
-export default function AddTaskForCompetitionFunction() {
+export default function AddTaskForCompetitionByCompanyAdsFunction() {
   const navigate = useNavigate();
   const [data, setData] = useState([]);
   const [errorMessage, setErrorMessage] = useState("");
@@ -40,9 +40,12 @@ export default function AddTaskForCompetitionFunction() {
   }, [navigate]);
 
   async function fetchExercises() {
-    let result = await axios.get(`http://localhost:5163/api/Task`, {
-      headers: { "Content-Type": "application/json" },
-    });
+    let result = await axios.get(
+      `http://localhost:5163/api/Task/ViewCompanyTask`,
+      {
+        headers: { "Content-Type": "application/json" },
+      }
+    );
     setData(JSON.parse(JSON.stringify(result.data)));
   }
 
@@ -85,13 +88,7 @@ export default function AddTaskForCompetitionFunction() {
     <>
       <Header />
       <div>
-        <Button
-          value="Go to your own tasks"
-          name="go-to-task"
-          onClick={() =>
-            navigate(`/home/Company/ViewAds/AddtaskByCompanyTask/${currentId}`)
-          }
-        />
+        <Button value="back" name="go-to-task" onClick={() => navigate(-1)} />
       </div>
       <div style={{ display: "flex", justifyContent: "center" }}>
         <table>

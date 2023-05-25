@@ -32,6 +32,7 @@ import ViewCreatedTasksFunctionForCompany from './components/Company/ViewCreated
 import CreateTestCaseForTaskForCompany from './components/Company/AddTestCaseForCompany';
 import ViewTestCasesForTaskForCompanyFunction from './components/Company/ViewTestCasesForTaskForCompany';
 import EditTestCaseForCompanyFunction from './components/Company/EditTestCaseForCompany';
+import AddTaskForCompetitionByCompanyAdsFunction from './components/Company/AddTaskToAdsCompanyAds';
 
 function App() {
   return (
@@ -71,6 +72,7 @@ function App() {
           <Route path="/home/Company/ViewTasks/Task/:id/TestCase" element={<CreateTestCaseForTaskForCompany></CreateTestCaseForTaskForCompany>}></Route>
           <Route path="/home/Company/ViewTasks/Task/:id/TestCase/View" element={<ViewTestCasesForTaskForCompanyFunction></ViewTestCasesForTaskForCompanyFunction>}></Route>
           <Route path="/home/Company/ViewTasks/Task/:id/TestCase/View/:TestCaseId" element={<EditTestCaseForCompanyFunction></EditTestCaseForCompanyFunction>}></Route>
+          <Route path="/home/Company/ViewAds/AddtaskByCompanyTask/:id" element={<AddTaskForCompetitionByCompanyAdsFunction></AddTaskForCompetitionByCompanyAdsFunction>}></Route>
 
           <Route path="/home/Admin" element={<AdminFunctionsFunction></AdminFunctionsFunction>}></Route>
           <Route path="/home/Admin/ApproveCompanies" element={<ApproveCompanies></ApproveCompanies>} ></Route>
