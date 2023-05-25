@@ -157,7 +157,7 @@ export default function JobAdsPage() {
     <div style={{ background: 'linear-gradient(59deg, rgba(23,55,117,1) 0%, rgba(75,100,148,1) 100%)', height: '100vh' }}>
       <Header />
       <Box sx={{ flexGrow: 1 }}>
-        <Grid container spacing={2}>
+        <Grid container spacing={2} style={{ width: '100%' }}>
           <Grid item xs={12} sm={8}>
             <Paper className={classes.paper} style={{background: 'rgb(211, 209, 209)'}}>Ad name: {addata.name}</Paper>
             <Box>
@@ -231,9 +231,9 @@ export default function JobAdsPage() {
             </Box>
           </Grid>
           {role.includes("Company") || role.includes("Admin") || (role.includes("User") && currentDate >= new Date(formatDate(addata.start)) && loggedUser.ad_id !== undefined && currentAdId === loggedUser.ad_id.toString()) ?
-            <Grid item xs={12} sm={4}>
+            <Grid item xs={10} sm={4}>
               {taskdata.map((item, index) => (
-                <Paper key={index} className={classes.paper}>
+                <Paper key={index} className={classes.paper} style={{background: 'linear-gradient(59deg,rgba(75,100,148,1) 0%, rgba(23,55,117,1) 100%)', color: 'white', border: '1px solid white'}}>
                   <Button value={item.name} name="go-to-ad" onClick={() => navigate(`/home/ad/${currentAdId}/task/${item.id}`)} style={{ width: '80%' }} />
                 </Paper>
               ))}

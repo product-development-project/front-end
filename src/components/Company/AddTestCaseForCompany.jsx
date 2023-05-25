@@ -9,27 +9,16 @@ export default function CreateTestCaseForTaskForCompany() {
   const navigate = useNavigate();
   const [types, setTypes] = useState([]);
   var parts = window.location.href.split("/");
-  var currentTaskId = (parts[parts.length - 2   ]).toString();
-
-  const handleFileChange = (event) => {
-    const file = event.target.files[0];
-    const reader = new FileReader();
-    reader.onload = (event) => {
-      const buffer = reader.result;
-      const bytes = new Uint8Array(buffer).toString();
-      setFormData({ ...formData, problem: bytes });
-    };
-    reader.readAsArrayBuffer(file);
-  };
+  var currentTaskId = (parts[parts.length - 2]).toString();
 
   const tokenWithQuotes = localStorage.getItem('access-token');
   const token = tokenWithQuotes.substring(1, tokenWithQuotes.length - 1);
   axios.defaults.headers.common['Authorization'] = `Bearer ${token}`;
 
   const [formData, setFormData] = useState({
-        data: '',
-        result: '',
-        example: false
+    data: '',
+    result: '',
+    example: false
   });
 
   useEffect(() => {
@@ -40,7 +29,7 @@ export default function CreateTestCaseForTaskForCompany() {
   }, [navigate]);
 
   async function fetchExercisesTypes() {
-    let result = await axios.get(`http://localhost:5163/api/TaskType`, { headers: { 'Content-Type': 'application/json'}});
+    let result = await axios.get(`http://localhost:5163/api/TaskType`, { headers: { 'Content-Type': 'application/json' } });
     setTypes(JSON.parse(JSON.stringify(result.data)));
   }
 
@@ -59,10 +48,10 @@ export default function CreateTestCaseForTaskForCompany() {
         example: formData.example
       };
       let json = JSON.stringify(data);
-      const response = await axios.post('http://localhost:5163/api/Task/'+currentTaskId+'/Result/Company', json, {
+      const response = await axios.post('http://localhost:5163/api/Task/' + currentTaskId + '/Result/Company', json, {
         headers: { 'Content-Type': 'application/json' },
       })
-      .then(navigate("/home/Company/ViewTasks"));
+        .then(navigate("/home/Company/ViewTasks"));
       setFormData({
         data: '',
         result: '',
@@ -72,8 +61,8 @@ export default function CreateTestCaseForTaskForCompany() {
       console.error(error);
     }
   };
-    return (
-    <>
+  return (
+    <div style={{ background: 'linear-gradient(59deg, rgba(23,55,117,1) 0%, rgba(75,100,148,1) 100%)', height: '100vh' }}>
       <Header />
       <table>
         <tr className="row-with-border">
@@ -87,16 +76,16 @@ export default function CreateTestCaseForTaskForCompany() {
         <tr className="row-with-border">
           <td>
             <label>
-                Result:
-                <input type="text" name="result" value={formData.result} onChange={handleChange} required />
+              Result:
+              <input type="text" name="result" value={formData.result} onChange={handleChange} required />
             </label>
           </td>
         </tr>
         <tr>
           <td>
             <label>
-                Is this test case an example?<br></br>
-                <input type="checkbox" name="example" checked={formData.example} onChange={handleChange} />
+              Is this test case an example?<br></br>
+              <input type="checkbox" name="example" checked={formData.example} onChange={handleChange} />
             </label>
           </td>
         </tr>
@@ -123,6 +112,6 @@ export default function CreateTestCaseForTaskForCompany() {
           />
         </div>
       </div>
-    </>
+    </div>
   );
 };

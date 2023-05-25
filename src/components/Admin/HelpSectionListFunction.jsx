@@ -57,7 +57,7 @@ export default function ApproveTasks() {
   };
 
   return (
-    <>
+    <div style={{ background: 'linear-gradient(59deg, rgba(23,55,117,1) 0%, rgba(75,100,148,1) 100%)', height: '100%' }}>
       <Header></Header>
       <table>
         <thead>
@@ -133,6 +133,6 @@ export default function ApproveTasks() {
           ]}
         />
       }
-    </>
+    </div>
   );
 };

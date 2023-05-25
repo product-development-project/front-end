@@ -133,7 +133,6 @@ export default function Profile() {
     return (
         <div style={{ background: 'linear-gradient(59deg, rgba(23,55,117,1) 0%, rgba(75,100,148,1) 100%)', height: '100vh' }}>
             <Header></Header>
-
             {
                 role.includes("User") ?
                     <center style={{ marginTop: '5%' }}>
@@ -334,7 +333,13 @@ export default function Profile() {
             {
                 role.includes("Admin") ?
                     <center style={{ marginTop: '5%' }}>
-                        <Card className={classes.root} style={{ height: '200px' }}>
+                        <Card className={classes.root}
+                            style={{
+                                height: '200px',
+                                background: 'linear-gradient(59deg, rgba(75,100,148,1) 0%, rgba(15,15,15,1) 100%)',
+                                borderRadius: '20px', // Increase the borderRadius value to round more corners
+                                color: 'white'
+                            }}>
                             <CardContent>
                                 <Typography variant="h6" component="h2" style={{ marginBottom: '10px' }}>
                                     Hello, {data.name}

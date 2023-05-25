@@ -42,7 +42,7 @@ export default function CreateAdds() {
   }, [navigate]);
 
   return (
-    <>
+    <div style={{ background: 'linear-gradient(59deg, rgba(23,55,117,1) 0%, rgba(75,100,148,1) 100%)', height: '100vh' }}>
       <Header />
       <table>
         <tr className="row-with-border">
@@ -91,11 +91,11 @@ export default function CreateAdds() {
       <div style={{ display: 'flex', justifyContent: 'center', marginTop: '10px' }}>
         <div style={{ display: 'flex', gap: '10px' }}>
           <Button value="Create" name="create-button" onClick={addAdds} style={{ width: '150px' }} />
-          <Link to="/home/Company">
-            <Button value="Cancel" name="cancel-button" style={{ width: '150px' }} />
-          </Link>
+          <Button value="Back" name="back-button" style={{ width: '150px' }} onClick={() => {
+            navigate(-1)
+          }} />
         </div>
       </div>
-    </>
+    </div>
   );
 }

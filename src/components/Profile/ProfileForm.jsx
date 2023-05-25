@@ -3,6 +3,7 @@ import { useNavigate } from "react-router-dom";
 import { Form, FormInput } from '../UI/Form';
 import TopBar from "../TopBar";
 import axios from 'axios';
+import { Button } from "react-bootstrap";
 
 export default function ProfileForm() {
     let username = localStorage.getItem('username')
@@ -55,7 +56,8 @@ export default function ProfileForm() {
     };
 
     return (
-        <>
+        <div style={{ background: 'linear-gradient(59deg, rgba(23,55,117,1) 0%, rgba(75,100,148,1) 100%)', height: '100vh' }}>
+
             <TopBar
                 title='workIT'
                 backButtonDisabled={true} />
@@ -96,6 +98,14 @@ export default function ProfileForm() {
                     required={true}
                 />
             </Form>
-        </>
+            <center style={{ paddingLeft: '60px', paddingRight: '60px', marginTop: '-200px'}}>
+                <Button
+                    id="submitButton"
+                    value="Back"
+                    name="back-button"
+                    onClick={() => navigate(-1)}
+                >Back</Button>
+            </center>
+        </div>
     );
 }

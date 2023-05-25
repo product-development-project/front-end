@@ -76,8 +76,8 @@ export default function EditTestCaseForCompanyFunction() {
     }
   };
   return (
-    <>
-      <Header />
+    <div style={{ background: 'linear-gradient(59deg, rgba(23,55,117,1) 0%, rgba(75,100,148,1) 100%)', height: '100vh' }}>
+    <Header />
       <table>
         <tr className="row-with-border">
           <td>
@@ -122,6 +122,6 @@ export default function EditTestCaseForCompanyFunction() {
           />
         </div>
       </div>
-    </>
+    </div>
   );
 };

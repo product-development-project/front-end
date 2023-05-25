@@ -82,12 +82,20 @@ export default function AddTaskForCompetitionFunction() {
   };
 
   return (
-    <>
+    <div style={{ background: 'linear-gradient(59deg, rgba(23,55,117,1) 0%, rgba(75,100,148,1) 100%)', height: '100h' }}>
       <Header />
-      <div>
+      <div style={{ display: "flex", justifyContent: "flex-start", paddingLeft: "20px", marginBottom: '-45px', paddingTop: '5px'}}>
+        <Button
+          value="Back"
+          name="go-back"
+          onClick={() => navigate(-1)}
+        />
+      </div>
+      <div style={{ display: "flex", justifyContent: "flex-end", paddingRight: "20px"}}>
         <Button
           value="Go to your own tasks"
           name="go-to-task"
+          style={{marginTop: '10px'}}
           onClick={() =>
             navigate(`/home/Company/ViewAds/AddtaskByCompanyTask/${currentId}`)
           }
@@ -145,6 +153,6 @@ export default function AddTaskForCompetitionFunction() {
           </Alert>
         )}
       </Snackbar>
-    </>
+    </div>
   );
 }

@@ -24,10 +24,15 @@ export default function Table({ data, types, navigate }) {
       { key: 'id', label: 'Task number' },
       { key: 'name', label: 'Task name' },
       { key: 'difficulty', label: 'Difficulty' },
-      { key: 'type', label: 'Task type' },
-      { key: 'action', label: 'Action' },
-      { key: 'attempted', label: 'Attempted?' }
+      { key: 'type', label: 'Task type' }
     ];
+
+    if (role.includes("User")) {
+      headers.push(
+        { key: 'action', label: 'Action' },
+        { key: 'attempted', label: 'Attempted?' }
+      );
+    }
 
     return headers.map(({ key, label }) => (
       <th key={key} onClick={() => sortData(key)}>{label}</th>

@@ -1,14 +1,16 @@
 import React from "react";
 import Header from "../Header";
-import { Button, Box } from "@material-ui/core";
+import { Box } from "@material-ui/core";
 import { useNavigate } from "react-router-dom";
 import "./style.css";
+import { Button } from '../UI/Button';
 
 export default function AdminFunctionsFunction() {
   const navigate = useNavigate();
 
   return (
-    <>
+    <div style={{ background: 'linear-gradient(59deg, rgba(23,55,117,1) 0%, rgba(75,100,148,1) 100%)', height: '100vh' }}>
+
       <Header />
 
       <div
@@ -18,70 +20,54 @@ export default function AdminFunctionsFunction() {
         <Box display="flex" flexDirection="column" alignItems="center">
           <Box mb={2}>
             <Button
-              variant="contained"
-              color="primary"
+              value="Approve Tasks"
+              name="approve-task-button"
               onClick={() => navigate("/home/Admin/ApproveTasks")}
               style={{
                 marginTop: "15px",
-                animationDelay: `${6 * 50}ms`,
-                width: "200px",
-                background: "white",
-                border: "2px solid blue",
+                animationDelay: `${6 * 50}ms`
               }}
             >
-              <span style={{ color: "black" }}>Approve Tasks</span>
             </Button>
           </Box>
           <Box mb={2}>
             <Button
-              variant="contained"
-              color="primary"
+              value="Approve Companies"
+              name="approve-companies-button"
               onClick={() => navigate("/home/Admin/ApproveCompanies")}
               style={{
                 marginTop: "15px",
-                animationDelay: `${8 * 50}ms`,
-                width: "200px",
-                background: "white",
-                border: "2px solid blue",
+                animationDelay: `${8 * 50}ms`
               }}
             >
-              <span style={{ color: "black" }}>Approve Companies</span>
             </Button>
           </Box>
           <Box mb={2}>
             <Button
-              variant="contained"
-              color="primary"
+              value="Create Task"
+              name="create-task-button"
               onClick={() => navigate("/home/Admin/CreateTask")}
               style={{
-                marginTop: "15px",
                 animationDelay: `${10 * 50}ms`,
-                width: "200px",
-                background: "white",
-                border: "2px solid blue",
+                marginTop: "15px"
               }}
             >
-              <span style={{ color: "black" }}>Create Task</span>
             </Button>
           </Box>
           <Box mb={2}>
             <Button
-              variant="contained"
-              color="primary"
+              value="Help section"
+              name="help-section-button"
               onClick={() => navigate("/home/Admin/HelpSection")}
               style={{
                 marginTop: "15px",
-                animationDelay: `${15 * 50}ms`,
-                width: "200px",
-                background: "white",
-                border: "2px solid blue",
+                animationDelay: `${15 * 50}ms`
               }}
             >
-              <span style={{ color: "black" }}>Help Section</span>
             </Button>
           </Box>
         </Box>
       </div>
-    </>
+    </div>
   );
 }

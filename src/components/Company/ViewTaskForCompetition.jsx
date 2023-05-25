@@ -4,6 +4,7 @@ import { useNavigate } from 'react-router-dom';
 import './style.css';
 import axios from 'axios';
 import Table from '../Exercises/OrderedTable';
+import { Button } from "../UI/Button";
 
 export default function ViewTaskForCompetitionFunction() {
     const navigate = useNavigate();
@@ -36,11 +37,18 @@ export default function ViewTaskForCompetitionFunction() {
     }
 
     return (
-        <>
+        <div style={{ background: 'linear-gradient(59deg, rgba(23,55,117,1) 0%, rgba(75,100,148,1) 100%)', height: '100vh' }}>
             <Header></Header>
+            <div style={{ display: "flex", justifyContent: "flex-start", paddingLeft: "20px", marginBottom: '-45px', paddingTop: '5px' }}>
+                <Button
+                    value="Back"
+                    name="go-back"
+                    onClick={() => navigate(-1)}
+                />
+            </div>
             <div className='Exercises'>
                 <Table data={data} types={types} navigate={navigate} />
             </div>
-        </>
+        </div>
     );
 };

@@ -1,14 +1,15 @@
 import React from "react";
 import Header from "../Header";
-import { Button, Box } from "@material-ui/core";
+import { Box } from "@material-ui/core";
 import { useNavigate } from "react-router-dom";
 import "./style.css";
+import { Button } from '../UI/Button';
 
 export default function CompanyFunctions() {
   const navigate = useNavigate();
 
   return (
-    <>
+    <div style={{ background: 'linear-gradient(59deg, rgba(23,55,117,1) 0%, rgba(75,100,148,1) 100%)', height: '100vh' }}>
       <Header />
       <div
         className="DivBox delayed-animation"
@@ -24,78 +25,54 @@ export default function CompanyFunctions() {
         >
           <Box mb={2}>
             <Button
-              variant="contained"
-              color="primary"
+              value="View Ads"
+              name="view-ads-button"
               onClick={() => navigate("/home/Company/ViewAds")}
               style={{
                 margin: "10px",
-                border: "2px solid blue",
-                background: "white",
-                color: "blue",
-                // Updated styles
-                textAlign: "center",
-                width: "90%",
+                textAlign: "center"
               }}
             >
-              <span style={{ color: "black" }}>View Ads</span>
             </Button>
           </Box>
           <Box mb={2}>
             <Button
-              variant="contained"
-              color="primary"
+              value="Create Ad"
+              name="create-ad-button"
               onClick={() => navigate("/home/Company/CreateAds")}
               style={{
                 margin: "10px",
-                border: "2px solid blue",
-                background: "white",
-                color: "blue",
-                // Updated styles
-                textAlign: "center",
-                width: "90%",
+                textAlign: "center"
               }}
             >
-              <span style={{ color: "black" }}>Create Ads</span>
             </Button>
           </Box>
           <Box mb={2}>
             <Button
-              variant="contained"
-              color="primary"
+              value="Create Task"
+              name="create-task-button"
               onClick={() => navigate("/home/Company/CreateTask")}
               style={{
                 margin: "10px",
-                border: "2px solid blue",
-                background: "white",
-                color: "blue",
-                // Updated styles
-                textAlign: "center",
-                width: "90%",
+                textAlign: "center"
               }}
             >
-              <span style={{ color: "black" }}>Create Task</span>
             </Button>
           </Box>
           <Box mb={2}>
             <Button
-              variant="contained"
-              color="primary"
+              value="View Created Tasks"
+              name="view-created-tasks-button"
               onClick={() => navigate("/home/Company/ViewTasks")}
               style={{
                 margin: "10px",
-                border: "2px solid blue",
-                background: "white",
-                color: "black", // Change text color to black
-                // Updated styles
-                textAlign: "center",
-                width: "90%",
+                textAlign: "center"
               }}
             >
-              <span style={{ color: "black" }}>View Created Tasks</span>
             </Button>
           </Box>
         </Box>
       </div>
-    </>
+    </div>
   );
 }

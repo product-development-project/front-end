@@ -3,6 +3,7 @@ import React, { useState, useEffect } from 'react'
 import { useNavigate } from 'react-router-dom';
 import './style.css';
 import axios from 'axios';
+import { Button } from "../UI/Button";
 
 export default function ViewLogged() {
     const navigate = useNavigate();
@@ -35,8 +36,15 @@ export default function ViewLogged() {
     }
 
     return (
-        <>
+        <div style={{ background: 'linear-gradient(59deg, rgba(23,55,117,1) 0%, rgba(75,100,148,1) 100%)', height: '100vh' }}>
             <Header></Header>
+            <div style={{ display: "flex", justifyContent: "flex-start", paddingLeft: "20px", marginBottom: '-45px', paddingTop: '5px' }}>
+                <Button
+                    value="Back"
+                    name="go-back"
+                    onClick={() => navigate(-1)}
+                />
+            </div>
             <table>
                 <thead>
                     <tr className="border-bottom delayed-animation" style={{ animationDelay: `${50}ms` }}>
@@ -59,6 +67,6 @@ export default function ViewLogged() {
                     ))}
                 </tbody>
             </table>
-        </>
+        </div>
     );
 };

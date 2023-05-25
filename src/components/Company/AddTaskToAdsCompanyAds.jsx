@@ -85,10 +85,10 @@ export default function AddTaskForCompetitionByCompanyAdsFunction() {
   };
 
   return (
-    <>
+    <div style={{ background: 'linear-gradient(59deg, rgba(23,55,117,1) 0%, rgba(75,100,148,1) 100%)', height: '100vh' }}>
       <Header />
       <div>
-        <Button value="back" name="go-to-task" onClick={() => navigate(-1)} />
+        <Button value="back" name="go-to-task" style={{marginTop: '10px'}}onClick={() => navigate(-1)} />
       </div>
       <div style={{ display: "flex", justifyContent: "center" }}>
         <table>
@@ -142,6 +142,6 @@ export default function AddTaskForCompetitionByCompanyAdsFunction() {
           </Alert>
         )}
       </Snackbar>
-    </>
+    </div>
   );
 }
