@@ -10,7 +10,6 @@ export default function CreateTestCaseForTaskForCompany() {
   const [types, setTypes] = useState([]);
   var parts = window.location.href.split("/");
   var currentTaskId = (parts[parts.length - 2   ]).toString();
-  console.log(currentTaskId);
 
   const handleFileChange = (event) => {
     const file = event.target.files[0];
@@ -59,13 +58,11 @@ export default function CreateTestCaseForTaskForCompany() {
         result: formData.result,
         example: formData.example
       };
-      console.log(formData.problem);
       let json = JSON.stringify(data);
       const response = await axios.post('http://localhost:5163/api/Task/'+currentTaskId+'/Result/Company', json, {
         headers: { 'Content-Type': 'application/json' },
       })
       .then(navigate("/home/Company/ViewTasks"));
-      console.log(response.data);
       setFormData({
         data: '',
         result: '',
@@ -103,26 +100,29 @@ export default function CreateTestCaseForTaskForCompany() {
             </label>
           </td>
         </tr>
-        
-        <tr>
-          <td>
-            <Button
-                value="Create"
-                name="Add task"
-                onClick={handleSubmit}
-              />
-          </td>
-        </tr>
-        <tr>
-          <td>
-            <Button
-                value="Cancel"
-                name="Add task"
-                onClick={() => navigate('/home/company/ViewTasks')}
-              />
-          </td>
-        </tr>
       </table>
+      <div style={{ display: 'flex', justifyContent: 'center', marginTop: '10px' }}>
+        <div style={{ display: 'flex', gap: '10px' }}>
+          <Button
+            value="Create Test Case"
+            name="create-test-case"
+            onClick={handleSubmit}
+            style={{ width: '200px' }}
+          />
+        </div>
+      </div>
+      <div style={{ display: 'flex', justifyContent: 'center', marginTop: '10px' }}>
+        <div style={{ display: 'flex', gap: '10px' }}>
+          <Button
+            value="Back"
+            name="back-button"
+            onClick={() => {
+              navigate(-1)
+            }}
+            style={{ width: '200px' }}
+          />
+        </div>
+      </div>
     </>
   );
 };

@@ -99,9 +99,9 @@ export default function Profile() {
         const otherRatings = allRatings.filter(rating => rating.userName !== username);
         const currentUserRating = allRatings.filter(rating => rating.userName === username);
 
-        const currentUsersAvgCorrectness = currentUserRating.reduce((total, rating) => total + rating.correctnesPoints, 0) / currentUserRating.length;
-        const currentUsersAvgTime = currentUserRating.reduce((total, rating) => total + rating.timePoints, 0) / currentUserRating.length;
-        const currentUsersAvgResources = currentUserRating.reduce((total, rating) => total + rating.recourcesPoints, 0) / currentUserRating.length;
+        const currentUsersAvgCorrectness = currentUserRating.reduce((total, rating) => total + rating.correctnesPoints, 0);
+        const currentUsersAvgTime = currentUserRating.reduce((total, rating) => total + rating.timePoints, 0);
+        const currentUsersAvgResources = currentUserRating.reduce((total, rating) => total + rating.recourcesPoints, 0);
 
         const otherUsersAvgCorrectness = otherRatings.reduce((total, rating) => total + rating.correctnesPoints, 0) / otherRatings.length;
         const otherUsersAvgTime = otherRatings.reduce((total, rating) => total + rating.timePoints, 0) / otherRatings.length;

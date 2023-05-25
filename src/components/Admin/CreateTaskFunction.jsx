@@ -4,10 +4,14 @@ import React, { useState, useEffect } from 'react'
 import { useNavigate } from 'react-router-dom';
 import './style.css';
 import axios from 'axios';
+import Snackbar from '@mui/material/Snackbar';
+import Alert from '@mui/material/Alert';
 
 export default function CreateTask() {
   const navigate = useNavigate();
   const [types, setTypes] = useState([]);
+  const [openSnackbar, setOpenSnackbar] = useState(false);
+  const [errorMessage, setErrorMessage] = useState('');
 
 const handleFileChange = (event) => {
   const file = event.target.files[0];
@@ -78,20 +82,31 @@ function arrayBufferToBase64(buffer) {
       const response = await axios.post('http://localhost:5163/api/Task', json, {
         headers: { 'Content-Type': 'application/json' },
       })
-        .then(navigate("/home/Admin"));
-      setFormData({
-        name: '',
-        problem: '',
-        difficulty: '',
-        confirmed: false,
-        educational: false,
-        type_id: ''
-      });
+      if (response.status === 201) {
+        setOpenSnackbar(true);
+        setFormData({
+          name: '',
+          problem: '',
+          difficulty: '',
+          confirmed: false,
+          educational: false,
+          type_id: ''
+        });
+      }
     } catch (error) {
-      console.error(error);
+      setErrorMessage(error.response.data.title);
+      setOpenSnackbar(true);
     }
   };
-  
+
+  const handleCloseSnackbar = (event, reason) => {
+    if (reason === 'clickaway') {
+      return;
+    }
+    setOpenSnackbar(false);
+    setErrorMessage('');
+  };
+
   return (
     <>
       <Header />
@@ -156,16 +171,41 @@ function arrayBufferToBase64(buffer) {
             </label>
           </td>
         </tr>
-        <tr>
-          <td>
-            <Button
-              value="Approve"
-              name="Add task"
-              onClick={handleSubmit}
-            />
-          </td>
-        </tr>
       </table>
+      <div style={{ display: 'flex', justifyContent: 'center', marginTop: '10px' }}>
+        <div style={{ display: 'flex', gap: '10px' }}>
+          <Button
+            value="Create Task"
+            name="create-task"
+            onClick={handleSubmit}
+            style={{ width: '150px' }}
+          />
+          <Button
+            value="Back"
+            name="back-button"
+            onClick={() => {
+              navigate(-1)
+            }}
+            style={{ width: '150px' }}
+          />
+        </div>
+      </div>
+      <Snackbar
+        open={openSnackbar}
+        autoHideDuration={3000}
+        onClose={handleCloseSnackbar}
+        anchorOrigin={{ vertical: 'bottom', horizontal: 'center' }}
+      >
+        {errorMessage ? (
+          <Alert onClose={handleCloseSnackbar} severity="error">
+            {errorMessage}
+          </Alert>
+        ) : (
+          <Alert onClose={handleCloseSnackbar} severity="success">
+            Created successfully!
+          </Alert>
+        )}
+      </Snackbar>
     </>
   );
 };

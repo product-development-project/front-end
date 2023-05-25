@@ -5,12 +5,15 @@ import { useNavigate } from 'react-router-dom';
 import './style.css';
 import axios from 'axios';
 import Snackbar from '@mui/material/Snackbar';
+import { Popup } from "../UI/Popup";
 import Alert from '@mui/material/Alert';
 
 export default function ApproveTasks() {
   const navigate = useNavigate();
   const [data, setData] = useState([]);
   const [openSnackbar, setOpenSnackbar] = useState(false);
+  const [approveConfirmIsOpen, setApproveConfirmIsOpen] = useState(false);
+  const [helpId, setHelpId] = useState(null);
   const [errorMessage, setErrorMessage] = useState('');
 
   useEffect(() => {
@@ -29,8 +32,8 @@ export default function ApproveTasks() {
     setData(JSON.parse(JSON.stringify(result.data)));
   };
 
-  async function Approve(Id) {
-    let response = await axios.put(`http://localhost:5163/api/Admin/Help/` + Id, { headers: { 'Content-Type': 'application/json' } });
+  async function Approve() {
+    let response = await axios.put(`http://localhost:5163/api/Admin/Help/` + helpId, { headers: { 'Content-Type': 'application/json' } });
     if (response.status === 200) {
       setOpenSnackbar(true);
       fetchHelp();
@@ -48,6 +51,11 @@ export default function ApproveTasks() {
     setErrorMessage('');
   };
 
+  const toggleApprovePopup = (id) => {
+    setHelpId(id);
+    setApproveConfirmIsOpen(!approveConfirmIsOpen);
+  };
+
   return (
     <>
       <Header></Header>
@@ -58,27 +66,39 @@ export default function ApproveTasks() {
             <th>Email Address</th>
             <th>Phone</th>
             <th>Description</th>
-            <th></th>
+            <th>Action</th>
           </tr>
         </thead>
         <tbody>
-          {data.map(task => (
-            <tr key={task.id}>
-              <td>{task.name}</td>
-              <td>{task.emailAddress}</td>
-              <td>{task.phone}</td>
-              <td>{task.description}</td>
+          {data.map(help => (
+            <tr key={help.id}>
+              <td>{help.name}</td>
+              <td>{help.emailAddress}</td>
+              <td>{help.phone}</td>
+              <td>{help.description}</td>
               <td>
                 <Button
                   value="Approve"
-                  name="Add task"
-                  onClick={() => Approve(task.id)}
+                  name="approve-help"
+                  onClick={() => toggleApprovePopup(help.id)}
                 />
               </td>
             </tr>
           ))}
         </tbody>
       </table>
+      <div style={{ display: 'flex', justifyContent: 'center', marginTop: '10px' }}>
+        <div style={{ display: 'flex', gap: '10px' }}>
+          <Button
+            value="Back"
+            name="back-button"
+            onClick={() => {
+              navigate(-1)
+            }}
+            style={{ width: '150px' }}
+          />
+        </div>
+      </div>
       <Snackbar
         open={openSnackbar}
         autoHideDuration={3000}
@@ -95,6 +115,24 @@ export default function ApproveTasks() {
           </Alert>
         )}
       </Snackbar>
+      {approveConfirmIsOpen &&
+        <Popup
+          content={<div>Are you sure you want to approve this help?</div>}
+          buttons={[
+            {
+              name: "Confirm",
+              onClick: () => {
+                Approve();
+                toggleApprovePopup();
+              }
+            },
+            {
+              name: "Cancel",
+              onClick: toggleApprovePopup
+            },
+          ]}
+        />
+      }
     </>
   );
 };

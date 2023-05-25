@@ -3,6 +3,7 @@ import { Button } from '../UI/Button';
 import React, { useState, useEffect } from 'react'
 import { useNavigate } from 'react-router-dom';
 import './style.css';
+import { Popup } from "../UI/Popup";
 import axios from 'axios';
 import Snackbar from '@mui/material/Snackbar';
 import Alert from '@mui/material/Alert';
@@ -18,7 +19,9 @@ function formatDate(dateString) {
 export default function ApproveTasks() {
   const navigate = useNavigate();
   const [openSnackbar, setOpenSnackbar] = useState(false);
+  const [approveConfirmIsOpen, setApproveConfirmIsOpen] = useState(false);
   const [data, setData] = useState([]);
+  const [taskId, setTaskId] = useState(null);
   const [types, setTypes] = useState([]);
   const [errorMessage, setErrorMessage] = useState('');
 
@@ -44,17 +47,14 @@ export default function ApproveTasks() {
     setTypes(JSON.parse(JSON.stringify(result.data)));
   };
 
-  async function Approve(Id) {
-    const confirmed = window.confirm("Are you sure you want to approve this task?");
-    if (confirmed) {
-      let response = await axios.put(`http://localhost:5163/api/Admin/Task/` + Id, { headers: { 'Content-Type': 'application/json' } });
-      if (response.status === 201) {
-        setOpenSnackbar(true);
-        fetchTasks();
-      } else {
-        setErrorMessage(response.statusText);
-        setOpenSnackbar(true);
-      }
+  async function Approve() {
+    let response = await axios.put(`http://localhost:5163/api/Admin/Task/` + taskId, { headers: { 'Content-Type': 'application/json' } });
+    if (response.status === 200) {
+      setOpenSnackbar(true);
+      fetchTasks();
+    } else {
+      setErrorMessage(response.statusText);
+      setOpenSnackbar(true);
     }
   };
 
@@ -65,49 +65,62 @@ export default function ApproveTasks() {
     setOpenSnackbar(false);
     setErrorMessage('');
   };
-  
+
+  const toggleApprovePopup = (id) => {
+    setTaskId(id);
+    setApproveConfirmIsOpen(!approveConfirmIsOpen);
+  };
+
   return (
     <>
       <Header></Header>
-
       <table>
         <thead>
           <tr>
-            <th>ID</th>
-            <th>Username</th>
-            <th>Email</th>
-            <th>Types</th>
-            <th>Date</th>
-            <th></th>
-            <th></th>
+            <th>Task name</th>
+            <th>Difficulty</th>
+            <th>Type</th>
+            <th>Creation Date</th>
+            <th>Action</th>
           </tr>
         </thead>
         <tbody>
           {data.map(task => (
             <tr key={task.id}>
-              <td>{task.id}</td>
               <td>{task.name}</td>
               <td>{task.difficulty}</td>
               <td>{types.find(t => t.id === task.type_id)?.name}</td>
               <td>{formatDate(task.date)}</td>
               <td>
-                <Button
-                  value="Check"
-                  name="Add task"
-                  onClick={() => navigate(`/home/task/${task.id}`)}
-                />
-              </td>
-              <td>
-                <Button
-                  value="Approve"
-                  name="Add task"
-                  onClick={() => Approve(task.id)}
-                />
+                <div style={{ display: 'flex', alignItems: 'center' }}>
+                  <Button
+                    value="View Task"
+                    name="view-task"
+                    onClick={() => navigate(`/home/task/${task.id}`)}
+                  />
+                  <Button
+                    value="Approve"
+                    name="approve-task"
+                    onClick={() => toggleApprovePopup(task.id)}
+                  />
+                </div>
               </td>
             </tr>
           ))}
         </tbody>
       </table>
+      <div style={{ display: 'flex', justifyContent: 'center', marginTop: '10px' }}>
+        <div style={{ display: 'flex', gap: '10px' }}>
+          <Button
+            value="Back"
+            name="back-button"
+            onClick={() => {
+              navigate(-1)
+            }}
+            style={{ width: '150px' }}
+          />
+        </div>
+      </div>
       <Snackbar
         open={openSnackbar}
         autoHideDuration={3000}
@@ -124,6 +137,24 @@ export default function ApproveTasks() {
           </Alert>
         )}
       </Snackbar>
+      {approveConfirmIsOpen &&
+        <Popup
+          content={<div>Are you sure you want to approve this task?</div>}
+          buttons={[
+            {
+              name: "Confirm",
+              onClick: () => {
+                Approve();
+                toggleApprovePopup();
+              }
+            },
+            {
+              name: "Cancel",
+              onClick: toggleApprovePopup
+            },
+          ]}
+        />
+      }
     </>
   );
 };

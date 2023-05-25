@@ -32,8 +32,8 @@ export default function ViewCreatedTasksFunctionForCompany() {
   async function fetchTasks() {
     let result = await axios.get(`http://localhost:5163/api/Task/ViewCompanyTask`, { headers: { 'Content-Type': 'application/json' } });
     setData(JSON.parse(JSON.stringify(result.data)));
-    console.log(result.data);
   }
+
   async function fetchExercisesTypes() {
     let result = await axios.get(`http://localhost:5163/api/TaskType`, { headers: { 'Content-Type': 'application/json' } })
     setTypes(JSON.parse(JSON.stringify(result.data)));
@@ -45,49 +45,55 @@ export default function ViewCreatedTasksFunctionForCompany() {
       <table>
         <thead>
           <tr>
-            <th>ID</th>
-            <th>Username</th>
-            <th>Email</th>
-            <th>Types</th>
-            <th>Date</th>
-            <th></th>
-            <th></th>
+            <th>Task name</th>
+            <th>Difficulty</th>
+            <th>Type</th>
+            <th>Creation date</th>
+            <th>Action</th>
           </tr>
         </thead>
         <tbody>
           {data.map(task => (
             <tr key={task.id}>
-              <td>{task.id}</td>
               <td>{task.name}</td>
               <td>{task.difficulty}</td>
               <td>{types.find(t => t.id === task.type_id)?.name}</td>
               <td>{formatDate(task.date)}</td>
               <td>
-                <Button
-                  value="Check"
-                  name="Add task"
-                  onClick={() => navigate(`/home/task/${task.id}`)}
-                />
-              </td>
-              <td>
-                <Button
-                  value="Add test cases"
-                  name="Add task"
-                  onClick={() => navigate(`/home/Company/ViewTasks/Task/${task.id}/TestCase`)}
-                />
-              </td>
-              <td>
-                <Button
-                  value="View test cases"
-                  name="Add task"
-                  onClick={() => navigate(`/home/Company/ViewTasks/Task/${task.id}/TestCase/View`)}
-                />
+                <div style={{ display: 'flex', alignItems: 'center' }}>
+                  <Button
+                    value="View Task"
+                    name="view-task"
+                    onClick={() => navigate(`/home/task/${task.id}`)}
+                  />
+                  <Button
+                    value="Add test cases"
+                    name="add-test-cases"
+                    onClick={() => navigate(`/home/Company/ViewTasks/Task/${task.id}/TestCase`)}
+                  />
+                  <Button
+                    value="View test cases"
+                    name="view-test-cases"
+                    onClick={() => navigate(`/home/Company/ViewTasks/Task/${task.id}/TestCase/View`)}
+                  />
+                </div>
               </td>
             </tr>
           ))}
         </tbody>
       </table>
-
+      <div style={{ display: 'flex', justifyContent: 'right', marginTop: '10px', marginRight: '25px' }}>
+        <div style={{ display: 'flex', gap: '10px' }}>
+          <Button
+            value="Back"
+            name="back-button"
+            onClick={() => {
+              navigate(-1)
+            }}
+            style={{ width: '120px' }}
+          />
+        </div>
+      </div>
     </>
   );
 };

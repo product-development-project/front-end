@@ -4,11 +4,17 @@ import React, { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import './style.css';
 import axios from 'axios';
+import { Popup } from "../UI/Popup";
+import Snackbar from '@mui/material/Snackbar';
+import Alert from '@mui/material/Alert';
 
 export default function ViewTestCasesForTaskForCompanyFunction() {
   const navigate = useNavigate();
   const [errorMessage, setErrorMessage] = useState('');
+  const [openSnackbar, setOpenSnackbar] = useState(false);
+  const [deleteConfirmIsOpen, setDeleteConfirmIsOpen] = useState(false);
   const [data, setData] = useState([]);
+  const [deleteItemId, setDeleteItemId] = useState(null);
   var parts = window.location.href.split("/");
   var currentTaskId = (parts[parts.length - 3]).toString();
 
@@ -29,54 +35,112 @@ export default function ViewTestCasesForTaskForCompanyFunction() {
       let result = await axios.get(`http://localhost:5163/api/Task/${currentTaskId}/Result/GetManyByTaskForCompany`, { headers: { 'Content-Type': 'application/json' } });
       setData(JSON.parse(JSON.stringify(result.data)));
     } catch (error) {
-      console.error(error);
-      setErrorMessage('Failed to fetch data.');
     }
-  }
+  };
 
-  async function Delete(currentTaskId, deleteItemId) {
+  async function Delete() {
     try {
       let result = await axios.delete(`http://localhost:5163/api/Task/${currentTaskId}/Result/${deleteItemId}/Company`, { headers: { 'Content-Type': 'application/json' } });
-      window.location.reload();
+      if (result.status === 204) {
+        fetchCompanyAds(currentTaskId);
+        setOpenSnackbar(true);
+      } else {
+        setErrorMessage(result.statusText);
+        setOpenSnackbar(true);
+      }
     } catch (error) {
-      console.error(error);
-      setErrorMessage('Failed to fetch data.');
     }
-  }
+  };
+
+  const handleCloseSnackbar = (event, reason) => {
+    if (reason === 'clickaway') {
+      return;
+    }
+    setOpenSnackbar(false);
+    setErrorMessage('');
+  };
+
+  const toggleDeletePopup = (id) => {
+    setDeleteItemId(id);
+    setDeleteConfirmIsOpen(!deleteConfirmIsOpen);
+  };
 
   return (
     <>
       <Header></Header>
       <table>
         <tr className="border-bottom delayed-animation" style={{ animationDelay: `${50}ms` }}>
-          <td>Ad Id</td>
           <td>Data</td>
           <td>Result</td>
-          <td></td>
-          <td></td>
+          <td>Action</td>
         </tr>
         {data.map((dataa, index) => (
           <tr key={dataa.id} className="border-bottom delayed-animation" style={{ animationDelay: `${index * 50}ms` }}>
-            <td>{dataa.id}</td>
             <td>{dataa.data}</td>
             <td>{dataa.result}</td>
             <td>
-              <Button
-                value="Edit"
-                name="go-to-task"
-                onClick={() => navigate(`/home/Company/ViewTasks/Task/${currentTaskId}/TestCase/View/${dataa.id}`)}
-              />
-            </td>
-            <td>
-              <Button
-                value="Delete"
-                name="go-to-task"
-                onClick={() => Delete(currentTaskId, dataa.id)} // Set the ID of the item to be deleted
-              />
+              <div style={{ display: 'flex', alignItems: 'center' }}>
+                <Button
+                  value="Edit"
+                  name="go-to-task"
+                  onClick={() => navigate(`/home/Company/ViewTasks/Task/${currentTaskId}/TestCase/View/${dataa.id}`)}
+                />
+                <Button
+                  value="Delete"
+                  name="go-to-task"
+                  onClick={() => toggleDeletePopup(dataa.id)}
+                />
+              </div>
             </td>
           </tr>
         ))}
       </table>
+      <div style={{ display: 'flex', justifyContent: 'center', marginTop: '10px' }}>
+        <div style={{ display: 'flex', gap: '10px' }}>
+          <Button
+            value="Back"
+            name="back-button"
+            onClick={() => {
+              navigate(-1)
+            }}
+            style={{ width: '200px' }}
+          />
+        </div>
+      </div>
+      <Snackbar
+        open={openSnackbar}
+        autoHideDuration={3000}
+        onClose={handleCloseSnackbar}
+        anchorOrigin={{ vertical: 'bottom', horizontal: 'center' }}
+      >
+        {errorMessage ? (
+          <Alert onClose={handleCloseSnackbar} severity="error">
+            {errorMessage}
+          </Alert>
+        ) : (
+          <Alert onClose={handleCloseSnackbar} severity="success">
+            Deleted successfully!
+          </Alert>
+        )}
+      </Snackbar>
+      {deleteConfirmIsOpen &&
+        <Popup
+          content={<div>Are you sure you want to delete this Test Case?</div>}
+          buttons={[
+            {
+              name: "Confirm",
+              onClick: () => {
+                Delete();
+                toggleDeletePopup();
+              }
+            },
+            {
+              name: "Cancel",
+              onClick: toggleDeletePopup
+            },
+          ]}
+        />
+      }
     </>
   );
 }

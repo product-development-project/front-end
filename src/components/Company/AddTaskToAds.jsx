@@ -33,11 +33,11 @@ export default function AddTaskForCompetitionFunction() {
     if (!localStorage.getItem('access-token')) {
       navigate('/');
     }
-    fetchExercises(username, currentId);
+    fetchExercises();
     fetchExercisesTypes();
-  }, [navigate, username, currentId]);
+  }, [navigate]);
 
-  async function fetchExercises(username, currentId) {
+  async function fetchExercises() {
     let result = await axios.get(`http://localhost:5163/api/Task`, { headers: { 'Content-Type': 'application/json' } });
     setData(JSON.parse(JSON.stringify(result.data)));
   };

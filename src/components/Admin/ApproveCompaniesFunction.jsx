@@ -4,12 +4,16 @@ import React, { useState, useEffect } from 'react'
 import { useNavigate } from 'react-router-dom';
 import './style.css';
 import axios from 'axios';
+import { Popup } from "../UI/Popup";
 import Snackbar from '@mui/material/Snackbar';
 import Alert from '@mui/material/Alert';
 
 export default function ApproveCompanies() {
   const navigate = useNavigate();
   const [openSnackbar, setOpenSnackbar] = useState(false);
+  const [approveConfirmIsOpen, setApproveConfirmIsOpen] = useState(false);
+  const [username, setUsername] = useState(null);
+  const [errorMessage, setErrorMessage] = useState('');
   const [data, setData] = useState([]);
 
   useEffect(() => {
@@ -36,12 +40,20 @@ export default function ApproveCompanies() {
     setOpenSnackbar(false);
   };
 
-  async function Approve(username) {
+  async function Approve() {
     let response = await axios.put(`http://localhost:5163/api/ChangeRoleCompany/` + username, { headers: { 'Content-Type': 'application/json' } });
-    if (response.status == "200") {
+    if (response.status === 200) {
+      setOpenSnackbar(true);
+      fetchUsers();
+    } else {
+      setErrorMessage(response.statusText);
       setOpenSnackbar(true);
     }
-    fetchUsers();
+  };
+
+  const toggleApprovePopup = (username) => {
+    setUsername(username);
+    setApproveConfirmIsOpen(!approveConfirmIsOpen);
   };
 
   return (
@@ -52,7 +64,7 @@ export default function ApproveCompanies() {
           <tr>
             <th>Username</th>
             <th>Email</th>
-            <th></th>
+            <th>Action</th>
           </tr>
         </thead>
         <tbody>
@@ -63,24 +75,60 @@ export default function ApproveCompanies() {
               <td>
                 <Button
                   value="Approve"
-                  name="Add task"
-                  onClick={() => Approve(user.name)}
+                  name="approve-company"
+                  onClick={() => toggleApprovePopup(user.name)}
                 />
               </td>
             </tr>
           ))}
         </tbody>
       </table>
+      <div style={{ display: 'flex', justifyContent: 'center', marginTop: '10px' }}>
+        <div style={{ display: 'flex', gap: '10px' }}>
+          <Button
+            value="Back"
+            name="back-button"
+            onClick={() => {
+              navigate(-1)
+            }}
+            style={{ width: '150px' }}
+          />
+        </div>
+      </div>
       <Snackbar
         open={openSnackbar}
         autoHideDuration={3000}
         onClose={handleCloseSnackbar}
         anchorOrigin={{ vertical: 'bottom', horizontal: 'center' }}
       >
-        <Alert onClose={handleCloseSnackbar} severity="success">
-          Approved successfully!
-        </Alert>
+        {errorMessage ? (
+          <Alert onClose={handleCloseSnackbar} severity="error">
+            {errorMessage}
+          </Alert>
+        ) : (
+          <Alert onClose={handleCloseSnackbar} severity="success">
+            Approved successfully!
+          </Alert>
+        )}
       </Snackbar>
+      {approveConfirmIsOpen &&
+        <Popup
+          content={<div>Are you sure you want to promote this user to company delegate?</div>}
+          buttons={[
+            {
+              name: "Confirm",
+              onClick: () => {
+                Approve();
+                toggleApprovePopup();
+              }
+            },
+            {
+              name: "Cancel",
+              onClick: toggleApprovePopup
+            },
+          ]}
+        />
+      }
     </>
   );
 };

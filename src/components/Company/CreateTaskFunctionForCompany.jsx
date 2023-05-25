@@ -148,16 +148,25 @@ function arrayBufferToBase64(buffer) {
             </label>
           </td>
         </tr>
-        <tr>
-          <td>
-            <Button
-                value="Approve"
-                name="Add task"
-                onClick={handleSubmit}
-              />
-          </td>
-        </tr>
       </table>
+      <div style={{ display: 'flex', justifyContent: 'center', marginTop: '10px' }}>
+        <div style={{ display: 'flex', gap: '10px' }}>
+          <Button
+            value="Create Task"
+            name="create-task"
+            onClick={handleSubmit}
+            style={{ width: '150px' }}
+          />
+          <Button
+            value="Back"
+            name="back-button"
+            onClick={() => {
+              navigate(-1)
+            }}
+            style={{ width: '150px' }}
+          />
+        </div>
+      </div>
     </>
   );
 };

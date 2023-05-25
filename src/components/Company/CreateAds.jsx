@@ -14,11 +14,11 @@ export default function CreateAdds() {
     const token = tokenWithQuotes.substring(1, tokenWithQuotes.length - 1);
     axios.defaults.headers.common['Authorization'] = `Bearer ${token}`;
     const navigate = useNavigate();
-
     const [Name, setName] = useState("");
     const [Description, setDescription] = useState("");
     const [StartDate, setStartDate] = useState("");
     const [EndDate, setEndDate] = useState("");
+
     async function addAdds(e) {
         e.preventDefault();
         const start = moment(StartDate).format("YYYY-MM-DDTHH:mm:ss");
@@ -35,12 +35,11 @@ export default function CreateAdds() {
     };
 
     return (
-        <div className="App">
+        <>
             <Header />
             <Container>
                 <br />
                 <div className="col-sm-6 offset-sm-3">
-                    <h2>create a job AD </h2>
                     <br />
                     <Form onSubmit={addAdds}>
                         <fieldset>
@@ -56,9 +55,8 @@ export default function CreateAdds() {
                             <Link to={'/home/Company'} ><Button variant='danger' className='my-1 m-1'>Cancel</Button></Link>
                         </fieldset>
                     </Form>
-
                 </div>
             </Container>
-        </div>
+        </>
     );
 };

@@ -87,6 +87,18 @@ export default function ViewAds() {
                     ))}
                 </tbody>
             </table>
+            <div style={{ display: 'flex', justifyContent: 'right', marginTop: '10px', marginRight: '150px' }}>
+                <div style={{ display: 'flex', gap: '10px' }}>
+                    <Button
+                        value="Back"
+                        name="back-button"
+                        onClick={() => {
+                            navigate(-1)
+                        }}
+                        style={{ width: '150px' }}
+                    />
+                </div>
+            </div>
         </>
     );
 };

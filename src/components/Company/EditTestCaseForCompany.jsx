@@ -103,25 +103,25 @@ export default function EditTestCaseForCompanyFunction() {
             </label>
           </td>
         </tr>
-        <tr>
-          <td>
-            <Button
-              value="Approve edit"
-              name="Add task"
-              onClick={handleSubmit}
-            />
-          </td>
-        </tr>
-        <tr>
-          <td>
-            <Button
-              value="Cancel"
-              name="Add task"
-              onClick={() => navigate('/home/company/ViewTasks')}
-            />
-          </td>
-        </tr>
       </table>
+      <div style={{ display: 'flex', justifyContent: 'center', marginTop: '10px' }}>
+        <div style={{ display: 'flex', gap: '10px' }}>
+          <Button
+            value="Save"
+            name="save-button"
+            onClick={handleSubmit}
+            style={{ width: '120px' }}
+          />
+          <Button
+            value="Back"
+            name="back-button"
+            onClick={() => {
+              navigate(-1)
+            }}
+            style={{ width: '120px' }}
+          />
+        </div>
+      </div>
     </>
   );
 };

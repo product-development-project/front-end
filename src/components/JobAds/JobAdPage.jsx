@@ -196,15 +196,41 @@ export default function JobAdsPage() {
                           float: 'right'
                         }}
                       />
+                      <Button
+                        value="Back"
+                        name="back-button"
+                        onClick={() => {
+                          navigate(-1)
+                        }}
+                        style={{
+                          float: 'right',
+                          width: '245px'
+                        }}
+                      />
                     </Grid>
                   </Grid>
                   :
                   <>
+                    <Grid container spacing={4} justifyContent="flex-end">
+                      <Grid item xs={6} sm={3}>
+                        <Button
+                          value="Back"
+                          name="back-button"
+                          onClick={() => {
+                            navigate(-1)
+                          }}
+                          style={{
+                            float: 'right',
+                            width: '245px'
+                          }}
+                        />
+                      </Grid>
+                    </Grid>
                   </>
-              } 
+              }
             </Box>
           </Grid>
-          {role.includes("Company") || (role.includes("User") && currentDate >= new Date(formatDate(addata.start)) && loggedUser.ad_id !== undefined && currentAdId === loggedUser.ad_id.toString()) ?
+          {role.includes("Company") || role.includes("Admin") || (role.includes("User") && currentDate >= new Date(formatDate(addata.start)) && loggedUser.ad_id !== undefined && currentAdId === loggedUser.ad_id.toString()) ?
             <Grid item xs={12} sm={4}>
               {taskdata.map((item, index) => (
                 <Paper key={index} className={classes.paper}>
