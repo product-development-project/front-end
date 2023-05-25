@@ -132,8 +132,9 @@ export default function JobAdsPage() {
       const response = await axios.post('http://localhost:5163/api/Logged', json, {
         headers: { 'Content-Type': 'application/json' },
       });
-      if (response.status === 201 || response.status === 201) {
+      if (response.status === 201 || response.status === 200) {
         setOpenSnackbar(true);
+        window.location.reload();
       } else {
         setErrorMessage(response.statusText);
         setOpenSnackbar(true);
