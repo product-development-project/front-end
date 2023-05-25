@@ -9,16 +9,27 @@ export default function CreateTask() {
   const navigate = useNavigate();
   const [types, setTypes] = useState([]);
 
-  const handleFileChange = (event) => {
-    const file = event.target.files[0];
-    const reader = new FileReader();
-    reader.onload = (event) => {
-      const buffer = reader.result;
-      const bytes = new Uint8Array(buffer).toString();
-      setFormData({ ...formData, problem: bytes });
-    };
-    reader.readAsArrayBuffer(file);
+const handleFileChange = (event) => {
+  const file = event.target.files[0];
+  const reader = new FileReader();
+  reader.onload = (event) => {
+    const buffer = reader.result;
+    const base64Data = arrayBufferToBase64(buffer);
+    setFormData({ ...formData, problem: base64Data });
   };
+  reader.readAsArrayBuffer(file);
+};
+
+function arrayBufferToBase64(buffer) {
+  const binary = [];
+  const bytes = new Uint8Array(buffer);
+  for (let i = 0; i < bytes.length; i++) {
+    binary.push(String.fromCharCode(bytes[i]));
+  }
+  const base64String = window.btoa(binary.join(''));
+  return base64String;
+}
+
 
   const tokenWithQuotes = localStorage.getItem('access-token');
   const token = tokenWithQuotes.substring(1, tokenWithQuotes.length - 1);
