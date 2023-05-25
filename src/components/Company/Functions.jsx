@@ -1,76 +1,101 @@
-import Header from '../Header';
-import { Button } from '../UI/Button';
-import React from 'react'
-import { useNavigate } from 'react-router-dom';
-import './style.css';
+import React from "react";
+import Header from "../Header";
+import { Button, Box } from "@material-ui/core";
+import { useNavigate } from "react-router-dom";
+import "./style.css";
 
 export default function CompanyFunctions() {
   const navigate = useNavigate();
 
   return (
     <>
-      <Header></Header>
-
-      <div className="DivBox delayed-animation" style={{ animationDelay: `${2 * 50}ms` }}>
-
-        <Button
-          className="delayed-animation"
-          value="View Ads"
-          name="company-button"
-          onClick={() => navigate('/home/Company/ViewAds')}
-          style={{ animationDelay: `${15 * 50}ms` }}
-        />
-        <Button
-          value="Create Ads"
-          className="delayed-animation"
-          name="company-button"
-          onClick={() => navigate('/home/Company/CreateAds')}
-          style={{
-            marginTop: '15px',
-            animationDelay: `${6 * 50}ms`
-          }}
-        />
-        <Button
-          value="Create Task"
-          className="delayed-animation"
-          name="company-button"
-          onClick={() => navigate('/home/Company/CreateTask')}
-          style={{
-            marginTop: '15px',
-            animationDelay: `${8 * 50}ms`
-          }}
-        />
-        <Button
-          value="View Created Tasks"
-          className="delayed-animation"
-          name="company-button"
-          onClick={() => navigate('/home/Company/ViewTasks')}
-          style={{
-            marginTop: '15px',
-            animationDelay: `${10 * 50}ms`
-          }}
-        />
-        <Button
-          value="For company"
-          className="delayed-animation"
-          name="company-button"
-          onClick={() => navigate('/home/company')}
-          style={{
-            marginTop: '15px',
-            animationDelay: `${15 * 50}ms`
-          }}
-        />
-        <Button
-          value="For company"
-          className="delayed-animation"
-          name="company-button"
-          onClick={() => navigate('/home/company')}
-          style={{
-            marginTop: '15px'
-            , animationDelay: `${20 * 50}ms`
-          }}
-        />
+      <Header />
+      <div
+        className="DivBox delayed-animation"
+        style={{ animationDelay: `${2 * 50}ms` }}
+      >
+        <Box
+          display="flex"
+          flexDirection="column"
+          justifyContent="center"
+          alignItems="center"
+          textAlign="center" // Align buttons horizontally
+          height="100vh" // Adjust the height of the container if needed
+        >
+          <Box mb={2}>
+            <Button
+              variant="contained"
+              color="primary"
+              onClick={() => navigate("/home/Company/ViewAds")}
+              style={{
+                margin: "10px",
+                border: "2px solid blue",
+                background: "white",
+                color: "blue",
+                // Updated styles
+                textAlign: "center",
+                width: "90%",
+              }}
+            >
+              <span style={{ color: "black" }}>View Ads</span>
+            </Button>
+          </Box>
+          <Box mb={2}>
+            <Button
+              variant="contained"
+              color="primary"
+              onClick={() => navigate("/home/Company/CreateAds")}
+              style={{
+                margin: "10px",
+                border: "2px solid blue",
+                background: "white",
+                color: "blue",
+                // Updated styles
+                textAlign: "center",
+                width: "90%",
+              }}
+            >
+              <span style={{ color: "black" }}>Create Ads</span>
+            </Button>
+          </Box>
+          <Box mb={2}>
+            <Button
+              variant="contained"
+              color="primary"
+              onClick={() => navigate("/home/Company/CreateTask")}
+              style={{
+                margin: "10px",
+                border: "2px solid blue",
+                background: "white",
+                color: "blue",
+                // Updated styles
+                textAlign: "center",
+                width: "90%",
+              }}
+            >
+              <span style={{ color: "black" }}>Create Task</span>
+            </Button>
+          </Box>
+          <Box mb={2}>
+            <Button
+              variant="contained"
+              color="primary"
+              onClick={() => navigate("/home/Company/ViewTasks")}
+              style={{
+                margin: "10px",
+                border: "2px solid blue",
+                background: "white",
+                color: "black", // Change text color to black
+                // Updated styles
+                textAlign: "center",
+                width: "90%",
+              }}
+            >
+              <span style={{ color: "black" }}>View Created Tasks</span>
+            </Button>
+          </Box>
+        </Box>
       </div>
     </>
   );
-};
+}
