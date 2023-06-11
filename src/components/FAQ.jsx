@@ -8,9 +8,9 @@ import ExpandMoreIcon from '@material-ui/icons/ExpandMore';
 export default function FAQ() {
   return (
     <div>
-      <Accordion>
+      <Accordion style={{ background: 'rgb(211, 209, 209)' }}>
         <AccordionSummary
-          expandIcon={<ExpandMoreIcon />}
+          expandIcon={<ExpandMoreIcon style={{ color: 'black' }} />}
           aria-controls="panel1a-content"
           id="panel1a-header"
         >
@@ -22,9 +22,9 @@ export default function FAQ() {
           </Typography>
         </AccordionDetails>
       </Accordion>
-      <Accordion>
+      <Accordion style={{ background: 'rgb(211, 209, 209)' }}>
         <AccordionSummary
-          expandIcon={<ExpandMoreIcon />}
+          expandIcon={<ExpandMoreIcon style={{ color: 'black' }} />}
           aria-controls="panel2a-content"
           id="panel2a-header"
         >
@@ -36,9 +36,9 @@ export default function FAQ() {
           </Typography>
         </AccordionDetails>
       </Accordion>
-      <Accordion>
+      <Accordion style={{ background: 'rgb(211, 209, 209)' }}>
         <AccordionSummary
-          expandIcon={<ExpandMoreIcon />}
+          expandIcon={<ExpandMoreIcon style={{ color: 'black' }} />}
           aria-controls="panel2a-content"
           id="panel2a-header"
         >
@@ -51,9 +51,9 @@ export default function FAQ() {
           </Typography>
         </AccordionDetails>
       </Accordion>
-      <Accordion>
+      <Accordion style={{ background: 'rgb(211, 209, 209)' }}>
         <AccordionSummary
-          expandIcon={<ExpandMoreIcon />}
+          expandIcon={<ExpandMoreIcon style={{ color: 'black' }} />}
           aria-controls="panel2a-content"
           id="panel2a-header"
         >
@@ -65,9 +65,9 @@ export default function FAQ() {
           </Typography>
         </AccordionDetails>
       </Accordion>
-      <Accordion>
+      <Accordion style={{ background: 'rgb(211, 209, 209)' }}>
         <AccordionSummary
-          expandIcon={<ExpandMoreIcon />}
+          expandIcon={<ExpandMoreIcon style={{ color: 'black' }} />}
           aria-controls="panel2a-content"
           id="panel2a-header"
         >

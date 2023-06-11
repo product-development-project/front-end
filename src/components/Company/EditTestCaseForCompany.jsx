@@ -61,11 +61,9 @@ export default function EditTestCaseForCompanyFunction() {
         example: formData.example,
         task_id: currentTaskId
       };
-      console.log(formData.problem);
       let json = JSON.stringify(data);
       const response = await axios.put(`http://localhost:5163/api/Task/${currentTaskId}/Result/${currentTestCaseId}`, json, { headers: { 'Content-Type': 'application/json' } })
         .then(navigate(`/home/Company/ViewTasks/Task/${currentTaskId}/TestCase/View`));
-      console.log(response.data);
       setFormData({
         data: '',
         result: '',

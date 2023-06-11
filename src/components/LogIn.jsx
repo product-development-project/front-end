@@ -4,7 +4,6 @@ import TopBar from './TopBar';
 import { Form, FormInput } from "./UI/Form";
 import axios from 'axios'
 import { Buffer } from 'buffer';
-import { Button } from "react-bootstrap";
 
 export default function LogIn() {
   const [errorMessage, setErrorMessage] = useState('');
@@ -40,8 +39,6 @@ export default function LogIn() {
       })
       .catch(error => {
         if (error.response) {
-          console.log(username);
-          console.log(request);
           console.warn(error.response.data);
           setErrorMessage(error.response.data);
         } else if (error.request) {
@@ -55,7 +52,7 @@ export default function LogIn() {
   };
 
   return (
-    <div style={{ background: 'linear-gradient(59deg, rgba(23,55,117,1) 0%, rgba(75,100,148,1) 100%)', height: '100vh'}}>
+    <div style={{ background: 'linear-gradient(59deg, rgba(23,55,117,1) 0%, rgba(75,100,148,1) 100%)', height: '100vh' }}>
       <TopBar title='workIT'
         backButtonDisabled={true}
       />

@@ -3,13 +3,11 @@ import { Button } from '../UI/Button';
 import './styleExercises.css';
 
 export default function Table({ data, types, navigate }) {
-  const [sortKey, setSortKey] = useState('id'); // default sorting key is 'id'
-  const [sortOrder, setSortOrder] = useState('asc'); // default sorting order is ascending
+  const [sortKey, setSortKey] = useState('id');
+  const [sortOrder, setSortOrder] = useState('asc');
   let role = localStorage.getItem('roles');
 
-  // function to sort the data
   const sortData = (key) => {
-    // if the same key is clicked, reverse the sort order
     if (key === sortKey) {
       setSortOrder(sortOrder === 'asc' ? 'desc' : 'asc');
     } else {
@@ -18,7 +16,6 @@ export default function Table({ data, types, navigate }) {
     }
   };
 
-  // function to generate the table headers
   const generateHeaders = () => {
     const headers = [
       { key: 'id', label: 'Task number' },
@@ -39,9 +36,7 @@ export default function Table({ data, types, navigate }) {
     ));
   };
 
-  // function to generate the table rows
   const generateRows = () => {
-    // sort the data based on the selected key and order
     const sortedData = data.sort((a, b) => {
       const valueA = a[sortKey];
       const valueB = b[sortKey];
@@ -62,7 +57,6 @@ export default function Table({ data, types, navigate }) {
       return 0;
     });
 
-    // generate the rows based on the sorted data
     return sortedData.map((task, index) => (
       <tr key={task.id} className="border-bottom delayed-animation" style={{ animationDelay: `${index * 60}ms` }}>
         <td>{task.id}</td>

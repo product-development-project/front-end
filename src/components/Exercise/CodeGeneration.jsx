@@ -13,7 +13,6 @@ const Boilerplate = ({ taskName, type }) => {
     };
 
     const typeName = typeIdToName[type];
-    console.log(typeName)
     switch (typeName) {
         case 'Integer manipulation':
             if (taskName === 'BeautifulNumbers') {
@@ -32,7 +31,6 @@ const Boilerplate = ({ taskName, type }) => {
                 break; 
             }
         case 'Array manipulation':
-            console.log(taskName);
             if (taskName === 'SumCombinations') {
                 boilerplateCode = `input = input()\nvalues = input.split(',')\ncoins = [int(x) for x in values[0].split()]\nsum = int(values[1])`;
                 break;

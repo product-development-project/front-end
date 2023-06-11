@@ -3,7 +3,6 @@ import { useNavigate } from 'react-router-dom';
 import Footer from './Footer';
 import FAQ from './FAQ';
 import Contacts from './Contacts';
-import Help from './Help';
 import { Button } from './UI/Button';
 import Logo from './Media/Photos/Logo.png'
 import Header from './Header';
@@ -13,14 +12,13 @@ export default function Homev2() {
     const section1Ref = useRef(null);
     const section2Ref = useRef(null);
     const section3Ref = useRef(null);
-    const section4Ref = useRef(null);
 
     return (
         <>
             <section ref={section1Ref}></section>
             <Header></Header>
 
-            <main style={{ display: 'grid', gridTemplateRows: '2fr 2fr 2fr 2fr' }}>
+            <main style={{ display: 'grid', gridTemplateRows: '2fr 2fr 2fr' }}>
                 <div style={{ position: 'relative' }}>
                     <img
                         src={Logo}
@@ -73,22 +71,17 @@ export default function Homev2() {
                     </center>
                 </div>
 
-                <section ref={section2Ref} style={{ backgroundColor: 'lightgray' }}>
-                    <h1>FAQ</h1>
+                <section ref={section2Ref} style={{ borderTop: '5px solid white', background: 'linear-gradient(-59deg, rgba(75,100,148,1) 0%, rgba(23,55,117,1) 100%)' }}>
+                    <h1 style={{ color: 'rgb(211, 209, 209)' }}>FAQ</h1>
                     <FAQ></FAQ>
                 </section>
 
-                <section ref={section3Ref} style={{ backgroundColor: 'lightblue' }}>
-                    <h1>Contacts</h1>
+                <section ref={section3Ref} style={{ borderTop: '5px solid white', background: 'linear-gradient(-59deg, rgba(75,100,148,1) 0%, rgba(23,55,117,1) 100%)' }}>
+                    <h1 style={{ color: 'rgb(211, 209, 209)' }}>Contacts</h1>
                     <Contacts></Contacts>
                 </section>
-
-                <section ref={section4Ref} style={{ backgroundColor: 'lightgreen' }}>
-                    <h1>Help</h1>
-                    <Help></Help>
-                </section>
             </main>
-            <Footer sectionRefs={[section1Ref, section2Ref, section3Ref, section4Ref]} />
+            <Footer sectionRefs={[section1Ref, section2Ref, section3Ref]} />
         </>
     )
 }

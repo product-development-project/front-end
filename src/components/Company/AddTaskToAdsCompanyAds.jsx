@@ -25,7 +25,6 @@ export default function AddTaskForCompetitionByCompanyAdsFunction() {
   var parts = window.location.href.split("/");
   var currentId = parts[parts.length - 1].toString();
   const [result, setResult] = useState([]);
-  let username = localStorage.getItem("username");
   const [openSnackbar, setOpenSnackbar] = useState(false);
   const tokenWithQuotes = localStorage.getItem("access-token");
   const token = tokenWithQuotes.substring(1, tokenWithQuotes.length - 1);
@@ -116,7 +115,7 @@ export default function AddTaskForCompetitionByCompanyAdsFunction() {
                     />
                     <Button
                       value="Add"
-                      name="Add task"
+                      name="add-task"
                       onClick={() => addTask(task.id)}
                     />
                   </div>

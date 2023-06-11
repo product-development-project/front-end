@@ -2,6 +2,7 @@ import React, { useState, useEffect } from 'react'
 import { useNavigate } from 'react-router-dom';
 import Header from '../Header';
 import axios from 'axios';
+import { FaMedal } from 'react-icons/fa';
 import './LeaderboardStyle.css';
 
 export default function Leaderboard() {
@@ -50,7 +51,7 @@ export default function Leaderboard() {
     }
 
     return (
-        <div style={{background: 'linear-gradient(59deg, rgba(23,55,117,1) 0%, rgba(75,100,148,1) 100%)', height: '100vh'}}>
+        <div style={{ background: 'linear-gradient(59deg, rgba(23,55,117,1) 0%, rgba(75,100,148,1) 100%)', height: '100vh' }}>
             <Header></Header>
             <table>
                 <tr className="border-bottom-Leaderboard delayed-animation-Leaderboard" style={{ animationDelay: `${50}ms` }}>
@@ -63,7 +64,12 @@ export default function Leaderboard() {
                 <tbody>
                     {data.map((item, index) => (
                         <tr key={item.id} className="delayed-animation" style={{ animationDelay: `${50 * (index + 1)}ms` }}>
-                            <td>{item.userName}</td>
+                            <td>
+                                {index === 0 && <FaMedal style={{ color: 'gold', stroke: 'black', strokeWidth: '20px', marginRight: '10px', verticalAlign: 'middle', float: 'left' }} size={25} />}
+                                {index === 1 && <FaMedal style={{ color: 'silver', stroke: 'black', strokeWidth: '20px', marginRight: '10px', verticalAlign: 'middle', float: 'left' }} size={25} />}
+                                {index === 2 && <FaMedal style={{ color: 'rgb(205, 127, 50)', stroke: 'black', strokeWidth: '20px', marginRight: '10px', verticalAlign: 'middle', float: 'left' }} size={25} />}
+                                <span style={{ margin: '0 auto', color: 'black', fontSize: '17px' }}>{item.userName}</span>
+                            </td>
                             <td>{item.correctnesPoints}</td>
                             <td>{item.recourcesPoints}</td>
                             <td>{item.timePoints}</td>

@@ -6,6 +6,7 @@ import axios from 'axios';
 import { python } from '@codemirror/lang-python';
 import { useNavigate } from 'react-router-dom';
 import Boilerplate from './CodeGeneration';
+import { FaSpinner } from 'react-icons/fa';
 
 export default function AdExercise() {
   const navigate = useNavigate();
@@ -18,12 +19,9 @@ export default function AdExercise() {
   var parts = window.location.href.split("/");
   var currentTaskId = (parts[parts.length - 1]).toString();
   var currentAdId = (parts[parts.length - 3]).toString();
+  const [loading, setLoading] = useState(false);
   const extensions = [python()];
-  let role = localStorage.getItem("roles");
-
   const languages = ['python3'];
-
-  console.log(solutionData);
 
   useEffect(() => {
     axios(`http://localhost:5163/api/Task/${currentTaskId}`)
@@ -40,6 +38,7 @@ export default function AdExercise() {
   }, []);
 
   const submitCode = event => {
+    setLoading(true);
     var exerciseName = data['name'];
     var request = {
       'language': language,
@@ -55,6 +54,7 @@ export default function AdExercise() {
       .post('http://localhost:5163/api/code/checker', request, { headers: { 'Content-Type': 'application/json' } })
       .then(response => {
         setSolutionData(JSON.parse(JSON.stringify(response.data)));
+        setLoading(false);
       })
       .catch(error => {
         if (error.request) {
@@ -100,6 +100,11 @@ export default function AdExercise() {
           </div>
           <div className="submitButtonDiv">
             <p style={{ paddingLeft: '0.2em' }}>{responseMessage}</p>
+            {loading && (
+              <div className="loadingSpinnerContainer">
+                <FaSpinner className="loadingSpinner" spin="true" size={40} />
+              </div>
+            )}
             {buttonPressed && solutionData?.passed?.length > 0 && (
               <table style={{ width: '100%' }}>
                 <tbody style={{ color: 'green' }}>

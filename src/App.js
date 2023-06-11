@@ -5,7 +5,6 @@ import Register from './components/Register';
 import Home from './components/Home';
 import Homev2 from './components/Homev2';
 import Profile from './components/Profile/Profile';
-import Help from './components/Help';
 import FAQ from './components/FAQ';
 import Contacts from './components/Contacts';
 import JobAdsListPageV2 from './components/JobAds/JobAdsListPageV2';
@@ -59,7 +58,6 @@ function App() {
 
           <Route path="home/faq" element={<FAQ />} />
           <Route path="home/contacts" element={<Contacts />} />
-          <Route path="home/help" element={<Help />} />
 
           <Route path="home/Company" element={<CompanyFunctions />} />
           <Route path="home/Company/ViewAds" element={<ViewAds />} />

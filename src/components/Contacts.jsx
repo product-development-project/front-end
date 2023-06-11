@@ -2,7 +2,7 @@ import React from 'react';
 import Box from '@material-ui/core/Box';
 import Paper from '@material-ui/core/Paper';
 import Grid from '@material-ui/core/Grid';
-import Button from '@material-ui/core/Button';
+import { Button } from './UI/Button';
 
 export default function AutoGrid() {
   const contacts = [
@@ -133,7 +133,7 @@ export default function AutoGrid() {
 
   return (
     <div>
-      <Box sx={{ flexGrow: 1}}  style={{width: '95%'}}>
+      <Box sx={{ flexGrow: 1 }} style={{ width: '95%' }}>
         <Grid container spacing={3}>
           <Grid item xs={12} sm={4}>
             {contacts.map((contact, index) => (
@@ -151,9 +151,9 @@ export default function AutoGrid() {
                 Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nulla eget est eu libero
                 feugiat malesuada. Nam dictum mauris vitae tincidunt ultrices.
               </p>
-              <Button variant="contained" style={{ color: 'blue', backgroundColor: 'lightblue' }}>
-                Contact
-              </Button>
+              <Button
+                value="Contact"
+              />
             </Paper>
           </Grid>
           <Grid item xs={12} sm={4}>
@@ -164,9 +164,9 @@ export default function AutoGrid() {
                 with our support team.
               </p>
               <br></br>
-              <Button variant="contained" style={{ color: 'blue', backgroundColor: 'lightblue' }}>
-                Open live chat
-              </Button>
+              <Button
+                value="Open live chat"
+              />
             </Paper>
           </Grid>
         </Grid>

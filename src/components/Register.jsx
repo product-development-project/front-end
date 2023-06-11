@@ -3,7 +3,6 @@ import { Form, FormInput } from './UI/Form';
 import { useNavigate } from 'react-router-dom'
 import TopBar from './TopBar';
 import axios from 'axios'
-import { Button } from "react-bootstrap";
 import Snackbar from '@mui/material/Snackbar';
 import Alert from '@mui/material/Alert';
 
@@ -41,7 +40,7 @@ export default function Register() {
             })
             .catch(error => {
                 console.log(error.response.status);
-                if (error.response.status == "400") {
+                if (error.response.status === "400") {
                     setErrorMessage(error.response.data);
                     setOpenSnackbar(true);
                 }

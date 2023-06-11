@@ -3,7 +3,6 @@ import { useNavigate } from "react-router-dom";
 import { Form, FormInput } from '../UI/Form';
 import TopBar from "../TopBar";
 import axios from 'axios';
-import { Button } from "react-bootstrap";
 
 export default function ProfileForm() {
     let username = localStorage.getItem('username')
@@ -12,10 +11,10 @@ export default function ProfileForm() {
     const [errorMessage, setErrorMessage] = useState('');
 
     useEffect(() => {
-        fetchUserInfo(username);
+        fetchUserInfo();
     }, [navigate]);
 
-    async function fetchUserInfo(username) {
+    async function fetchUserInfo() {
         let result = await axios.get(`http://localhost:5163/api/User/${username}`, { headers: { 'Content-Type': 'application/json' } })
         setUser(JSON.parse(JSON.stringify(result.data)));
     };

@@ -177,7 +177,7 @@ export default function Profile() {
                                                 Milestones on workIT page
                                             </Typography>
                                             <Typography className={classes.pos} color="initial">
-                                                Place in leaderboard: {placeData.findIndex(obj => obj.userName === username) == -1 ? "Not in Leaderboard" : placeData.findIndex(obj => obj.userName === username) + 1}
+                                                Place in leaderboard: {placeData.findIndex(obj => obj.userName === username) === -1 ? "Not in Leaderboard" : placeData.findIndex(obj => obj.userName === username) + 1}
                                             </Typography>
                                             <Typography className={classes.pos} color="initial">
                                                 Exercices completed: {taskCount.count}
@@ -186,7 +186,7 @@ export default function Profile() {
                                     </Card>
                                 </div>
                                 <div>
-                                    <Card style={{ width: '550px', height: '350px', background: 'linear-gradient(59deg, #3c5583 60%, rgba(15,15,15,1) 90%)', color: 'white', border: '1px solid white', color: 'white' }}>
+                                    <Card style={{ width: '550px', height: '350px', background: 'linear-gradient(59deg, #3c5583 60%, rgba(15,15,15,1) 90%)', border: '1px solid white', color: 'white' }}>
                                         <CardContent>
                                             <Typography className={classes.pos} color="initial">
                                                 Code analysis between other users

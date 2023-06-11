@@ -30,7 +30,6 @@ export default function ApproveCompanies() {
   async function fetchUsers() {
     let result = await axios.get(`http://localhost:5163/api/Admin/Company`, { headers: { 'Content-Type': 'application/json' } });
     setData(JSON.parse(JSON.stringify(result.data)));
-    console.log(result.data);
   };
 
   const handleCloseSnackbar = (event, reason) => {

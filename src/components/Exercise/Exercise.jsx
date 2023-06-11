@@ -6,6 +6,7 @@ import axios from 'axios';
 import { python } from '@codemirror/lang-python';
 import { useNavigate } from 'react-router-dom';
 import Boilerplate from './CodeGeneration';
+import { FaSpinner } from 'react-icons/fa';
 
 export default function Exercise() {
   const navigate = useNavigate();
@@ -18,7 +19,7 @@ export default function Exercise() {
   var parts = window.location.href.split("/");
   var currentTaskId = (parts[parts.length - 1]).toString();
   const extensions = [python()];
-
+  const [loading, setLoading] = useState(false);
   const languages = ['python3'];
 
   useEffect(() => {
@@ -36,6 +37,7 @@ export default function Exercise() {
   }, []);
 
   const submitCode = event => {
+    setLoading(true);
     var exerciseName = data['name'];
     var request = {
       'language': language,
@@ -50,6 +52,7 @@ export default function Exercise() {
       .post('http://localhost:5163/api/code/checker', request, { headers: { 'Content-Type': 'application/json' } })
       .then(response => {
         setSolutionData(JSON.parse(JSON.stringify(response.data)));
+        setLoading(false);
       })
       .catch(error => {
         if (error.request) {
@@ -95,6 +98,11 @@ export default function Exercise() {
           </div>
           <div className="submitButtonDiv">
             <p style={{ paddingLeft: '0.2em' }}>{responseMessage}</p>
+            {loading && (
+              <div className="loadingSpinnerContainer">
+                <FaSpinner className="loadingSpinner" spin="true" size={40} />
+              </div>
+            )}
             {buttonPressed && solutionData?.passed?.length > 0 && (
               <table style={{ width: '100%' }}>
                 <tbody style={{ color: 'green' }}>
@@ -113,7 +121,9 @@ export default function Exercise() {
                 <tbody style={{ color: 'red' }}>
                   {solutionData.failed.map((message, index) => (
                     <tr key={index}>
-                      <td style={{ background: 'rgb(211, 209, 209)', color: 'rgb(255, 0, 0, 1)', fontWeight: 'bold' }}>{message}</td>
+                      <td style={{ background: 'rgb(211, 209, 209)', color: 'rgb(255, 0, 0, 1)', fontWeight: 'bold' }}>
+                        {message}
+                      </td>
                     </tr>
                   ))}
                 </tbody>
