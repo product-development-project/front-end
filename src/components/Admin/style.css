@@ -1,14 +1,3 @@
-.DivBox {
-    border: 3px solid black;
-    display: inline-block;
-    padding: 10px;
-    align-self: center;
-    position: absolute;
-    top: 5em;
-    left: 45%;
-    justify-content: center;
-}
-
 .delayed-animation {
     animation: fadeIn 0.3s ease-in-out;
     animation-fill-mode: both;
@@ -16,8 +5,33 @@
 
 }
 
-tr.border-bottom td {
-    border: 1pt solid;
+.columns-container {
+    display: flex;
+    justify-content: center;
+}
+
+.column {
+    margin: 0 20px;
+
+}
+
+.tr {
+    text-align: center;
+}
+
+td {
+    border: 2pt solid;
+    border-image-slice: 1;
+    border-image-source: linear-gradient(to bottom, black);
+    border-radius: 5px;
+    text-align: center;
+    padding: 10px;
+    background-color: rgb(211, 209, 209);
+    color: black;
+}
+
+tr {
+    border-bottom: 1pt solid;
     border-image-slice: 1;
     border-image-source: linear-gradient(to bottom, black, blue);
     border-radius: 5px;
@@ -25,23 +39,39 @@ tr.border-bottom td {
     padding: 10px;
 }
 
-tr {
-    border: 1px solid black;
+tr.border-bottom td {
+    border: 1pt solid black;
+    color: white;
+    background-color: black;
+    border-radius: 5px;
+    text-align: center;
+    padding: 10px;
 }
 
-.row-with-border {
-    border: 1px solid black;
+tr.border-bottom td:hover {
+    cursor: pointer;
+    color: black;
+    background-color: white;
 }
 
 table {
-    border-collapse: separate;
-    border-spacing: 10px;
+    margin: 0 auto;
 }
 
-table td {
-    white-space: normal;
-    width: 200px;
-    word-break: break-all;
+.delayed-animation-Exercise {
+    animation: fadeIn 0.3s ease-in-out;
+    animation-fill-mode: both;
+    opacity: 0;
+}
+
+@keyframes fade-in {
+    from {
+        opacity: 0;
+    }
+
+    to {
+        opacity: 1;
+    }
 }
 
 @keyframes fadeIn {
@@ -54,4 +84,45 @@ table td {
         opacity: 1;
         transform: translateY(0);
     }
+}
+
+.card-container {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    align-items: center;
+    margin-top: 20px;
+}
+
+.card {
+    width: 230px;
+    height: 250px;
+    margin: 10px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    background: linear-gradient(59deg, rgba(75, 100, 148, 1) 0%, rgba(15, 15, 15, 1) 100%);
+    border-radius: 10px;
+    box-shadow: 0 2px 6px rgba(0, 0, 0, 0.1);
+}
+
+.card-icon {
+    font-size: 48px;
+    margin-top: 20px;
+    color: white;
+}
+
+.card-title {
+    color: white;
+    font-size: 24px;
+    margin-top: 10px;
+    margin-bottom: 20px;
+}
+
+.card-content {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
 }

@@ -13,26 +13,26 @@ export default function CreateTask() {
   const [openSnackbar, setOpenSnackbar] = useState(false);
   const [errorMessage, setErrorMessage] = useState('');
 
-const handleFileChange = (event) => {
-  const file = event.target.files[0];
-  const reader = new FileReader();
-  reader.onload = (event) => {
-    const buffer = reader.result;
-    const base64Data = arrayBufferToBase64(buffer);
-    setFormData({ ...formData, problem: base64Data });
+  const handleFileChange = (event) => {
+    const file = event.target.files[0];
+    const reader = new FileReader();
+    reader.onload = (event) => {
+      const buffer = reader.result;
+      const base64Data = arrayBufferToBase64(buffer);
+      setFormData({ ...formData, problem: base64Data });
+    };
+    reader.readAsArrayBuffer(file);
   };
-  reader.readAsArrayBuffer(file);
-};
 
-function arrayBufferToBase64(buffer) {
-  const binary = [];
-  const bytes = new Uint8Array(buffer);
-  for (let i = 0; i < bytes.length; i++) {
-    binary.push(String.fromCharCode(bytes[i]));
+  function arrayBufferToBase64(buffer) {
+    const binary = [];
+    const bytes = new Uint8Array(buffer);
+    for (let i = 0; i < bytes.length; i++) {
+      binary.push(String.fromCharCode(bytes[i]));
+    }
+    const base64String = window.btoa(binary.join(''));
+    return base64String;
   }
-  const base64String = window.btoa(binary.join(''));
-  return base64String;
-}
 
 
   const tokenWithQuotes = localStorage.getItem('access-token');
@@ -113,51 +113,40 @@ function arrayBufferToBase64(buffer) {
       <table>
         <tr className="row-with-border">
           <td>
-            <label>
-              Name:
-              <input type="text" name="name" value={formData.name} onChange={handleChange} required />
-            </label>
+            <input type="text" placeholder="Name" name="name" value={formData.name} onChange={handleChange} required />
+
           </td>
         </tr>
         <tr className="row-with-border">
           <td>
-            <label>
-              Problem:
-              <input type="file" name="problem" onChange={handleFileChange} accept="" required />
-            </label>
+            <input type="file" name="problem" onChange={handleFileChange} accept="" required />
           </td>
         </tr>
         <tr>
           <td>
-            <label>
-              Difficulty:
-              <select name="difficulty" value={formData.difficulty} onChange={handleChange} required>
-                <option value="">-- Select difficulty --</option>
-                <option value="Easy">Easy</option>
-                <option value="Medium">Medium</option>
-                <option value="Hard">Hard</option>
-              </select>
-            </label>
+            <select name="difficulty" value={formData.difficulty} onChange={handleChange} required>
+              <option value="">-- Select difficulty --</option>
+              <option value="Easy">Easy</option>
+              <option value="Medium">Medium</option>
+              <option value="Hard">Hard</option>
+            </select>
           </td>
         </tr>
         <tr>
           <td>
-            <label>
-              Type:
-              <select name="type_id" value={formData.type_id} onChange={handleChange} required>
-                <option value="">-- Select type --</option>
-                {types.map((type) => (
-                  <option key={type.id} value={type.id}>
-                    {type.name}
-                  </option>
-                ))}
-              </select>
-            </label>
+            <select name="type_id" value={formData.type_id} onChange={handleChange} required>
+              <option value="">-- Select type --</option>
+              {types.map((type) => (
+                <option key={type.id} value={type.id}>
+                  {type.name}
+                </option>
+              ))}
+            </select>
           </td>
         </tr>
         <tr>
           <td>
-            <label>
+            <label style={{ color: 'black' }}>
               Confirmed:
               <input type="checkbox" name="confirmed" checked={formData.confirmed} onChange={handleChange} />
             </label>
@@ -165,7 +154,7 @@ function arrayBufferToBase64(buffer) {
         </tr>
         <tr>
           <td>
-            <label>
+            <label style={{ color: 'black' }}>
               Educational:
               <input type="checkbox" name="educational" checked={formData.educational} onChange={handleChange} />
             </label>

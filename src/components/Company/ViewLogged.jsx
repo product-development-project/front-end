@@ -47,17 +47,17 @@ export default function ViewLogged() {
             </div>
             <table>
                 <thead>
-                    <tr className="border-bottom delayed-animation" style={{ animationDelay: `${50}ms` }}>
-                        <th>Username</th>
-                        <th>Points for Correctness</th>
-                        <th>Points for RAM Usage</th>
-                        <th>Points for CPU Time</th>
-                        <th>Total Points</th>
+                    <tr className="border-bottom delayed-animation" style={{ animationDelay: `${50}ms`, color: 'rgb(211, 209, 209)' }}>
+                        <td>Username</td>
+                        <td>Points for Correctness</td>
+                        <td>Points for RAM Usage</td>
+                        <td>Points for CPU Time</td>
+                        <td>Total Points</td>
                     </tr>
                 </thead>
                 <tbody>
                     {data.map((userData, index) => (
-                        <tr key={index} className="border-bottom delayed-animation" style={{ animationDelay: `${index * 50}ms` }}>
+                        <tr key={index} className="delayed-animation" style={{ animationDelay: `${index * 50}ms` }}>
                             <td>{userData.userName}</td>
                             <td>{userData.correctnesPoints}</td>
                             <td>{userData.recourcesPoints}</td>

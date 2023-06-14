@@ -12,25 +12,13 @@ export default function EditTestCaseForCompanyFunction() {
   var currentTaskId = (parts[parts.length - 4]).toString();
   var currentTestCaseId = (parts[parts.length - 1]).toString();
 
-  const handleFileChange = (event) => {
-    const file = event.target.files[0];
-    const reader = new FileReader();
-    reader.onload = (event) => {
-      const buffer = reader.result;
-      const bytes = new Uint8Array(buffer).toString();
-      setFormData({ ...formData, problem: bytes });
-    };
-    reader.readAsArrayBuffer(file);
-  };
-
   const tokenWithQuotes = localStorage.getItem('access-token');
   const token = tokenWithQuotes.substring(1, tokenWithQuotes.length - 1);
   axios.defaults.headers.common['Authorization'] = `Bearer ${token}`;
 
   const [formData, setFormData] = useState({
     data: '',
-    result: '',
-    example: false
+    result: ''
   });
 
   useEffect(() => {
@@ -58,7 +46,7 @@ export default function EditTestCaseForCompanyFunction() {
         id: currentTestCaseId,
         data: formData.data,
         result: formData.result,
-        example: formData.example,
+        example: false,
         task_id: currentTaskId
       };
       let json = JSON.stringify(data);
@@ -66,8 +54,7 @@ export default function EditTestCaseForCompanyFunction() {
         .then(navigate(`/home/Company/ViewTasks/Task/${currentTaskId}/TestCase/View`));
       setFormData({
         data: '',
-        result: '',
-        example: false
+        result: ''
       });
     } catch (error) {
       console.error(error);
@@ -79,26 +66,12 @@ export default function EditTestCaseForCompanyFunction() {
       <table>
         <tr className="row-with-border">
           <td>
-            <label>
-              Data:
-              <input type="text" name="data" value={formData.data} onChange={handleChange} required />
-            </label>
+              <input type="text" placeholder="Data" name="data" value={formData.data} onChange={handleChange} required />
           </td>
         </tr>
         <tr className="row-with-border">
           <td>
-            <label>
-              Result:
-              <input type="text" name="result" value={formData.result} onChange={handleChange} required />
-            </label>
-          </td>
-        </tr>
-        <tr>
-          <td>
-            <label>
-              Is this test case an example?<br></br>
-              <input type="checkbox" name="example" checked={formData.example} onChange={handleChange} />
-            </label>
+              <input type="text" placeholder="Result" name="result" value={formData.result} onChange={handleChange} required />
           </td>
         </tr>
       </table>

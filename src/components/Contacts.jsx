@@ -10,7 +10,7 @@ export default function AutoGrid() {
       name: 'Edgaras Blauzdys',
       email: 'e.blauzdys@ktu.edu',
       style: {
-        backgroundColor: '#fff',
+        background: 'rgb(211, 209, 209)',
         padding: '16px',
         textAlign: 'center',
         color: 'rgba(0, 0, 0, 0.87)',
@@ -26,7 +26,7 @@ export default function AutoGrid() {
       name: 'Augustė Čičinskaitė',
       email: 'auguste.cicinskaite@ktu.edu',
       style: {
-        backgroundColor: '#fff',
+        background: 'rgb(211, 209, 209)',
         padding: '16px',
         textAlign: 'center',
         color: 'rgba(0, 0, 0, 0.87)',
@@ -42,7 +42,7 @@ export default function AutoGrid() {
       name: 'Augustas Druceika',
       email: 'augustas.druceika@ktu.edu',
       style: {
-        backgroundColor: '#fff',
+        background: 'rgb(211, 209, 209)',
         padding: '16px',
         textAlign: 'center',
         color: 'rgba(0, 0, 0, 0.87)',
@@ -58,7 +58,7 @@ export default function AutoGrid() {
       name: 'Justinas Končius',
       email: 'justinas.koncius@ktu.edu',
       style: {
-        backgroundColor: '#fff',
+        background: 'rgb(211, 209, 209)',
         padding: '16px',
         textAlign: 'center',
         color: 'rgba(0, 0, 0, 0.87)',
@@ -74,7 +74,7 @@ export default function AutoGrid() {
       name: 'Rokas Miliūnas',
       email: 'rokas.miliunas@ktu.edu',
       style: {
-        backgroundColor: '#fff',
+        background: 'rgb(211, 209, 209)',
         padding: '16px',
         textAlign: 'center',
         color: 'rgba(0, 0, 0, 0.87)',
@@ -90,7 +90,7 @@ export default function AutoGrid() {
       name: 'Marijus Petkevičius',
       email: 'ma.petkevicius@ktu.edu',
       style: {
-        backgroundColor: '#fff',
+        background: 'rgb(211, 209, 209)',
         padding: '16px',
         textAlign: 'center',
         color: 'rgba(0, 0, 0, 0.87)',
@@ -106,7 +106,7 @@ export default function AutoGrid() {
   ];
 
   const helpStyle = {
-    backgroundColor: '#fff',
+    background: 'rgb(211, 209, 209)',
     padding: '16px',
     textAlign: 'center',
     color: 'rgba(0, 0, 0, 0.87)',
@@ -119,7 +119,7 @@ export default function AutoGrid() {
   };
 
   const chatStyle = {
-    backgroundColor: '#fff',
+    background: 'rgb(211, 209, 209)',
     padding: '16px',
     textAlign: 'center',
     color: 'rgba(0, 0, 0, 0.87)',

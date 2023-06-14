@@ -9,26 +9,26 @@ export default function CreateTaskForCompany() {
   const navigate = useNavigate();
   const [types, setTypes] = useState([]);
 
-const handleFileChange = (event) => {
-  const file = event.target.files[0];
-  const reader = new FileReader();
-  reader.onload = (event) => {
-    const buffer = reader.result;
-    const base64Data = arrayBufferToBase64(buffer);
-    setFormData({ ...formData, problem: base64Data });
+  const handleFileChange = (event) => {
+    const file = event.target.files[0];
+    const reader = new FileReader();
+    reader.onload = (event) => {
+      const buffer = reader.result;
+      const base64Data = arrayBufferToBase64(buffer);
+      setFormData({ ...formData, problem: base64Data });
+    };
+    reader.readAsArrayBuffer(file);
   };
-  reader.readAsArrayBuffer(file);
-};
 
-function arrayBufferToBase64(buffer) {
-  const binary = [];
-  const bytes = new Uint8Array(buffer);
-  for (let i = 0; i < bytes.length; i++) {
-    binary.push(String.fromCharCode(bytes[i]));
+  function arrayBufferToBase64(buffer) {
+    const binary = [];
+    const bytes = new Uint8Array(buffer);
+    for (let i = 0; i < bytes.length; i++) {
+      binary.push(String.fromCharCode(bytes[i]));
+    }
+    const base64String = window.btoa(binary.join(''));
+    return base64String;
   }
-  const base64String = window.btoa(binary.join(''));
-  return base64String;
-}
 
   const tokenWithQuotes = localStorage.getItem('access-token');
   const token = tokenWithQuotes.substring(1, tokenWithQuotes.length - 1);
@@ -52,7 +52,7 @@ function arrayBufferToBase64(buffer) {
   }, [navigate]);
 
   async function fetchExercisesTypes() {
-    let result = await axios.get(`http://localhost:5163/api/TaskType`, { headers: { 'Content-Type': 'application/json'}});
+    let result = await axios.get(`http://localhost:5163/api/TaskType`, { headers: { 'Content-Type': 'application/json' } });
     setTypes(JSON.parse(JSON.stringify(result.data)));
   }
 
@@ -78,7 +78,7 @@ function arrayBufferToBase64(buffer) {
       const response = await axios.post('http://localhost:5163/api/Task/Company', json, {
         headers: { 'Content-Type': 'application/json' },
       })
-      .then(navigate(-1));
+        .then(navigate(-1));
       setFormData({
         name: '',
         problem: '',
@@ -92,60 +92,45 @@ function arrayBufferToBase64(buffer) {
       console.error(error);
     }
   };
-    return (
-      <div style={{ background: 'linear-gradient(59deg, rgba(23,55,117,1) 0%, rgba(75,100,148,1) 100%)', height: '100vh' }}>
+  return (
+    <div style={{ background: 'linear-gradient(59deg, rgba(23,55,117,1) 0%, rgba(75,100,148,1) 100%)', height: '100vh' }}>
       <Header />
       <table>
         <tr className="row-with-border">
           <td>
-            <label>
-              Name:
-              <input type="text" name="name" value={formData.name} onChange={handleChange} required />
-            </label>
+            <input type="text" name="name" placeholder="Name" value={formData.name} onChange={handleChange} required />
           </td>
         </tr>
         <tr className="row-with-border">
           <td>
-            <label>
-                Problem:
-                <input type="file" name="problem" onChange={handleFileChange} accept="" required />
-            </label>
+            <input type="file" name="problem" onChange={handleFileChange} accept="" required />
           </td>
         </tr>
         <tr>
           <td>
-            <label>
-              Difficulty:
-              <select name="difficulty" value={formData.difficulty} onChange={handleChange} required>
-                <option value="">-- Select difficulty --</option>
-                <option value="Easy">Easy</option>
-                <option value="Medium">Medium</option>
-                <option value="Hard">Hard</option>
-              </select>
-            </label>
+            <select name="difficulty" value={formData.difficulty} onChange={handleChange} required>
+              <option value="">-- Select difficulty --</option>
+              <option value="Easy">Easy</option>
+              <option value="Medium">Medium</option>
+              <option value="Hard">Hard</option>
+            </select>
           </td>
         </tr>
         <tr>
           <td>
-            <label>
-              Type:
-              <select name="type_id" value={formData.type_id} onChange={handleChange} required>
-                <option value="">-- Select type --</option>
-                {types.map((type) => (
-                  <option key={type.id} value={type.id}>
-                    {type.name}
-                  </option>
-                ))}
-              </select>
-            </label>
+            <select name="type_id" value={formData.type_id} onChange={handleChange} required>
+              <option value="">-- Select type --</option>
+              {types.map((type) => (
+                <option key={type.id} value={type.id}>
+                  {type.name}
+                </option>
+              ))}
+            </select>
           </td>
         </tr>
         <tr>
           <td>
-            <label>
-              Date:
-              <input type="date" name="date" value={formData.date} onChange={handleChange} required />
-            </label>
+            <input type="date" name="date" value={formData.date} onChange={handleChange} required />
           </td>
         </tr>
       </table>

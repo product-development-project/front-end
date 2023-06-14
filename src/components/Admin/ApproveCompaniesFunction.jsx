@@ -60,15 +60,20 @@ export default function ApproveCompanies() {
       <Header></Header>
       <table>
         <thead>
-          <tr>
-            <th>Username</th>
-            <th>Email</th>
-            <th>Action</th>
+          <tr
+            className="border-bottom delayed-animation"
+            style={{ animationDelay: `${50}ms`, color: 'rgb(211, 209, 209)' }}
+          >
+            <td>Username</td>
+            <td>Email</td>
+            <td>Action</td>
           </tr>
         </thead>
         <tbody>
-          {data.map(user => (
-            <tr key={user.id}>
+          {data.map((user, index) => (
+            <tr key={user.id}
+              className='delayed-animation'
+              style={{ animationDelay: `${index * 50}ms` }}>
               <td>{user.name}</td>
               <td>{user.email}</td>
               <td>

@@ -45,7 +45,7 @@ export default function CreateTestCaseForTaskForCompany() {
       const data = {
         data: formData.data,
         result: formData.result,
-        example: formData.example
+        example: false
       };
       let json = JSON.stringify(data);
       const response = await axios.post('http://localhost:5163/api/Task/' + currentTaskId + '/Result/Company', json, {
@@ -55,7 +55,6 @@ export default function CreateTestCaseForTaskForCompany() {
       setFormData({
         data: '',
         result: '',
-        example: false
       });
     } catch (error) {
       console.error(error);
@@ -67,26 +66,12 @@ export default function CreateTestCaseForTaskForCompany() {
       <table>
         <tr className="row-with-border">
           <td>
-            <label>
-              Data:
-              <input type="text" name="data" value={formData.data} onChange={handleChange} required />
-            </label>
+              <input type="text" placeholder="Data" name="data" value={formData.data} onChange={handleChange} required />
           </td>
         </tr>
         <tr className="row-with-border">
           <td>
-            <label>
-              Result:
-              <input type="text" name="result" value={formData.result} onChange={handleChange} required />
-            </label>
-          </td>
-        </tr>
-        <tr>
-          <td>
-            <label>
-              Is this test case an example?<br></br>
-              <input type="checkbox" name="example" checked={formData.example} onChange={handleChange} />
-            </label>
+              <input type="text" placeholder="Result" name="result" value={formData.result} onChange={handleChange} required />
           </td>
         </tr>
       </table>

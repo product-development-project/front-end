@@ -57,21 +57,26 @@ export default function ApproveTasks() {
   };
 
   return (
-    <div style={{ background: 'linear-gradient(59deg, rgba(23,55,117,1) 0%, rgba(75,100,148,1) 100%)', height: '100%' }}>
+    <div style={{ background: 'linear-gradient(59deg, rgba(23,55,117,1) 0%, rgba(75,100,148,1) 100%)', height: '100vh' }}>
       <Header></Header>
       <table>
         <thead>
-          <tr>
-            <th>Name</th>
-            <th>Email Address</th>
-            <th>Phone</th>
-            <th>Description</th>
-            <th>Action</th>
+          <tr
+            className="border-bottom delayed-animation"
+            style={{ animationDelay: `${50}ms`, color: 'rgb(211, 209, 209)' }}
+          >
+            <td>Name</td>
+            <td>Email Address</td>
+            <td>Phone</td>
+            <td>Description</td>
+            <td>Action</td>
           </tr>
         </thead>
         <tbody>
-          {data.map(help => (
-            <tr key={help.id}>
+          {data.map((help, index) => (
+            <tr key={help.id}
+              className='delayed-animation'
+              style={{ animationDelay: `${index * 50}ms` }}>
               <td>{help.name}</td>
               <td>{help.emailAddress}</td>
               <td>{help.phone}</td>

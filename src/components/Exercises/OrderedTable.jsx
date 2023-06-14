@@ -18,7 +18,7 @@ export default function Table({ data, types, navigate }) {
 
   const generateHeaders = () => {
     const headers = [
-      { key: 'id', label: 'Task number' },
+      { key: 'id', label: 'Task number'},
       { key: 'name', label: 'Task name' },
       { key: 'difficulty', label: 'Difficulty' },
       { key: 'type', label: 'Task type' }
@@ -58,7 +58,7 @@ export default function Table({ data, types, navigate }) {
     });
 
     return sortedData.map((task, index) => (
-      <tr key={task.id} className="border-bottom delayed-animation" style={{ animationDelay: `${index * 60}ms` }}>
+      <tr key={task.id} className="delayed-animation" style={{ animationDelay: `${index * 60}ms` }}>
         <td>{task.id}</td>
         <td>{task.name}</td>
         <td className={`difficulty ${task.difficulty.toLowerCase()}`}>{task.difficulty}</td>
@@ -90,7 +90,7 @@ export default function Table({ data, types, navigate }) {
   return (
     <table>
       <thead>
-        <tr className="table-header delayed-animation">{generateHeaders()}</tr>
+        <tr className="border-bottom table-header delayed-animation">{generateHeaders()}</tr>
       </thead>
       <tbody>{generateRows()}</tbody>
     </table>

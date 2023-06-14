@@ -119,7 +119,7 @@ export default function AddTaskForCompetitionFunction() {
               .map((task, index) => (
                 <tr
                   key={task.id}
-                  className="border-bottom delayed-animation"
+                  className="delayed-animation"
                   style={{ animationDelay: `${index * 60}ms` }}
                 >
                   <td>{task.id}</td>

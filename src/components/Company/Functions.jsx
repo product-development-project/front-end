@@ -1,9 +1,10 @@
 import React from "react";
 import Header from "../Header";
-import { Box } from "@material-ui/core";
+import { Card, CardContent, CardActions } from "@material-ui/core";
 import { useNavigate } from "react-router-dom";
 import "./style.css";
 import { Button } from '../UI/Button';
+import { FaEye, FaPlus, FaTasks, FaListAlt } from 'react-icons/fa';
 
 export default function CompanyFunctions() {
   const navigate = useNavigate();
@@ -11,67 +12,63 @@ export default function CompanyFunctions() {
   return (
     <div style={{ background: 'linear-gradient(59deg, rgba(23,55,117,1) 0%, rgba(75,100,148,1) 100%)', height: '100vh' }}>
       <Header />
-      <div
-        className="DivBox delayed-animation"
-        style={{ animationDelay: `${2 * 50}ms` }}
-      >
-        <Box
-          display="flex"
-          flexDirection="column"
-          justifyContent="center"
-          alignItems="center"
-          textAlign="center" // Align buttons horizontally
-          height="100vh" // Adjust the height of the container if needed
-        >
-          <Box mb={2}>
+      <div className="card-container delayed-animation">
+
+        <Card className="card">
+          <CardContent className="card-content">
+            <FaEye className="card-icon" />
+            <h3 className="card-title">View Ads</h3>
+          </CardContent>
+          <CardActions>
             <Button
               value="View Ads"
               name="view-ads-button"
               onClick={() => navigate("/home/Company/ViewAds")}
-              style={{
-                margin: "10px",
-                textAlign: "center"
-              }}
-            >
-            </Button>
-          </Box>
-          <Box mb={2}>
+            />
+          </CardActions>
+        </Card>
+
+        <Card className="card">
+          <CardContent className="card-content">
+            <FaPlus className="card-icon" />
+            <h3 className="card-title">Create Ad</h3>
+          </CardContent>
+          <CardActions>
             <Button
               value="Create Ad"
               name="create-ad-button"
               onClick={() => navigate("/home/Company/CreateAds")}
-              style={{
-                margin: "10px",
-                textAlign: "center"
-              }}
-            >
-            </Button>
-          </Box>
-          <Box mb={2}>
+            />
+          </CardActions>
+        </Card>
+
+        <Card className="card">
+          <CardContent className="card-content">
+            <FaTasks className="card-icon" />
+            <h3 className="card-title">Create Task</h3>
+          </CardContent>
+          <CardActions>
             <Button
               value="Create Task"
               name="create-task-button"
               onClick={() => navigate("/home/Company/CreateTask")}
-              style={{
-                margin: "10px",
-                textAlign: "center"
-              }}
-            >
-            </Button>
-          </Box>
-          <Box mb={2}>
+            />
+          </CardActions>
+        </Card>
+
+        <Card className="card">
+          <CardContent className="card-content">
+            <FaListAlt className="card-icon" />
+            <h3 className="card-title">View Created Tasks</h3>
+          </CardContent>
+          <CardActions>
             <Button
               value="View Created Tasks"
               name="view-created-tasks-button"
               onClick={() => navigate("/home/Company/ViewTasks")}
-              style={{
-                margin: "10px",
-                textAlign: "center"
-              }}
-            >
-            </Button>
-          </Box>
-        </Box>
+            />
+          </CardActions>
+        </Card>
       </div>
     </div>
   );

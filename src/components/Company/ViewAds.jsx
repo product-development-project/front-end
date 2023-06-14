@@ -57,19 +57,19 @@ export default function ViewAds() {
         <thead>
           <tr
             className="border-bottom delayed-animation"
-            style={{ animationDelay: `${50}ms` }}
+            style={{ animationDelay: `${50}ms`, color: 'rgb(211, 209, 209)' }}
           >
-            <th>Ad name</th>
-            <th>Start date</th>
-            <th>End date</th>
-            <th>Action</th>
+            <td>Ad name</td>
+            <td>Start date</td>
+            <td>End date</td>
+            <td>Action</td>
           </tr>
         </thead>
         <tbody>
           {data.map((dataa, index) => (
             <tr
               key={dataa.id}
-              className="border-bottom delayed-animation"
+              className="delayed-animation"
               style={{ animationDelay: `${index * 50}ms` }}
             >
               <td>{dataa.name}</td>

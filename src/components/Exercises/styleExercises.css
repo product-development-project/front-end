@@ -11,19 +11,6 @@
   text-align: center;
 }
 
-tr.border-bottom td {
-  border: 1pt solid;
-  border-image-slice: 1;
-  border-image-source: linear-gradient(to bottom, black, blue);
-  border-radius: 5px;
-  text-align: center;
-  padding: 10px;
-}
-
-tr.table-header:hover {
-  cursor: pointer;
-}
-
 table {
   margin: 0 auto;
 }
@@ -43,6 +30,23 @@ table {
   to {
     opacity: 1;
   }
+}
+
+tr.table-header:hover {
+  cursor: pointer;
+}
+
+.tr {
+  text-align: center;
+}
+
+tr.border-bottom {
+  border: 1pt solid black;
+  color: white;
+  background-color: black;
+  border-radius: 5px;
+  text-align: center;
+  padding: 10px;
 }
 
 td.difficulty {

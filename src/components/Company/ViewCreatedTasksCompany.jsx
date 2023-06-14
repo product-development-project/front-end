@@ -44,17 +44,19 @@ export default function ViewCreatedTasksFunctionForCompany() {
 
       <table>
         <thead>
-          <tr>
-            <th>Task name</th>
-            <th>Difficulty</th>
-            <th>Type</th>
-            <th>Creation date</th>
-            <th>Action</th>
+          <tr className="border-bottom delayed-animation" style={{ color: 'rgb(211, 209, 209)' }}>
+            <td>Task name</td>
+            <td>Difficulty</td>
+            <td>Type</td>
+            <td>Creation date</td>
+            <td>Action</td>
           </tr>
         </thead>
         <tbody>
-          {data.map(task => (
-            <tr key={task.id}>
+          {data.map((task, index) => (
+            <tr key={task.id}
+            className='delayed-animation'
+            style={{ animationDelay: `${index * 50}ms`}}>
               <td>{task.name}</td>
               <td>{task.difficulty}</td>
               <td>{types.find(t => t.id === task.type_id)?.name}</td>

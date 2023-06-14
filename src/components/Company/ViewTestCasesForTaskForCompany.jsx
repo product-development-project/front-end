@@ -69,13 +69,13 @@ export default function ViewTestCasesForTaskForCompanyFunction() {
     <div style={{ background: 'linear-gradient(59deg, rgba(23,55,117,1) 0%, rgba(75,100,148,1) 100%)', height: '100vh' }}>
       <Header></Header>
       <table>
-        <tr className="border-bottom delayed-animation" style={{ animationDelay: `${50}ms` }}>
+        <tr className="border-bottom delayed-animation" style={{ animationDelay: `${50}ms`, color: 'rgb(211, 209, 209)'}}>
           <td>Data</td>
           <td>Result</td>
           <td>Action</td>
         </tr>
         {data.map((dataa, index) => (
-          <tr key={dataa.id} className="border-bottom delayed-animation" style={{ animationDelay: `${index * 50}ms` }}>
+          <tr key={dataa.id} className="delayed-animation" style={{ animationDelay: `${index * 50}ms` }}>
             <td>{dataa.data}</td>
             <td>{dataa.result}</td>
             <td>

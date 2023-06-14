@@ -1,72 +1,73 @@
 import React from "react";
 import Header from "../Header";
-import { Box } from "@material-ui/core";
+import { Card, CardContent, CardActions } from "@material-ui/core";
 import { useNavigate } from "react-router-dom";
 import "./style.css";
 import { Button } from '../UI/Button';
+import { FaCheck, FaUserShield, FaClipboardList, FaQuestionCircle } from 'react-icons/fa';
 
 export default function AdminFunctionsFunction() {
   const navigate = useNavigate();
 
   return (
     <div style={{ background: 'linear-gradient(59deg, rgba(23,55,117,1) 0%, rgba(75,100,148,1) 100%)', height: '100vh' }}>
-
       <Header />
-
-      <div
-        className="DivBox delayed-animation"
-        style={{ animationDelay: `${2 * 50}ms` }}
-      >
-        <Box display="flex" flexDirection="column" alignItems="center">
-          <Box mb={2}>
+      <div className="card-container delayed-animation">
+        <Card className="card">
+          <CardContent className="card-content">
+            <FaCheck className="card-icon" />
+            <h3 className="card-title">Approve Tasks</h3>
+          </CardContent>
+          <CardActions>
             <Button
               value="Approve Tasks"
               name="approve-task-button"
               onClick={() => navigate("/home/Admin/ApproveTasks")}
-              style={{
-                marginTop: "15px",
-                animationDelay: `${6 * 50}ms`
-              }}
-            >
-            </Button>
-          </Box>
-          <Box mb={2}>
+            />
+          </CardActions>
+        </Card>
+
+        <Card className="card">
+          <CardContent className="card-content">
+            <FaUserShield className="card-icon" />
+            <h3 className="card-title">Approve Companies</h3>
+          </CardContent>
+          <CardActions>
             <Button
               value="Approve Companies"
               name="approve-companies-button"
               onClick={() => navigate("/home/Admin/ApproveCompanies")}
-              style={{
-                marginTop: "15px",
-                animationDelay: `${8 * 50}ms`
-              }}
-            >
-            </Button>
-          </Box>
-          <Box mb={2}>
+            />
+          </CardActions>
+        </Card>
+
+        <Card className="card">
+          <CardContent className="card-content">
+            <FaClipboardList className="card-icon" />
+            <h3 className="card-title">Create Task</h3>
+          </CardContent>
+          <CardActions>
             <Button
               value="Create Task"
               name="create-task-button"
               onClick={() => navigate("/home/Admin/CreateTask")}
-              style={{
-                animationDelay: `${10 * 50}ms`,
-                marginTop: "15px"
-              }}
-            >
-            </Button>
-          </Box>
-          <Box mb={2}>
+            />
+          </CardActions>
+        </Card>
+
+        <Card className="card">
+          <CardContent className="card-content">
+            <FaQuestionCircle className="card-icon" />
+            <h3 className="card-title">Help section</h3>
+          </CardContent>
+          <CardActions>
             <Button
               value="Help section"
               name="help-section-button"
               onClick={() => navigate("/home/Admin/HelpSection")}
-              style={{
-                marginTop: "15px",
-                animationDelay: `${15 * 50}ms`
-              }}
-            >
-            </Button>
-          </Box>
-        </Box>
+            />
+          </CardActions>
+        </Card>
       </div>
     </div>
   );
