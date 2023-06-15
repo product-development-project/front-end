@@ -40,13 +40,27 @@ tr.table-header:hover {
   text-align: center;
 }
 
-tr.border-bottom {
+.table-container {
+  display: flex;
+  flex-direction: column;
+  min-height: 100vh;
+}
+
+th{
   border: 1pt solid black;
   color: white;
   background-color: black;
   border-radius: 5px;
   text-align: center;
   padding: 10px;
+  font-weight: normal;
+}
+
+th:hover{
+  cursor: pointer;
+  color: black;
+  background-color: white;
+  font-weight: normal;
 }
 
 td.difficulty {
