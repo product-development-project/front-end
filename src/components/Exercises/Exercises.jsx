@@ -36,34 +36,6 @@ export default function Exercises() {
   let username = localStorage.getItem('username')
 
   useEffect(() => {
-    let tasks;
-    axios.get("http://localhost:5163/api/Task")
-      .then(taskResponse => {
-        tasks = taskResponse.data;
-        axios.get(`http://localhost:5163/api/Logged/user/${username}`)
-          .then(userResponse => {
-            userResponse.data.forEach(user => {
-              tasks.forEach(task => {
-                if (task.id === user.task_id) {
-                  task.completed = 1;
-                  task.solution = true;
-                } else if (task.id !== user.task_id && !task.solution) {
-                  task.completed = 0;
-                }
-              })
-            });
-          })
-          .catch(error => {
-            console.log(error);
-          });
-        setData(tasks);
-      })
-      .catch(error => {
-        console.log(error);
-      });
-  }, []);
-
-  useEffect(() => {
     fetchExercises();
     fetchExercisesTypes();
   }, [navigate, difficultiesSelection, exerciseTypeSelection]);
@@ -88,39 +60,39 @@ export default function Exercises() {
       test = 7;
     }
 
-    let tasks;
-    axios.get(`http://localhost:5163/api/Task/${difficultiesSelection}/${test}`)
-      .then(taskResponse => {
-        tasks = taskResponse.data;
-        axios.get(`http://localhost:5163/api/Logged/user/${username}`)
-          .then(userResponse => {
-            userResponse.data.forEach(user => {
-              tasks.forEach(task => {
-                if (task.id === user.task_id) {
-                  task.completed = 1;
-                  task.solution = true;
-                } else if (task.id !== user.task_id && !task.solution) {
-                  task.completed = 0;
-                }
-              })
-            });
-          })
-          .catch(error => {
-            console.log(error);
-          });
-        setData(tasks);
-      })
-      .catch(error => {
-        console.log(error);
+    try {
+      const taskResponse = await axios.get(`http://localhost:5163/api/Task/${difficultiesSelection}/${test}`);
+      const tasks = taskResponse.data;
+
+      const userResponse = await axios.get(`http://localhost:5163/api/Logged/user/${username}`);
+      userResponse.data.forEach(user => {
+        tasks.forEach(task => {
+          if (task.id === user.task_id) {
+            task.completed = 1;
+            task.solution = true;
+          } else if (task.id !== user.task_id && !task.solution) {
+            task.completed = 0;
+          }
+        });
       });
+
+      setData(tasks);
+
+    } catch (error) {
+      console.log(error);
+    }
   }
 
   async function fetchExercisesTypes() {
-    let result = await axios.get(`http://localhost:5163/api/TaskType`, { headers: { 'Content-Type': 'application/json' } })
-    setTypes(JSON.parse(JSON.stringify(result.data)));
+    try {
+      const result = await axios.get(`http://localhost:5163/api/TaskType`, { headers: { 'Content-Type': 'application/json' } });
+      setTypes(JSON.parse(JSON.stringify(result.data)));
+    } catch (error) {
+      console.log(error);
+    }
   }
 
-  return (
+  return (   
     <div style={{ height: '100%', background: 'linear-gradient(59deg, rgba(23,55,117,1) 0%, rgba(75,100,148,1) 100%)' }}>
       <Header></Header>
       <div className="App">

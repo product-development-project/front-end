@@ -77,22 +77,32 @@ export default function Table({ data, types, navigate }) {
             </>
         }
         {
-          role.includes("User") ?
-            <td>{task.completed == "1" ? <span style={{ color: 'green' }}>&#10004;</span> : <span style={{ color: 'red' }}>&#10008;</span>}</td>
-            :
+          role.includes("User") ? (
+            <td>
+              {
+              task.completed == 1 ? (
+                <span style={{ color: 'green' }}>&#10004;</span>
+              ) : 
+                <span style={{ color: 'red' }}>&#10008;</span>
+              }
+            </td>
+          ) : (
             <>
             </>
+          )
         }
       </tr>
     ));
   };
 
   return (
-    <table>
-      <thead>
-        <tr className="border-bottom table-header delayed-animation">{generateHeaders()}</tr>
-      </thead>
-      <tbody>{generateRows()}</tbody>
-    </table>
+    <div className="table-container">
+      <table>
+        <thead>
+          <tr className="border-bottom table-header delayed-animation">{generateHeaders()}</tr>
+        </thead>
+        <tbody>{generateRows()}</tbody>
+      </table>
+    </div>
   );
 };
