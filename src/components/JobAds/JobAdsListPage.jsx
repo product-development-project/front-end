@@ -22,7 +22,6 @@ export default function JobAdsListPage() {
     const [data, setData] = useState([]);
     const [sortColumn, setSortColumn] = useState(null);
     const [sortOrder, setSortOrder] = useState(1);
-
     let username = localStorage.getItem('username')
     const tokenWithQuotes = localStorage.getItem('access-token');
     const token = tokenWithQuotes.substring(1, tokenWithQuotes.length - 1);
@@ -74,6 +73,7 @@ export default function JobAdsListPage() {
             <Header></Header>
             <table>
                 <tr className="border-bottom-JobList delayed-animation-JobList" style={{ animationDelay: `${50}ms` }}>
+                    <td onClick={() => sortData('username')}>Company{sortColumn === 'username' && sortOrder === 1 ? ' ▲' : sortColumn === 'username' ? ' ▼' : ''}</td>
                     <td onClick={() => sortData('name')}>Name{sortColumn === 'name' && sortOrder === 1 ? ' ▲' : sortColumn === 'name' ? ' ▼' : ''}</td>
                     <td onClick={() => sortData('description')}>Description{sortColumn === 'description' && sortOrder === 1 ? ' ▲' : sortColumn === 'description' ? ' ▼' : ''}</td>
                     <td onClick={() => sortData('start')}>Start date{sortColumn === 'start' && sortOrder === 1 ? ' ▲' : sortColumn === 'start' ? ' ▼' : ''}</td>
@@ -83,6 +83,7 @@ export default function JobAdsListPage() {
                 <tbody>
                     {data.map((item, index) => (
                         <tr key={item.id} className="delayed-animation-JobList" style={{ animationDelay: `${50 * (index + 1)}ms` }}>
+                            <td>{item.username}</td>
                             <td>{item.name}</td>
                             <td>{item.description}</td>
                             <td>{formatDate(item.start)}</td>

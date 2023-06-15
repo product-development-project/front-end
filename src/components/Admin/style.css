@@ -48,12 +48,6 @@ tr.border-bottom td {
     padding: 10px;
 }
 
-tr.border-bottom td:hover {
-    cursor: pointer;
-    color: black;
-    background-color: white;
-}
-
 table {
     margin: 0 auto;
 }

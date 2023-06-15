@@ -83,8 +83,8 @@ export default function Home() {
                         >
                             <Button
                                 id="buttonHome"
-                                value="Job competition"
-                                name="job-competition-button"
+                                value="Job offerings"
+                                name="job-oferrings-button"
                                 onClick={() => navigate('job/ads')}
                             />
                         </div>

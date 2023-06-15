@@ -63,8 +63,8 @@ export default function Header(props) {
         }}
       />
       <Button
-        value="Job competition"
-        name="job-competition-button"
+        value="Job offerings"
+        name="job-offerings-button"
         onClick={() => navigate('/home/job/ads')}
         style={{
           marginTop: '15px'
