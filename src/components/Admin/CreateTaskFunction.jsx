@@ -6,7 +6,9 @@ import './style.css';
 import axios from 'axios';
 import Snackbar from '@mui/material/Snackbar';
 import Alert from '@mui/material/Alert';
+import getBackendApiLink from "../BackEnd";
 
+const backendApiLink = getBackendApiLink();
 export default function CreateTask() {
   const navigate = useNavigate();
   const [types, setTypes] = useState([]);
@@ -57,7 +59,7 @@ export default function CreateTask() {
   }, [navigate]);
 
   async function fetchExercisesTypes() {
-    let result = await axios.get(`http://localhost:5163/api/TaskType`, { headers: { 'Content-Type': 'application/json' } });
+    let result = await axios.get(backendApiLink + `TaskType`, { headers: { 'Content-Type': 'application/json' } });
     setTypes(JSON.parse(JSON.stringify(result.data)));
   };
 
@@ -79,7 +81,7 @@ export default function CreateTask() {
         type_id: formData.type_id
       };
       let json = JSON.stringify(data);
-      const response = await axios.post('http://localhost:5163/api/Task', json, {
+      const response = await axios.post(backendApiLink + 'Task', json, {
         headers: { 'Content-Type': 'application/json' },
       })
       if (response.status === 201) {

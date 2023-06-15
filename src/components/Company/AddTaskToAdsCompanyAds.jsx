@@ -7,6 +7,10 @@ import axios from "axios";
 import Snackbar from "@mui/material/Snackbar";
 import Alert from "@mui/material/Alert";
 
+import getBackendApiLink from "../BackEnd";
+
+const backendApiLink = getBackendApiLink();
+
 const tokenWithQuotes = localStorage.getItem("access-token");
 const token = tokenWithQuotes
   ? tokenWithQuotes.substring(1, tokenWithQuotes.length - 1)
@@ -41,17 +45,14 @@ export default function AddTaskForCompetitionByCompanyAdsFunction() {
   }, [navigate]);
 
   async function fetchExercises() {
-    let result = await axios.get(
-      `http://localhost:5163/api/Task/ViewCompanyTask`,
-      {
-        headers: { "Content-Type": "application/json" },
-      }
-    );
+    let result = await axios.get(backendApiLink + `Task/ViewCompanyTask`, {
+      headers: { "Content-Type": "application/json" },
+    });
     setData(JSON.parse(JSON.stringify(result.data)));
   }
 
   async function fetchExercisesTypes() {
-    let result = await axios.get(`http://localhost:5163/api/TaskType`, {
+    let result = await axios.get(backendApiLink + `TaskType`, {
       headers: { "Content-Type": "application/json" },
     });
     setTypes(JSON.parse(JSON.stringify(result.data)));
@@ -60,7 +61,7 @@ export default function AddTaskForCompetitionByCompanyAdsFunction() {
   async function addTask(task) {
     try {
       const result = await axios.post(
-        `http://localhost:5163/api/Task/AddTaskCompetition/${task}/${currentId}`,
+        backendApiLink + `Task/AddTaskCompetition/${task}/${currentId}`,
         {},
         { headers: { "Content-Type": "application/json" } }
       );
@@ -80,9 +81,11 @@ export default function AddTaskForCompetitionByCompanyAdsFunction() {
 
   async function fetchCompanyAddedTasks() {
     const result = await axios.get(
-      `http://localhost:5163/api/Task/Competition/${currentId}`, {
-      headers: { "Content-Type": "application/json" },
-    });
+      backendApiLink + `Task/Competition/${currentId}`,
+      {
+        headers: { "Content-Type": "application/json" },
+      }
+    );
     setCompanyTaskData(JSON.parse(JSON.stringify(result.data)));
   }
 
@@ -95,16 +98,30 @@ export default function AddTaskForCompetitionByCompanyAdsFunction() {
   };
 
   return (
-    <div style={{ background: 'linear-gradient(59deg, rgba(23,55,117,1) 0%, rgba(75,100,148,1) 100%)', height: '100vh' }}>
+    <div
+      style={{
+        background:
+          "linear-gradient(59deg, rgba(23,55,117,1) 0%, rgba(75,100,148,1) 100%)",
+        height: "100vh",
+      }}
+    >
       <Header />
       <div>
-        <Button value="Back" name="go-to-task" style={{ marginTop: '10px' }} onClick={() => navigate(-1)} />
+        <Button
+          value="Back"
+          name="go-to-task"
+          style={{ marginTop: "10px" }}
+          onClick={() => navigate(-1)}
+        />
       </div>
       <div style={{ display: "flex", justifyContent: "center" }}>
         <table>
           <tbody>
             {data
-              .filter((task) => !companyTaskData.find((addedTask) => addedTask.id === task.id))
+              .filter(
+                (task) =>
+                  !companyTaskData.find((addedTask) => addedTask.id === task.id)
+              )
               .map((task, index) => (
                 <tr
                   key={task.id}

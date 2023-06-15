@@ -5,7 +5,9 @@ import { useNavigate } from "react-router-dom";
 import "./style.css";
 import { Button } from '../UI/Button';
 import { FaCheck, FaUserShield, FaClipboardList, FaQuestionCircle } from 'react-icons/fa';
+import getBackendApiLink from "../BackEnd";
 
+const backendApiLink = getBackendApiLink();
 export default function AdminFunctionsFunction() {
   const navigate = useNavigate();
 

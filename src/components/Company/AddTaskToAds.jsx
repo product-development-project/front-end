@@ -7,6 +7,10 @@ import axios from "axios";
 import Snackbar from "@mui/material/Snackbar";
 import Alert from "@mui/material/Alert";
 
+import getBackendApiLink from "../BackEnd";
+
+const backendApiLink = getBackendApiLink();
+
 const tokenWithQuotes = localStorage.getItem("access-token");
 const token = tokenWithQuotes
   ? tokenWithQuotes.substring(1, tokenWithQuotes.length - 1)
@@ -41,14 +45,14 @@ export default function AddTaskForCompetitionFunction() {
   }, [navigate]);
 
   async function fetchExercises() {
-    let result = await axios.get(`http://localhost:5163/api/Task`, {
+    let result = await axios.get(backendApiLink + `Task`, {
       headers: { "Content-Type": "application/json" },
     });
     setData(JSON.parse(JSON.stringify(result.data)));
   }
 
   async function fetchExercisesTypes() {
-    let result = await axios.get(`http://localhost:5163/api/TaskType`, {
+    let result = await axios.get(backendApiLink + `TaskType`, {
       headers: { "Content-Type": "application/json" },
     });
     setTypes(JSON.parse(JSON.stringify(result.data)));
@@ -57,7 +61,7 @@ export default function AddTaskForCompetitionFunction() {
   async function addTask(task) {
     try {
       const result = await axios.post(
-        `http://localhost:5163/api/Task/AddTaskCompetition/${task}/${currentId}`,
+        backendApiLink + `Task/AddTaskCompetition/${task}/${currentId}`,
         {},
         { headers: { "Content-Type": "application/json" } }
       );
@@ -77,9 +81,11 @@ export default function AddTaskForCompetitionFunction() {
 
   async function fetchCompanyAddedTasks() {
     const result = await axios.get(
-      `http://localhost:5163/api/Task/Competition/${currentId}`, {
+      backendApiLink + `Task/Competition/${currentId}`,
+      {
         headers: { "Content-Type": "application/json" },
-      });
+      }
+    );
     setCompanyTaskData(JSON.parse(JSON.stringify(result.data)));
   }
 
@@ -92,20 +98,36 @@ export default function AddTaskForCompetitionFunction() {
   };
 
   return (
-    <div style={{ background: 'linear-gradient(59deg, rgba(23,55,117,1) 0%, rgba(75,100,148,1) 100%)', height: '100h' }}>
+    <div
+      style={{
+        background:
+          "linear-gradient(59deg, rgba(23,55,117,1) 0%, rgba(75,100,148,1) 100%)",
+        height: "100h",
+      }}
+    >
       <Header />
-      <div style={{ display: "flex", justifyContent: "flex-start", paddingLeft: "20px", marginBottom: '-45px', paddingTop: '5px' }}>
-        <Button
-          value="Back"
-          name="go-back"
-          onClick={() => navigate(-1)}
-        />
+      <div
+        style={{
+          display: "flex",
+          justifyContent: "flex-start",
+          paddingLeft: "20px",
+          marginBottom: "-45px",
+          paddingTop: "5px",
+        }}
+      >
+        <Button value="Back" name="go-back" onClick={() => navigate(-1)} />
       </div>
-      <div style={{ display: "flex", justifyContent: "flex-end", paddingRight: "20px" }}>
+      <div
+        style={{
+          display: "flex",
+          justifyContent: "flex-end",
+          paddingRight: "20px",
+        }}
+      >
         <Button
           value="Go to your own tasks"
           name="go-to-task"
-          style={{ marginTop: '10px' }}
+          style={{ marginTop: "10px" }}
           onClick={() =>
             navigate(`/home/Company/ViewAds/AddtaskByCompanyTask/${currentId}`)
           }
@@ -115,7 +137,10 @@ export default function AddTaskForCompetitionFunction() {
         <table>
           <tbody>
             {data
-              .filter((task) => !companyTaskData.find((addedTask) => addedTask.id === task.id))
+              .filter(
+                (task) =>
+                  !companyTaskData.find((addedTask) => addedTask.id === task.id)
+              )
               .map((task, index) => (
                 <tr
                   key={task.id}

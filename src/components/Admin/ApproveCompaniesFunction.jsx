@@ -7,7 +7,9 @@ import axios from 'axios';
 import { Popup } from "../UI/Popup";
 import Snackbar from '@mui/material/Snackbar';
 import Alert from '@mui/material/Alert';
+import getBackendApiLink from "../BackEnd";
 
+const backendApiLink = getBackendApiLink();
 export default function ApproveCompanies() {
   const navigate = useNavigate();
   const [openSnackbar, setOpenSnackbar] = useState(false);
@@ -28,7 +30,7 @@ export default function ApproveCompanies() {
   axios.defaults.headers.common['Authorization'] = `Bearer ${token}`;
 
   async function fetchUsers() {
-    let result = await axios.get(`http://localhost:5163/api/Admin/Company`, { headers: { 'Content-Type': 'application/json' } });
+    let result = await axios.get(backendApiLink + `Admin/Company`, { headers: { 'Content-Type': 'application/json' } });
     setData(JSON.parse(JSON.stringify(result.data)));
   };
 
@@ -40,7 +42,7 @@ export default function ApproveCompanies() {
   };
 
   async function Approve() {
-    let response = await axios.put(`http://localhost:5163/api/ChangeRoleCompany/` + username, { headers: { 'Content-Type': 'application/json' } });
+    let response = await axios.put(backendApiLink + `ChangeRoleCompany/` + username, { headers: { 'Content-Type': 'application/json' } });
     if (response.status === 200) {
       setOpenSnackbar(true);
       fetchUsers();

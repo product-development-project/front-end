@@ -7,7 +7,9 @@ import { Popup } from "../UI/Popup";
 import axios from 'axios';
 import Snackbar from '@mui/material/Snackbar';
 import Alert from '@mui/material/Alert';
+import getBackendApiLink from "../BackEnd";
 
+const backendApiLink = getBackendApiLink();
 function formatDate(dateString) {
   const date = new Date(dateString);
   const year = date.getFullYear();
@@ -38,17 +40,17 @@ export default function ApproveTasks() {
   axios.defaults.headers.common['Authorization'] = `Bearer ${token}`;
 
   async function fetchTasks() {
-    let result = await axios.get(`http://localhost:5163/api/Admin/Task`, { headers: { 'Content-Type': 'application/json' } });
+    let result = await axios.get(backendApiLink + `Admin/Task`, { headers: { 'Content-Type': 'application/json' } });
     setData(JSON.parse(JSON.stringify(result.data)));
   };
 
   async function fetchExercisesTypes() {
-    let result = await axios.get(`http://localhost:5163/api/TaskType`, { headers: { 'Content-Type': 'application/json' } })
+    let result = await axios.get(backendApiLink + `TaskType`, { headers: { 'Content-Type': 'application/json' } })
     setTypes(JSON.parse(JSON.stringify(result.data)));
   };
 
   async function Approve() {
-    let response = await axios.put(`http://localhost:5163/api/Admin/Task/` + taskId, { headers: { 'Content-Type': 'application/json' } });
+    let response = await axios.put(backendApiLink + `Admin/Task/` + taskId, { headers: { 'Content-Type': 'application/json' } });
     if (response.status === 200) {
       setOpenSnackbar(true);
       fetchTasks();

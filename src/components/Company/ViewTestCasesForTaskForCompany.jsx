@@ -1,46 +1,54 @@
-import Header from '../Header';
-import { Button } from '../UI/Button';
-import React, { useState, useEffect } from 'react';
-import { useNavigate } from 'react-router-dom';
-import './style.css';
-import axios from 'axios';
+import Header from "../Header";
+import { Button } from "../UI/Button";
+import React, { useState, useEffect } from "react";
+import { useNavigate } from "react-router-dom";
+import "./style.css";
+import axios from "axios";
 import { Popup } from "../UI/Popup";
-import Snackbar from '@mui/material/Snackbar';
-import Alert from '@mui/material/Alert';
+import Snackbar from "@mui/material/Snackbar";
+import Alert from "@mui/material/Alert";
+import getBackendApiLink from "../BackEnd";
+
+const backendApiLink = getBackendApiLink();
 
 export default function ViewTestCasesForTaskForCompanyFunction() {
   const navigate = useNavigate();
-  const [errorMessage, setErrorMessage] = useState('');
+  const [errorMessage, setErrorMessage] = useState("");
   const [openSnackbar, setOpenSnackbar] = useState(false);
   const [deleteConfirmIsOpen, setDeleteConfirmIsOpen] = useState(false);
   const [data, setData] = useState([]);
   const [deleteItemId, setDeleteItemId] = useState(null);
   var parts = window.location.href.split("/");
-  var currentTaskId = (parts[parts.length - 3]).toString();
+  var currentTaskId = parts[parts.length - 3].toString();
 
-  let username = localStorage.getItem('username');
-  const tokenWithQuotes = localStorage.getItem('access-token');
+  let username = localStorage.getItem("username");
+  const tokenWithQuotes = localStorage.getItem("access-token");
   const token = tokenWithQuotes.substring(1, tokenWithQuotes.length - 1);
-  axios.defaults.headers.common['Authorization'] = `Bearer ${token}`;
+  axios.defaults.headers.common["Authorization"] = `Bearer ${token}`;
 
   useEffect(() => {
-    if (!localStorage.getItem('access-token')) {
-      navigate('/');
+    if (!localStorage.getItem("access-token")) {
+      navigate("/");
     }
     fetchCompanyAds(currentTaskId);
   }, [navigate, username]);
 
   async function fetchCompanyAds(currentTaskId) {
     try {
-      let result = await axios.get(`http://localhost:5163/api/Task/${currentTaskId}/Result/GetManyByTaskForCompany`, { headers: { 'Content-Type': 'application/json' } });
+      let result = await axios.get(
+        backendApiLink + `Task/${currentTaskId}/Result/GetManyByTaskForCompany`,
+        { headers: { "Content-Type": "application/json" } }
+      );
       setData(JSON.parse(JSON.stringify(result.data)));
-    } catch (error) {
-    }
-  };
+    } catch (error) {}
+  }
 
   async function Delete() {
     try {
-      let result = await axios.delete(`http://localhost:5163/api/Task/${currentTaskId}/Result/${deleteItemId}/Company`, { headers: { 'Content-Type': 'application/json' } });
+      let result = await axios.delete(
+        backendApiLink + `Task/${currentTaskId}/Result/${deleteItemId}/Company`,
+        { headers: { "Content-Type": "application/json" } }
+      );
       if (result.status === 204) {
         fetchCompanyAds(currentTaskId);
         setOpenSnackbar(true);
@@ -48,16 +56,15 @@ export default function ViewTestCasesForTaskForCompanyFunction() {
         setErrorMessage(result.statusText);
         setOpenSnackbar(true);
       }
-    } catch (error) {
-    }
-  };
+    } catch (error) {}
+  }
 
   const handleCloseSnackbar = (event, reason) => {
-    if (reason === 'clickaway') {
+    if (reason === "clickaway") {
       return;
     }
     setOpenSnackbar(false);
-    setErrorMessage('');
+    setErrorMessage("");
   };
 
   const toggleDeletePopup = (id) => {
@@ -66,24 +73,41 @@ export default function ViewTestCasesForTaskForCompanyFunction() {
   };
 
   return (
-    <div style={{ background: 'linear-gradient(59deg, rgba(23,55,117,1) 0%, rgba(75,100,148,1) 100%)', height: '100vh' }}>
+    <div
+      style={{
+        background:
+          "linear-gradient(59deg, rgba(23,55,117,1) 0%, rgba(75,100,148,1) 100%)",
+        height: "100vh",
+      }}
+    >
       <Header></Header>
       <table>
-        <tr className="border-bottom delayed-animation" style={{ animationDelay: `${50}ms`, color: 'rgb(211, 209, 209)'}}>
+        <tr
+          className="border-bottom delayed-animation"
+          style={{ animationDelay: `${50}ms`, color: "rgb(211, 209, 209)" }}
+        >
           <td>Data</td>
           <td>Result</td>
           <td>Action</td>
         </tr>
         {data.map((dataa, index) => (
-          <tr key={dataa.id} className="delayed-animation" style={{ animationDelay: `${index * 50}ms` }}>
+          <tr
+            key={dataa.id}
+            className="delayed-animation"
+            style={{ animationDelay: `${index * 50}ms` }}
+          >
             <td>{dataa.data}</td>
             <td>{dataa.result}</td>
             <td>
-              <div style={{ display: 'flex', alignItems: 'center' }}>
+              <div style={{ display: "flex", alignItems: "center" }}>
                 <Button
                   value="Edit"
                   name="go-to-task"
-                  onClick={() => navigate(`/home/Company/ViewTasks/Task/${currentTaskId}/TestCase/View/${dataa.id}`)}
+                  onClick={() =>
+                    navigate(
+                      `/home/Company/ViewTasks/Task/${currentTaskId}/TestCase/View/${dataa.id}`
+                    )
+                  }
                 />
                 <Button
                   value="Delete"
@@ -95,15 +119,17 @@ export default function ViewTestCasesForTaskForCompanyFunction() {
           </tr>
         ))}
       </table>
-      <div style={{ display: 'flex', justifyContent: 'center', marginTop: '10px' }}>
-        <div style={{ display: 'flex', gap: '10px' }}>
+      <div
+        style={{ display: "flex", justifyContent: "center", marginTop: "10px" }}
+      >
+        <div style={{ display: "flex", gap: "10px" }}>
           <Button
             value="Back"
             name="back-button"
             onClick={() => {
-              navigate(-1)
+              navigate(-1);
             }}
-            style={{ width: '200px' }}
+            style={{ width: "200px" }}
           />
         </div>
       </div>
@@ -111,7 +137,7 @@ export default function ViewTestCasesForTaskForCompanyFunction() {
         open={openSnackbar}
         autoHideDuration={3000}
         onClose={handleCloseSnackbar}
-        anchorOrigin={{ vertical: 'bottom', horizontal: 'center' }}
+        anchorOrigin={{ vertical: "bottom", horizontal: "center" }}
       >
         {errorMessage ? (
           <Alert onClose={handleCloseSnackbar} severity="error">
@@ -123,7 +149,7 @@ export default function ViewTestCasesForTaskForCompanyFunction() {
           </Alert>
         )}
       </Snackbar>
-      {deleteConfirmIsOpen &&
+      {deleteConfirmIsOpen && (
         <Popup
           content={<div>Are you sure you want to delete this Test Case?</div>}
           buttons={[
@@ -132,15 +158,15 @@ export default function ViewTestCasesForTaskForCompanyFunction() {
               onClick: () => {
                 Delete();
                 toggleDeletePopup();
-              }
+              },
             },
             {
               name: "Cancel",
-              onClick: toggleDeletePopup
+              onClick: toggleDeletePopup,
             },
           ]}
         />
-      }
+      )}
     </div>
   );
 }

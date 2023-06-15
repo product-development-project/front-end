@@ -1,21 +1,24 @@
-import React, { useState, useEffect } from 'react';
-import { useNavigate } from 'react-router-dom';
-import Header from '../Header';
-import axios from 'axios';
-import '../JobAds/style.css';
-import { Button } from '../UI/Button';
-import Box from '@material-ui/core/Box';
-import Paper from '@material-ui/core/Paper';
-import Grid from '@material-ui/core/Grid';
-import { makeStyles } from '@material-ui/core/styles';
-import Snackbar from '@mui/material/Snackbar';
-import Alert from '@mui/material/Alert';
+import React, { useState, useEffect } from "react";
+import { useNavigate } from "react-router-dom";
+import Header from "../Header";
+import axios from "axios";
+import "../JobAds/style.css";
+import { Button } from "../UI/Button";
+import Box from "@material-ui/core/Box";
+import Paper from "@material-ui/core/Paper";
+import Grid from "@material-ui/core/Grid";
+import { makeStyles } from "@material-ui/core/styles";
+import Snackbar from "@mui/material/Snackbar";
+import Alert from "@mui/material/Alert";
+import getBackendApiLink from "../BackEnd";
+
+const backendApiLink = getBackendApiLink();
 
 function formatDate(dateString) {
   const date = new Date(dateString);
   const year = date.getFullYear();
-  const month = ('0' + (date.getMonth() + 1)).slice(-2);
-  const day = ('0' + date.getDate()).slice(-2);
+  const month = ("0" + (date.getMonth() + 1)).slice(-2);
+  const day = ("0" + date.getDate()).slice(-2);
   return `${year}-${month}-${day}`;
 }
 
@@ -25,32 +28,32 @@ const useStyles = makeStyles((theme) => ({
   },
   paper: {
     padding: theme.spacing(2),
-    textAlign: 'center',
-    color: 'black',
-    margin: '10px',
+    textAlign: "center",
+    color: "black",
+    margin: "10px",
   },
 }));
 
 export default function JobAdsPage() {
   const navigate = useNavigate();
-  const [errorMessage, setErrorMessage] = useState('');
+  const [errorMessage, setErrorMessage] = useState("");
   const [addata, setAddata] = useState([]);
   const [taskdata, setTaskdata] = useState([]);
   const [pointsdata, setPointsdata] = useState([]);
   const [currentAdId, setCurrentAdId] = useState(null);
   const [loggedUser, setLoggedUser] = useState([]);
-  const username = localStorage.getItem('username');
+  const username = localStorage.getItem("username");
   const [openSnackbar, setOpenSnackbar] = useState(false);
-  const tokenWithQuotes = localStorage.getItem('access-token');
+  const tokenWithQuotes = localStorage.getItem("access-token");
   const token = tokenWithQuotes.substring(1, tokenWithQuotes.length - 1);
-  axios.defaults.headers.common['Authorization'] = `Bearer ${token}`;
-  let userId = localStorage.getItem('id');
-  let role = localStorage.getItem('roles');
+  axios.defaults.headers.common["Authorization"] = `Bearer ${token}`;
+  let userId = localStorage.getItem("id");
+  let role = localStorage.getItem("roles");
   const currentDate = new Date();
 
   useEffect(() => {
-    if (!localStorage.getItem('access-token')) {
-      navigate('/');
+    if (!localStorage.getItem("access-token")) {
+      navigate("/");
     }
     setCurrentAdId(getCurrentAdIdFromURL());
     fetchAd(currentAdId);
@@ -71,14 +74,14 @@ export default function JobAdsPage() {
   }, [navigate, currentAdId, username]);
 
   function getCurrentAdIdFromURL() {
-    const parts = window.location.href.split('/');
+    const parts = window.location.href.split("/");
     return parts[parts.length - 1];
   }
 
   async function fetchAd(adId) {
     try {
-      const result = await axios.get(`http://localhost:5163/api/Ad/` + adId, {
-        headers: { 'Content-Type': 'application/json' }
+      const result = await axios.get(backendApiLink + `Ad/` + adId, {
+        headers: { "Content-Type": "application/json" },
       });
       setAddata(JSON.parse(JSON.stringify(result.data)));
     } catch (error) {
@@ -89,9 +92,12 @@ export default function JobAdsPage() {
 
   async function fetchTaskForAd(adId) {
     try {
-      const result = await axios.get(`http://localhost:5163/api/Task/Competition/${adId}`, {
-        headers: { 'Content-Type': 'application/json' }
-      });
+      const result = await axios.get(
+        backendApiLink + `Task/Competition/${adId}`,
+        {
+          headers: { "Content-Type": "application/json" },
+        }
+      );
       setTaskdata(JSON.parse(JSON.stringify(result.data)));
     } catch (error) {
       // setErrorMessage('Failed to fetch data');
@@ -101,9 +107,12 @@ export default function JobAdsPage() {
 
   async function fetchPointsForAd(adId, username) {
     try {
-      const result = await axios.get(`http://localhost:5163/api/PointsAd/` + adId + `/` + username, {
-        headers: { 'Content-Type': 'application/json' }
-      });
+      const result = await axios.get(
+        backendApiLink + `PointsAd/` + adId + `/` + username,
+        {
+          headers: { "Content-Type": "application/json" },
+        }
+      );
       setPointsdata(JSON.parse(JSON.stringify(result.data)));
     } catch (error) {
       // setErrorMessage('Failed to fetch data');
@@ -113,9 +122,12 @@ export default function JobAdsPage() {
 
   async function fetchLogged() {
     try {
-      const result = await axios.get(`http://localhost:5163/api/Logged/ad/${currentAdId}/user/${userId}`, {
-        headers: { 'Content-Type': 'application/json' }
-      });
+      const result = await axios.get(
+        backendApiLink + `Logged/ad/${currentAdId}/user/${userId}`,
+        {
+          headers: { "Content-Type": "application/json" },
+        }
+      );
       setLoggedUser(JSON.parse(JSON.stringify(result.data)));
     } catch (error) {
       // setErrorMessage('Failed to fetch data');
@@ -129,8 +141,8 @@ export default function JobAdsPage() {
         ad_id: currentAdId,
       };
       let json = JSON.stringify(data);
-      const response = await axios.post('http://localhost:5163/api/Logged', json, {
-        headers: { 'Content-Type': 'application/json' },
+      const response = await axios.post(backendApiLink + "Logged", json, {
+        headers: { "Content-Type": "application/json" },
       });
       if (response.status === 201 || response.status === 200) {
         setOpenSnackbar(true);
@@ -146,110 +158,187 @@ export default function JobAdsPage() {
   };
 
   const handleCloseSnackbar = (event, reason) => {
-    if (reason === 'clickaway') {
+    if (reason === "clickaway") {
       return;
     }
     setOpenSnackbar(false);
-    setErrorMessage('');
+    setErrorMessage("");
   };
 
   const classes = useStyles();
   return (
-    <div style={{ background: 'linear-gradient(59deg, rgba(23,55,117,1) 0%, rgba(75,100,148,1) 100%)', height: '100vh' }}>
+    <div
+      style={{
+        background:
+          "linear-gradient(59deg, rgba(23,55,117,1) 0%, rgba(75,100,148,1) 100%)",
+        height: "100vh",
+      }}
+    >
       <Header />
       <Box sx={{ flexGrow: 1 }}>
-        <Grid container spacing={2} style={{ width: '100%' }}>
+        <Grid container spacing={2} style={{ width: "100%" }}>
           <Grid item xs={12} sm={8}>
-            <Paper className={classes.paper} style={{background: 'rgb(211, 209, 209)'}}>Ad name: {addata.name}</Paper>
+            <Paper
+              className={classes.paper}
+              style={{ background: "rgb(211, 209, 209)" }}
+            >
+              Ad name: {addata.name}
+            </Paper>
             <Box>
               <Grid container spacing={2}>
                 <Grid item xs={12} sm={6}>
-                  <Paper className={classes.paper} style={{background: 'rgb(211, 209, 209)'}}>Start date: {formatDate(addata.start)}</Paper>
+                  <Paper
+                    className={classes.paper}
+                    style={{ background: "rgb(211, 209, 209)" }}
+                  >
+                    Start date: {formatDate(addata.start)}
+                  </Paper>
                 </Grid>
                 <Grid item xs={12} sm={6}>
-                  <Paper className={classes.paper} style={{background: 'rgb(211, 209, 209)'}}>End date: {formatDate(addata.end)}</Paper>
+                  <Paper
+                    className={classes.paper}
+                    style={{ background: "rgb(211, 209, 209)" }}
+                  >
+                    End date: {formatDate(addata.end)}
+                  </Paper>
                 </Grid>
               </Grid>
               <Grid item xs={12} sm={12}>
-                <Paper className={classes.paper} style={{background: 'rgb(211, 209, 209)'}}>Description: {addata.description}</Paper>
+                <Paper
+                  className={classes.paper}
+                  style={{ background: "rgb(211, 209, 209)" }}
+                >
+                  Description: {addata.description}
+                </Paper>
               </Grid>
-              {
-                role.includes("User") ?
+              {role.includes("User") ? (
+                <Grid container spacing={4} justifyContent="flex-end">
+                  <Grid item xs={6} sm={3}>
+                    <Paper
+                      className={classes.paper}
+                      style={{
+                        height: "45%",
+                        background: "rgb(211, 209, 209)",
+                      }}
+                    >
+                      Correctnes points: {pointsdata.correctnesPoints}
+                    </Paper>
+                  </Grid>
+                  <Grid item xs={6} sm={3}>
+                    <Paper
+                      className={classes.paper}
+                      style={{
+                        height: "45%",
+                        background: "rgb(211, 209, 209)",
+                      }}
+                    >
+                      Time points: {pointsdata.timePoints}
+                    </Paper>
+                  </Grid>
+                  <Grid item xs={6} sm={3}>
+                    <Paper
+                      className={classes.paper}
+                      style={{
+                        height: "45%",
+                        background: "rgb(211, 209, 209)",
+                      }}
+                    >
+                      Recourses points: {pointsdata.recourcesPoints}
+                    </Paper>
+                  </Grid>
+                  <Grid item xs={6} sm={3}>
+                    <Paper
+                      className={classes.paper}
+                      style={{
+                        height: "45%",
+                        background: "rgb(211, 209, 209)",
+                      }}
+                    >
+                      Total points: {pointsdata.totalPoints}
+                    </Paper>
+                  </Grid>
+                  <Grid item xs={6} sm={3}>
+                    <Button
+                      value="Register for Competition"
+                      name="register-for-competition-button"
+                      onClick={() => handleSubmit()}
+                      style={{
+                        float: "right",
+                      }}
+                    />
+                    <Button
+                      value="Back"
+                      name="back-button"
+                      onClick={() => {
+                        navigate(-1);
+                      }}
+                      style={{
+                        float: "right",
+                        width: "245px",
+                      }}
+                    />
+                  </Grid>
+                </Grid>
+              ) : (
+                <>
                   <Grid container spacing={4} justifyContent="flex-end">
                     <Grid item xs={6} sm={3}>
-                      <Paper className={classes.paper} style={{ height: '45%', background: 'rgb(211, 209, 209)' }}>Correctnes points: {pointsdata.correctnesPoints}</Paper>
-                    </Grid>
-                    <Grid item xs={6} sm={3}>
-                      <Paper className={classes.paper} style={{ height: '45%', background: 'rgb(211, 209, 209)' }}>Time points: {pointsdata.timePoints}</Paper>
-                    </Grid>
-                    <Grid item xs={6} sm={3}>
-                      <Paper className={classes.paper} style={{ height: '45%', background: 'rgb(211, 209, 209)' }}>Recourses points: {pointsdata.recourcesPoints}</Paper>
-                    </Grid>
-                    <Grid item xs={6} sm={3}>
-                      <Paper className={classes.paper} style={{ height: '45%', background: 'rgb(211, 209, 209)' }}>Total points: {pointsdata.totalPoints}</Paper>
-                    </Grid>
-                    <Grid item xs={6} sm={3}>
-                      <Button
-                        value="Register for Competition"
-                        name="register-for-competition-button"
-                        onClick={() => handleSubmit()}
-                        style={{
-                          float: 'right'
-                        }}
-                      />
                       <Button
                         value="Back"
                         name="back-button"
                         onClick={() => {
-                          navigate(-1)
+                          navigate(-1);
                         }}
                         style={{
-                          float: 'right',
-                          width: '245px'
+                          float: "right",
+                          width: "245px",
                         }}
                       />
                     </Grid>
                   </Grid>
-                  :
-                  <>
-                    <Grid container spacing={4} justifyContent="flex-end">
-                      <Grid item xs={6} sm={3}>
-                        <Button
-                          value="Back"
-                          name="back-button"
-                          onClick={() => {
-                            navigate(-1)
-                          }}
-                          style={{
-                            float: 'right',
-                            width: '245px'
-                          }}
-                        />
-                      </Grid>
-                    </Grid>
-                  </>
-              }
+                </>
+              )}
             </Box>
           </Grid>
-          {role.includes("Company") || role.includes("Admin") || (role.includes("User") && currentDate >= new Date(formatDate(addata.start)) && loggedUser.ad_id !== undefined && currentAdId === loggedUser.ad_id.toString()) ?
+          {role.includes("Company") ||
+          role.includes("Admin") ||
+          (role.includes("User") &&
+            currentDate >= new Date(formatDate(addata.start)) &&
+            loggedUser.ad_id !== undefined &&
+            currentAdId === loggedUser.ad_id.toString()) ? (
             <Grid item xs={10} sm={4}>
               {taskdata.map((item, index) => (
-                <Paper key={index} className={classes.paper} style={{background: 'linear-gradient(59deg,rgba(75,100,148,1) 0%, rgba(23,55,117,1) 100%)', color: 'white', border: '1px solid white'}}>
-                  <Button value={item.name} name="go-to-ad" onClick={() => navigate(`/home/ad/${currentAdId}/task/${item.id}`)} style={{ width: '80%' }} />
+                <Paper
+                  key={index}
+                  className={classes.paper}
+                  style={{
+                    background:
+                      "linear-gradient(59deg,rgba(75,100,148,1) 0%, rgba(23,55,117,1) 100%)",
+                    color: "white",
+                    border: "1px solid white",
+                  }}
+                >
+                  <Button
+                    value={item.name}
+                    name="go-to-ad"
+                    onClick={() =>
+                      navigate(`/home/ad/${currentAdId}/task/${item.id}`)
+                    }
+                    style={{ width: "80%" }}
+                  />
                 </Paper>
               ))}
             </Grid>
-            :
-            <>
-            </>
-          }
+          ) : (
+            <></>
+          )}
         </Grid>
       </Box>
       <Snackbar
         open={openSnackbar}
         autoHideDuration={3000}
         onClose={handleCloseSnackbar}
-        anchorOrigin={{ vertical: 'bottom', horizontal: 'center' }}
+        anchorOrigin={{ vertical: "bottom", horizontal: "center" }}
       >
         {errorMessage ? (
           <Alert onClose={handleCloseSnackbar} severity="error">

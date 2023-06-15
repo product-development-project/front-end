@@ -1,10 +1,12 @@
-import Header from '../Header';
-import { Button } from '../UI/Button';
-import React, { useState, useEffect } from 'react'
-import { useNavigate } from 'react-router-dom';
-import './style.css';
-import axios from 'axios';
+import Header from "../Header";
+import { Button } from "../UI/Button";
+import React, { useState, useEffect } from "react";
+import { useNavigate } from "react-router-dom";
+import "./style.css";
+import axios from "axios";
+import getBackendApiLink from "../BackEnd";
 
+const backendApiLink = getBackendApiLink();
 export default function CreateTaskForCompany() {
   const navigate = useNavigate();
   const [types, setTypes] = useState([]);
@@ -26,39 +28,44 @@ export default function CreateTaskForCompany() {
     for (let i = 0; i < bytes.length; i++) {
       binary.push(String.fromCharCode(bytes[i]));
     }
-    const base64String = window.btoa(binary.join(''));
+    const base64String = window.btoa(binary.join(""));
     return base64String;
   }
 
-  const tokenWithQuotes = localStorage.getItem('access-token');
+  const tokenWithQuotes = localStorage.getItem("access-token");
   const token = tokenWithQuotes.substring(1, tokenWithQuotes.length - 1);
-  axios.defaults.headers.common['Authorization'] = `Bearer ${token}`;
+  axios.defaults.headers.common["Authorization"] = `Bearer ${token}`;
 
   const [formData, setFormData] = useState({
-    name: '',
-    problem: '',
-    difficulty: '',
+    name: "",
+    problem: "",
+    difficulty: "",
     confirmed: false,
     educational: false,
     date: new Date().toISOString().substr(0, 10),
-    type_id: ''
+    type_id: "",
   });
 
   useEffect(() => {
-    if (!localStorage.getItem('access-token')) {
-      navigate('/');
+    if (!localStorage.getItem("access-token")) {
+      navigate("/");
     }
     fetchExercisesTypes();
   }, [navigate]);
 
   async function fetchExercisesTypes() {
-    let result = await axios.get(`http://localhost:5163/api/TaskType`, { headers: { 'Content-Type': 'application/json' } });
+    let result = await axios.get(backendApiLink + `TaskType`, {
+      headers: { "Content-Type": "application/json" },
+    });
     setTypes(JSON.parse(JSON.stringify(result.data)));
   }
 
   const handleChange = (event) => {
     const name = event.target.name;
-    const value = event.target.type === 'checkbox' ? event.target.checked : event.target.value;
+    const value =
+      event.target.type === "checkbox"
+        ? event.target.checked
+        : event.target.value;
     setFormData({ ...formData, [name]: value });
   };
 
@@ -72,43 +79,68 @@ export default function CreateTaskForCompany() {
         confirmed: false,
         educational: false,
         date: formData.date,
-        type_id: formData.type_id
+        type_id: formData.type_id,
       };
       let json = JSON.stringify(data);
-      const response = await axios.post('http://localhost:5163/api/Task/Company', json, {
-        headers: { 'Content-Type': 'application/json' },
-      })
+      const response = await axios
+        .post(backendApiLink + "Task/Company", json, {
+          headers: { "Content-Type": "application/json" },
+        })
         .then(navigate(-1));
       setFormData({
-        name: '',
-        problem: '',
-        difficulty: '',
+        name: "",
+        problem: "",
+        difficulty: "",
         confirmed: false,
         educational: false,
-        date: '',
-        type_id: ''
+        date: "",
+        type_id: "",
       });
     } catch (error) {
       console.error(error);
     }
   };
   return (
-    <div style={{ background: 'linear-gradient(59deg, rgba(23,55,117,1) 0%, rgba(75,100,148,1) 100%)', height: '100vh' }}>
+    <div
+      style={{
+        background:
+          "linear-gradient(59deg, rgba(23,55,117,1) 0%, rgba(75,100,148,1) 100%)",
+        height: "100vh",
+      }}
+    >
       <Header />
       <table>
         <tr className="row-with-border">
           <td>
-            <input type="text" name="name" placeholder="Name" value={formData.name} onChange={handleChange} required />
+            <input
+              type="text"
+              name="name"
+              placeholder="Name"
+              value={formData.name}
+              onChange={handleChange}
+              required
+            />
           </td>
         </tr>
         <tr className="row-with-border">
           <td>
-            <input type="file" name="problem" onChange={handleFileChange} accept="" required />
+            <input
+              type="file"
+              name="problem"
+              onChange={handleFileChange}
+              accept=""
+              required
+            />
           </td>
         </tr>
         <tr>
           <td>
-            <select name="difficulty" value={formData.difficulty} onChange={handleChange} required>
+            <select
+              name="difficulty"
+              value={formData.difficulty}
+              onChange={handleChange}
+              required
+            >
               <option value="">-- Select difficulty --</option>
               <option value="Easy">Easy</option>
               <option value="Medium">Medium</option>
@@ -118,7 +150,12 @@ export default function CreateTaskForCompany() {
         </tr>
         <tr>
           <td>
-            <select name="type_id" value={formData.type_id} onChange={handleChange} required>
+            <select
+              name="type_id"
+              value={formData.type_id}
+              onChange={handleChange}
+              required
+            >
               <option value="">-- Select type --</option>
               {types.map((type) => (
                 <option key={type.id} value={type.id}>
@@ -130,28 +167,36 @@ export default function CreateTaskForCompany() {
         </tr>
         <tr>
           <td>
-            <input type="date" name="date" value={formData.date} onChange={handleChange} required />
+            <input
+              type="date"
+              name="date"
+              value={formData.date}
+              onChange={handleChange}
+              required
+            />
           </td>
         </tr>
       </table>
-      <div style={{ display: 'flex', justifyContent: 'center', marginTop: '10px' }}>
-        <div style={{ display: 'flex', gap: '10px' }}>
+      <div
+        style={{ display: "flex", justifyContent: "center", marginTop: "10px" }}
+      >
+        <div style={{ display: "flex", gap: "10px" }}>
           <Button
             value="Create Task"
             name="create-task"
             onClick={handleSubmit}
-            style={{ width: '150px' }}
+            style={{ width: "150px" }}
           />
           <Button
             value="Back"
             name="back-button"
             onClick={() => {
-              navigate(-1)
+              navigate(-1);
             }}
-            style={{ width: '150px' }}
+            style={{ width: "150px" }}
           />
         </div>
       </div>
     </div>
   );
-};
+}

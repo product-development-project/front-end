@@ -7,7 +7,9 @@ import axios from 'axios';
 import Snackbar from '@mui/material/Snackbar';
 import { Popup } from "../UI/Popup";
 import Alert from '@mui/material/Alert';
+import getBackendApiLink from "../BackEnd";
 
+const backendApiLink = getBackendApiLink();
 export default function ApproveTasks() {
   const navigate = useNavigate();
   const [data, setData] = useState([]);
@@ -28,12 +30,12 @@ export default function ApproveTasks() {
   axios.defaults.headers.common['Authorization'] = `Bearer ${token}`;
 
   async function fetchHelp() {
-    let result = await axios.get(`http://localhost:5163/api/Admin/Help`, { headers: { 'Content-Type': 'application/json' } });
+    let result = await axios.get(backendApiLink + `Admin/Help`, { headers: { 'Content-Type': 'application/json' } });
     setData(JSON.parse(JSON.stringify(result.data)));
   };
 
   async function Approve() {
-    let response = await axios.put(`http://localhost:5163/api/Admin/Help/` + helpId, { headers: { 'Content-Type': 'application/json' } });
+    let response = await axios.put(backendApiLink + `Admin/Help/` + helpId, { headers: { 'Content-Type': 'application/json' } });
     if (response.status === 200) {
       setOpenSnackbar(true);
       fetchHelp();
